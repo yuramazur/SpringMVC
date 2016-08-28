@@ -20,15 +20,6 @@ public class NameController {
 		model.addAttribute("names", nameService.findAll());
 		return "adminName";
 	}
-//	@RequestMapping("/admin/name")
-//	public String showName(Model model,@RequestParam String namesSearch) {
-//		if(namesSearch == null){
-//		model.addAttribute("names", nameService.findAll());
-//		}else{
-//			model.addAttribute("names", nameService.findAllByCoincidence(namesSearch));
-//		}
-//		return "adminName";
-//	}
 	
 	@RequestMapping(value = "/admin/name", method = RequestMethod.POST)
 	public String saveName(@RequestParam String names){

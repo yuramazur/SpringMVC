@@ -1,6 +1,6 @@
 package ua.service.implementation;
 
-import java.util.ArrayList;
+
 
 import java.util.List;
 
@@ -54,15 +54,8 @@ public class NameServiceImpl implements NameService {
 	}
 
 	public List<Name> findAllByCoincidence(String value) {
-		List<Name> rezult = new ArrayList<Name>();
-		List<Name> names = nameRepository.findAll();
-		for (int i = 0; i < names.size(); i++) {
-			if (names.get(i).getNames().toLowerCase().startsWith(value.toLowerCase())) {
-				rezult.add(names.get(i));
-			}
-		}
-		names.clear();
-		return rezult;
+		value = value+'%';
+		return nameRepository.findAllByCoincidence(value);
 	}
 
 }
