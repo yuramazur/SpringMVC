@@ -38,13 +38,33 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"> <input name="numCerrDep" placeholder="number of carriar department"></td>
+				<td colspan="2" align="center"><input name="numCerrDep"
+					placeholder="number of carriar department"></td>
 			</tr>
 			<tr>
-			<td align="right" colspan="2"><input type="submit" value="Save"></td>
+				<td align="right" colspan="2"><input type="submit" value="Save"></td>
 			</tr>
 		</table>
 	</form>
+	<table width="75%">
+		<tr>
+			<td align="center" colspan="4">Delivery List:</td>
+			<c:if test="${size == 0}">
+				<tr>
+					<td><font color="red" size="20">List is empty</font></td>
+				</tr>
+			</c:if>
+			<c:forEach items="${deliveries}" var="delivery">
+				<tr>
+					<td>${delivery.city.name}</td>
+					<td>${delivery.carrier.name}</td>
+					<td>${delivery.numCerrDep}</td>
+					<th width="10%"><a class="a1"
+						href="/admin/delivery/delete/${delivery.id}"><b>delete</b></a></th>
+				</tr>
+			</c:forEach>
+		</tr>
+	</table>
 	<form name="returnToAdmin" action="/admin">
 		<p align="right">
 			<b>Return to administrator menu:</b> <input type="submit"

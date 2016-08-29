@@ -7,9 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Product</title>
 <style>
-.a1 {
-	color: red;
-}
+
 </style>
 </head>
 <body>
