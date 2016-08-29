@@ -5,8 +5,11 @@ import java.util.List;
 import ua.entity.Name;
 
 public interface NameService {
+	
 	void save(String nameNames);
+	
 	void save(Name name);
+	
 	Name findByNames(String nameNames);
 
 	Name findById(int nameId);
@@ -16,5 +19,6 @@ public interface NameService {
 	void deleteById(int nameId);
 
 	List<Name> findAll();
+	
 	List<Name> findAllByCoincidence(String value);
 }
