@@ -58,4 +58,8 @@ public class NameServiceImpl implements NameService {
 		return nameRepository.findAllByCoincidence(value);
 	}
 
+	public void save(Name name) {
+		nameRepository.save(name);
+	}
+
 }

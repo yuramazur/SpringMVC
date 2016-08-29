@@ -6,7 +6,7 @@ import ua.entity.Name;
 
 public interface NameService {
 	void save(String nameNames);
-
+	void save(Name name);
 	Name findByNames(String nameNames);
 
 	Name findById(int nameId);
