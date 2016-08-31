@@ -7,6 +7,8 @@ import ua.entity.Client;
 public interface ClientService {
 
 	void save(String name, String lastName, String phone);
+	
+	void deleteById(int id);
 
 	List<Client> findBy(String name, String lastName, String phone);
 

@@ -27,10 +27,11 @@ public class ProductServiceImpl implements ProductService {
 		product.setPrice(price);
 		product.setProductType(productTypeRepository.findByName(productType));
 		product.setProducer(producerRepository.findByName(producerName));
-		// if (!productRepository.findProduct(product)) {
-		// productRepository.save(product);
-		// }
-		productRepository.save(product);
+		if (productRepository.findProduct(product.getProducer().getName(),
+				product.getProductType().getName(), product.getName(),
+				product.getPrice()) == null) {
+			productRepository.save(product);
+		}
 
 	}
 
@@ -41,10 +42,12 @@ public class ProductServiceImpl implements ProductService {
 		product.setPrice(price);
 		product.setProductType(productTypeRepository.findById(productTypeId));
 		product.setProducer(producerRepository.findById(producerId));
-		if (productRepository.findProduct(product.getProducer().getName(),product.getProductType().getName(),product.getName(),product.getPrice()) == null) {
+		if (productRepository.findProduct(product.getProducer().getName(),
+				product.getProductType().getName(), product.getName(),
+				product.getPrice()) == null) {
 			productRepository.save(product);
 		}
-		
+
 	}
 
 	public List<Product> findAll() {
@@ -66,6 +69,12 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteById(int id) {
 		productRepository.delete(id);
 
+	}
+
+	@Override
+	public Product findById(int id) {
+
+		return productRepository.findOneInited(id);
 	}
 
 }

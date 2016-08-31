@@ -20,5 +20,5 @@ public interface ProductService {
 			String producerName);
 	void deleteById(int id);
 		
-	
+	Product findById(int id);
 }

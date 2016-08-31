@@ -49,8 +49,9 @@ public class ProductController {
 		return "redirect:/admin/product";
 	}
 
-	@RequestMapping("/user/search/product")
-	public String showUserProduct() {
+	@RequestMapping("/user/product/{id}")
+	public String showUserProduct(@PathVariable int id,Model model) {
+		model.addAttribute("product", productService.findById(id));
 		return "userProduct";
 	}
 }

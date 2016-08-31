@@ -15,7 +15,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 	ProductTypeRepository productTypeReposetory;
 
 	public void save(String name) {
-		if(productTypeReposetory.findByName(name)==null){
+		if (productTypeReposetory.findByName(name) == null) {
 			ProductType productType = new ProductType();
 			productType.setName(name);
 			productTypeReposetory.save(productType);
@@ -24,18 +24,18 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 	}
 
 	public ProductType findByName(String name) {
-		
+
 		return productTypeReposetory.findByName(name);
 	}
 
 	public ProductType findById(int id) {
-		
+
 		return productTypeReposetory.findById(id);
 	}
 
 	public void deleteByName(String name) {
-		if(productTypeReposetory.findByName(name)!=null){
-		productTypeReposetory.delete(productTypeReposetory.findByName(name));
+		if (productTypeReposetory.findByName(name) != null) {
+			productTypeReposetory.delete(productTypeReposetory.findByName(name));
 		}
 	}
 
@@ -45,8 +45,16 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 	}
 
 	public List<ProductType> findAll() {
-		
+
 		return productTypeReposetory.findAll();
+	}
+
+	@Override
+	public void save(ProductType productType) {
+		if (productTypeReposetory.findByName(productType.getName()) == null) {
+			productTypeReposetory.save(productType);
+		}
+
 	}
 
 }

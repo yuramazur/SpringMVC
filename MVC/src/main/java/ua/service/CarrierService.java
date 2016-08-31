@@ -7,6 +7,8 @@ import ua.entity.*;
 public interface CarrierService {
 	void save(String name);
 
+	void save(Carrier carrier);
+
 	Carrier findByName(String name);
 
 	Carrier findById(int id);

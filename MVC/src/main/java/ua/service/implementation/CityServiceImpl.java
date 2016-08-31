@@ -48,4 +48,12 @@ public class CityServiceImpl implements CityService {
 		return cityReposetory.findAll();
 	}
 
+	@Override
+	public void save(City city) {
+		if(cityReposetory.findByName(city.getName())==null){
+			cityReposetory.save(city);
+		}
+		
+	}
+
 }

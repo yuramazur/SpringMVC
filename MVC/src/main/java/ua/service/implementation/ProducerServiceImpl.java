@@ -49,4 +49,12 @@ public class ProducerServiceImpl implements ProducerService {
 		return producerReposetory.findAll();
 	}
 
+	@Override
+	public void save(Producer producer) {
+		if(producerReposetory.findByName(producer.getName())==null){
+			producerReposetory.save(producer);
+		}
+		
+	}
+
 }

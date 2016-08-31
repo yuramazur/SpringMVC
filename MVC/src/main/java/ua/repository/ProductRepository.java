@@ -17,5 +17,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	Product findProduct(@Param("producer") String producer,
 			@Param("productType") String productType,
 			@Param("name") String name, @Param("price") double price);
-	
+
+	@Query("SELECT p FROM Product p LEFT JOIN FETCH p.producer LEFT JOIN FETCH p.productType WHERE p.id=:id")
+	Product findOneInited(@Param("id") int id);
+
 }

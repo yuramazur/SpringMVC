@@ -7,6 +7,8 @@ import ua.entity.*;
 public interface ProductTypeService {
 	void save(String name);
 
+	void save(ProductType productType);
+
 	ProductType findByName(String name);
 
 	ProductType findById(int id);

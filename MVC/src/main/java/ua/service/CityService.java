@@ -7,6 +7,8 @@ import ua.entity.*;
 public interface CityService {
 	void save(String name);
 
+	void save(City city);
+
 	City findByName(String name);
 
 	City findById(int id);

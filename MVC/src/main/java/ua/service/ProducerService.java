@@ -7,6 +7,8 @@ import ua.entity.*;
 public interface ProducerService {
 	void save(String name);
 
+	void save(Producer producer);
+
 	Producer findByName(String name);
 
 	Producer findById(int id);

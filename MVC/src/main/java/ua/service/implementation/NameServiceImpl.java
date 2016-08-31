@@ -1,7 +1,5 @@
 package ua.service.implementation;
 
-
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,12 +52,14 @@ public class NameServiceImpl implements NameService {
 	}
 
 	public List<Name> findAllByCoincidence(String value) {
-		value = value+'%';
+		value = value + '%';
 		return nameRepository.findAllByCoincidence(value);
 	}
 
 	public void save(Name name) {
-		nameRepository.save(name);
+		if (nameRepository.findByNames(name.getNames()) == null) {
+			nameRepository.save(name);
+		}
 	}
 
 }
