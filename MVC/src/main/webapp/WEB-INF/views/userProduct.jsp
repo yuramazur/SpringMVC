@@ -24,11 +24,11 @@
 
 
 	</table>
-
+<form action="/user">
 	<p align="right">
 		<a>Previous page:</a>
-	<form action="/user">
-		<input type="submit" value="BACK">
+	
+		<input type="submit" value="BACK"></p>
 	</form>
 
 </body>
