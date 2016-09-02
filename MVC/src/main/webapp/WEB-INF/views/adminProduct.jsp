@@ -13,7 +13,8 @@
 </head>
 <body>
 	<h1 align="center">Product administration:</h1>
-	<form method="post" action="/admin/product">
+	<form:form method="post" action="/admin/product" modelAttribute="product">
+	<form:hidden path="id"/>
 		<table>
 			<tr>
 				<td colspan="2" align="center">
@@ -53,7 +54,7 @@
 				<td colspan="2" align="right"><input type="submit" value="Save"></td>
 			</tr>
 		</table>
-	</form>
+	</form:form>
 
 	<table width="75%">
 		<tr>

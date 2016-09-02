@@ -77,4 +77,10 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findOneInited(id);
 	}
 
+	@Override
+	public void save(Product product) {
+		productRepository.save(product);
+		
+	}
+
 }

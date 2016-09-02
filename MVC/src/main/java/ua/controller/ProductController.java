@@ -3,14 +3,20 @@ package ua.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
+import ua.entity.Producer;
+import ua.entity.Product;
+import ua.entity.ProductType;
 import ua.service.ProducerService;
 import ua.service.ProductService;
 import ua.service.ProductTypeService;
+import ua.service.implementation.editor.ProducerEditor;
+import ua.service.implementation.editor.ProductTypeEditor;
 
 @Controller
 public class ProductController {
@@ -21,6 +27,19 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
+	@InitBinder
+	protected void initBinderProduct(WebDataBinder binderProduct) {
+		binderProduct.registerCustomEditor(ProductType.class,
+				new ProductTypeEditor(productTypeService));
+		binderProduct.registerCustomEditor(Producer.class, new ProducerEditor(
+				producerService));
+	}
+
+	@ModelAttribute("producr")
+	public Product getProduct() {
+		return new Product();
+	}
+
 	@RequestMapping("/admin/product")
 	public String showProduct(Model model) {
 		model.addAttribute("products", productService.findAll());
@@ -29,17 +48,23 @@ public class ProductController {
 		return "adminProduct";
 	}
 
+	// @RequestMapping(value = "/admin/product", method = RequestMethod.POST)
+	// public String saveProduct(@RequestParam String name,
+	// @RequestParam String price, @RequestParam int productTypeId,
+	// @RequestParam int producerId) {
+	// double priceDouble = 0;
+	// try {
+	// priceDouble = Double.parseDouble(price);
+	// } catch (NumberFormatException e) {
+	// priceDouble = 150000;
+	// }
+	// productService.save(name, priceDouble, productTypeId, producerId);
+	// return "redirect:/admin/product";
+	// }
+
 	@RequestMapping(value = "/admin/product", method = RequestMethod.POST)
-	public String saveProduct(@RequestParam String name,
-			@RequestParam String price, @RequestParam int productTypeId,
-			@RequestParam int producerId) {
-		double priceDouble = 0;
-		try {
-			priceDouble = Double.parseDouble(price);
-		} catch (NumberFormatException e) {
-			priceDouble = 150000;
-		}
-		productService.save(name, priceDouble, productTypeId, producerId);
+	public String saveProduct(@ModelAttribute("product") Product product) {
+		productService.save(product);
 		return "redirect:/admin/product";
 	}
 
@@ -49,8 +74,17 @@ public class ProductController {
 		return "redirect:/admin/product";
 	}
 
+	@RequestMapping("/admin/product/update/{id}")
+	public String updateProduct(Model model, @PathVariable int id) {
+		model.addAttribute("product", productService.findById(id));
+		model.addAttribute("products", productService.findAll());
+		model.addAttribute("productTypes", productTypeService.findAll());
+		model.addAttribute("producers", producerService.findAll());
+		return "adminProduct";
+	}
+
 	@RequestMapping("/user/product/{id}")
-	public String showUserProduct(@PathVariable int id,Model model) {
+	public String showUserProduct(@PathVariable int id, Model model) {
 		model.addAttribute("product", productService.findById(id));
 		return "userProduct";
 	}
