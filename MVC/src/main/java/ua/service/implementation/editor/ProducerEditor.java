@@ -10,7 +10,6 @@ public class ProducerEditor extends PropertyEditorSupport {
 	private final ProducerService producerService;
 
 	public ProducerEditor(ProducerService producerService) {
-
 		this.producerService = producerService;
 	}
 

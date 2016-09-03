@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 import ua.entity.Producer;
 import ua.service.ProducerService;
 
@@ -36,20 +35,22 @@ public class ProducerController {
 		producerService.deleteById(id);
 		return "redirect:/admin/producer";
 	}
-@RequestMapping("/admin/producer/update/{id}")
+
+	@RequestMapping("/admin/producer/update/{id}")
 	public String updateProducer(@PathVariable int id, Model model) {
-model.addAttribute("producer", producerService.findById(id));
-model.addAttribute("producers", producerService.findAll());
+		model.addAttribute("producer", producerService.findById(id));
+		model.addAttribute("producers", producerService.findAll());
 		return "adminProducer";
 	}
-	
+
 	@ModelAttribute("producer")
 	public Producer getProducer() {
 		return new Producer();
 	}
-	
-	@RequestMapping(value ="/admin/producer", method = RequestMethod.POST)
-	public String saveProducer(@ModelAttribute("producer") @Valid Producer producer){
+
+	@RequestMapping(value = "/admin/producer", method = RequestMethod.POST)
+	public String saveProducer(
+			@ModelAttribute("producer") @Valid Producer producer) {
 		producerService.save(producer);
 		return "redirect:/admin/producer";
 	}

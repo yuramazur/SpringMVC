@@ -8,13 +8,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Product</title>
 <style>
-
 </style>
 </head>
 <body>
 	<h1 align="center">Product administration:</h1>
-	<form:form method="post" action="/admin/product" modelAttribute="product">
-	<form:hidden path="id"/>
+	<form:form method="post" action="/admin/product"
+		modelAttribute="product">
+		<form:hidden path="id" />
 		<table>
 			<tr>
 				<td colspan="2" align="center">
@@ -28,20 +28,34 @@
 				<td align="center">
 					<p>
 						<b>Product type select:</b>
-					</p> <select name="productTypeId">
+					</p> <form:select path="productType">
 						<c:forEach items="${productTypes}" var="productType">
-							<option value="${productType.id}">${productType.name}</option>
+							<c:choose>
+								<c:when test="${productType.id eq product.productType.id}">
+									<option value="${productType.id}" selected="selected">${productType.name}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${productType.id}">${productType.name}</option>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
-				</select>
+					</form:select>
 				</td>
 				<td align="center">
 					<p>
 						<b>Producer select:</b>
-					</p> <select name="producerId">
+					</p> <form:select path="producer">
 						<c:forEach items="${producers}" var="producer">
-							<option value="${producer.id}">${producer.name}</option>
+							<c:choose>
+								<c:when test="${producer.id eq product.producer.name}">
+									<option value="${producer.id}" selected="selected">${producer.name}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${producer.id}">${producer.name}</option>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
-				</select>
+					</form:select>
 				</td>
 			</tr>
 			<tr>
@@ -58,7 +72,7 @@
 
 	<table width="75%">
 		<tr>
-			<th align="center" colspan="5">Product List:</th>
+			<th align="center" colspan="6">Product List:</th>
 			<c:forEach items="${products}" var="product">
 				<tr>
 					<td>${product.productType.name}</td>
@@ -67,6 +81,8 @@
 					<td>${product.price}</td>
 					<th width="10%"><a class="a1"
 						href="/admin/product/delete/${product.id}"><b>delete</b></a></th>
+					<th width="10%"><a class="a1"
+						href="/admin/product/update/${product.id}"><b>update</b></a></th>
 				</tr>
 			</c:forEach>
 		</tr>
@@ -78,5 +94,5 @@
 				value="Return">
 		</p>
 	</form>
-</body> 
+</body>
 </html>

@@ -35,7 +35,7 @@ public class ProductController {
 				producerService));
 	}
 
-	@ModelAttribute("producr")
+	@ModelAttribute("product")
 	public Product getProduct() {
 		return new Product();
 	}
@@ -68,13 +68,13 @@ public class ProductController {
 		return "redirect:/admin/product";
 	}
 
-	@RequestMapping("/admin/product/delete/{id}")
+	@RequestMapping(value = "/admin/product/delete/{id}")
 	public String deleteProduct(@PathVariable int id) {
 		productService.deleteById(id);
 		return "redirect:/admin/product";
 	}
 
-	@RequestMapping("/admin/product/update/{id}")
+	@RequestMapping(value = "/admin/product/update/{id}")
 	public String updateProduct(Model model, @PathVariable int id) {
 		model.addAttribute("product", productService.findById(id));
 		model.addAttribute("products", productService.findAll());
