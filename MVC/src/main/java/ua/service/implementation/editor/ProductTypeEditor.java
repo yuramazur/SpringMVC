@@ -19,4 +19,6 @@ public class ProductTypeEditor extends PropertyEditorSupport {
 		setValue(productType);
 	}
 
+	
+
 }
