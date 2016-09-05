@@ -47,11 +47,11 @@ text-align: center;
 			<tr>
 			<td><a><b> Enter Name:</b></a></td>
 			</tr>
-<!-- 				<tr> -->
-<%-- 					<td><form:errors path="names" /></td> --%>
-<!-- 				</tr> -->
+ 				<tr>
+ 					<td><form:errors path="names"/></td>
+				</tr>
 				<tr>
-					<td><form:input path="names" /></td>
+					<td><form:input path="names"/></td>
 				</tr>
 				<tr>
 					<th align="right"><input type="submit" value="save"></th>

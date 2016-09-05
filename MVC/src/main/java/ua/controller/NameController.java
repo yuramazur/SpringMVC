@@ -5,14 +5,17 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 import ua.entity.Name;
 import ua.service.NameService;
+import ua.service.implementation.validator.NameValidator;
 
 @Controller
 public class NameController {
@@ -25,13 +28,23 @@ public class NameController {
 		return "adminName";
 	}
 
+	@InitBinder
+	protected void InitBinder(WebDataBinder binder) {
+		binder.setValidator(new NameValidator(nameService));
+	}
+
 	@ModelAttribute("name")
 	public Name getName() {
 		return new Name();
 	}
 
 	@RequestMapping(value = "/admin/name", method = RequestMethod.POST)
-	public String saveName(@ModelAttribute("name") @Valid Name name) {
+	public String saveName(@ModelAttribute("name") @Valid Name name,
+			BindingResult br, Model model) {
+		if (br.hasErrors()) {
+			model.addAttribute("names", nameService.findAll());
+			return "adminName";
+		}
 		nameService.save(name);
 		return "redirect:/admin/name";
 	}

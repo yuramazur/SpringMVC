@@ -47,7 +47,7 @@
 					</p> <form:select path="producer">
 						<c:forEach items="${producers}" var="producer">
 							<c:choose>
-								<c:when test="${producer.id eq product.producer.name}">
+								<c:when test="${producer.id eq product.producer.id}">
 									<option value="${producer.id}" selected="selected">${producer.name}</option>
 								</c:when>
 								<c:otherwise>
@@ -59,10 +59,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="center"><input name="name"
-					placeholder="Product title:"></td>
-				<td align="center"><input name="price"
-					placeholder="Product price:"></td>
+			
+				<td align="center"><form:input path="name"  placeholder="Product title:"/></td>
+				<td align="center"><form:input path="price" placeholder="Product price:"/></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="right"><input type="submit" value="Save"></td>
