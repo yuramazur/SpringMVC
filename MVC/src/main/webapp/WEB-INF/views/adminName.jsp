@@ -8,9 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Carriers</title>
 <style>
-td{
-text-align: center;
-}
+
 </style>
 </head>
 <body>
@@ -45,16 +43,16 @@ text-align: center;
 			<form:hidden path="id" />
 			<table>
 			<tr>
-			<td><a><b> Enter Name:</b></a></td>
+			<td align="center"><a><b> Enter Name:</b></a></td>
 			</tr>
  				<tr>
- 					<td><form:errors path="names"/></td>
+ 					<td><a class="a1"><b><form:errors path="names"/></b></a></td>
 				</tr>
 				<tr>
 					<td><form:input path="names"/></td>
 				</tr>
 				<tr>
-					<th align="right"><input type="submit" value="save"></th>
+					<td align="right"><input type="submit" value="save"></td>
 				</tr>
 			</table>
 		</form:form>
@@ -69,7 +67,7 @@ text-align: center;
 			<c:forEach items="${names}" var="name">
 				<tr>
 					<td><b>${name.names}</b></td>
-					<th><a href="/admin/name/delete/${name.id}">delete</a></th>
+					<th><a class="a1" href="/admin/name/delete/${name.id}">delete</a></th>
 					<th><a href="/admin/name/update/${name.id}">update</a></th>
 				</tr>
 				

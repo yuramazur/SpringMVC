@@ -12,7 +12,7 @@
 <body>
 	<div class="div1">
 
-		<!-- 		<h1 align="center">Producer administration:</h1> -->
+		<h1 align="center">Producer administration:</h1>
 
 
 		<!-- 		<form name="newProducer" method="post" action="/admin/producer"> -->
@@ -28,16 +28,16 @@
 			<form:hidden path="id" />
 			<table>
 				<tr>
-					<td><a><b> Enter Producer:</b></a></td>
+					<td align="center"><a><b> Enter Producer:</b></a></td>
 				</tr>
-				<!-- 				<tr> -->
-				<%-- 					<td><form:errors path="name" /></td> --%>
-				<!-- 				</tr> -->
+				<tr>
+					<td><a class="a1"><b><form:errors path="name" /></b></a></td>
+				</tr>
 				<tr>
 					<td><form:input path="name" /></td>
 				</tr>
 				<tr>
-					<th align="right"><input type="submit" value="save"></th>
+					<td align="right"><input type="submit" value="save"></td>
 				</tr>
 			</table>
 		</form:form>
@@ -50,7 +50,7 @@
 			<c:forEach items="${producers}" var="producer">
 				<tr>
 					<td><b>${producer.name}</b></td>
-					<th><a href="/admin/producer/delete/${producer.id}">delete</a></th>
+					<th><a class="a1" href="/admin/producer/delete/${producer.id}">delete</a></th>
 					<th><a href="/admin/producer/update/${producer.id}">update</a></th>
 				</tr>
 			</c:forEach>

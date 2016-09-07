@@ -29,8 +29,8 @@ public class NameController {
 	}
 
 	@InitBinder
-	protected void InitBinder(WebDataBinder binder) {
-		binder.setValidator(new NameValidator(nameService));
+	protected void InitBinderName(WebDataBinder binderName) {
+		binderName.setValidator(new NameValidator(nameService));
 	}
 
 	@ModelAttribute("name")

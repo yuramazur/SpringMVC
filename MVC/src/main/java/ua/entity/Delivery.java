@@ -22,7 +22,7 @@ public class Delivery {
 	private Carrier carrier;
 	@OneToMany(mappedBy = "delivery")
 	private List<MyOrder> order;
-	private int numCerrDep;
+	private String numCerrDep;
 
 	public Delivery() {
 
@@ -60,17 +60,18 @@ public class Delivery {
 		this.carrier = carrier;
 	}
 
-	public int getNumCerrDep() {
+	public String getNumCerrDep() {
 		return numCerrDep;
 	}
 
-	public void setNumCerrDep(int numCerrDep) {
+	public void setNumCerrDep(String numCerrDep) {
 		this.numCerrDep = numCerrDep;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "id: " + id + " city: " + city + ", carrier: " + carrier + ", ¹ " + numCerrDep;
-//	}
+	// @Override
+	// public String toString() {
+	// return "id: " + id + " city: " + city + ", carrier: " + carrier + ", ï¿½ "
+	// + numCerrDep;
+	// }
 
 }

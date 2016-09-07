@@ -27,7 +27,7 @@
 				<td>${client.name.names}</td>
 				<td>${client.lastName}</td>
 				<td>${client.phone}</td>
-				<th><a href="/admin/client/delete/${client.id}">delete</a>
+				<th><a class="a1" href="/admin/client/delete/${client.id}">delete</a>
 
 				</th>
 			</tr>

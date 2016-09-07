@@ -25,7 +25,8 @@ public class Product {
 	@OneToMany(mappedBy = "products")
 	private List<MyOrder> order;
 	private String name;
-	private double price;
+	private String price;
+	private String error;
 
 	public Product() {
 
@@ -55,11 +56,11 @@ public class Product {
 		this.producer = producer;
 	}
 
-	public double getPrice() {
+	public String getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 
@@ -77,6 +78,14 @@ public class Product {
 
 	public void setName(String productName) {
 		this.name = productName;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
 	}
 
 }

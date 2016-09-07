@@ -5,6 +5,9 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,16 +15,39 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.Producer;
 import ua.service.ProducerService;
+import ua.service.implementation.validator.ProducerValidator;
 
 @Controller
 public class ProducerController {
 	@Autowired
 	private ProducerService producerService;
 
+	@ModelAttribute("producer")
+	public Producer getProducer() {
+		return new Producer();
+	}
+
+	@InitBinder
+	protected void InitBinderProducer(WebDataBinder binderProducer) {
+		binderProducer.setValidator(new ProducerValidator(producerService));
+	}
+
 	@RequestMapping("/admin/producer")
 	public String showProducer(Model model) {
 		model.addAttribute("producers", producerService.findAll());
 		return "adminProducer";
+	}
+
+	@RequestMapping(value = "/admin/producer", method = RequestMethod.POST)
+	public String saveProducer(
+			@ModelAttribute("producer") @Valid Producer producer,
+			BindingResult br, Model model) {
+		if (br.hasErrors()) {
+			model.addAttribute("producers", producerService.findAll());
+			return "adminProducer";
+		}
+		producerService.save(producer);
+		return "redirect:/admin/producer";
 	}
 
 	// @RequestMapping(value = "/admin/producer", method = RequestMethod.POST)
@@ -43,15 +69,4 @@ public class ProducerController {
 		return "adminProducer";
 	}
 
-	@ModelAttribute("producer")
-	public Producer getProducer() {
-		return new Producer();
-	}
-
-	@RequestMapping(value = "/admin/producer", method = RequestMethod.POST)
-	public String saveProducer(
-			@ModelAttribute("producer") @Valid Producer producer) {
-		producerService.save(producer);
-		return "redirect:/admin/producer";
-	}
 }

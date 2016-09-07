@@ -15,7 +15,7 @@
 	<form:form method="post" action="/admin/product"
 		modelAttribute="product">
 		<form:hidden path="id" />
-		<table>
+		<table border="1">
 			<tr>
 				<td colspan="2" align="center">
 					<p>
@@ -25,10 +25,23 @@
 				</td>
 			</tr>
 			<tr>
-				<td align="center">
-					<p>
-						<b>Product type select:</b>
-					</p> <form:select path="productType">
+				<td align="center" colspan="2"><a class="a1"><b><form:errors
+								path="error" /></b></a></td>
+
+			</tr>
+			<tr>
+				<td align="center"><b>Product type select:</b></td>
+				<td align="center"><b>Producer select:</b></td>
+			</tr>
+			<tr>
+				<td align="center"><a class="a1"><b><form:errors
+								path="productType" /></b></a></td>
+				<td align="center"><a class="a1"><b><form:errors
+								path="producer" /></b></a></td>
+			</tr>
+			<tr>
+				<td align="center"><form:select path="productType">
+						<option value="0">---Product Types---</option>
 						<c:forEach items="${productTypes}" var="productType">
 							<c:choose>
 								<c:when test="${productType.id eq product.productType.id}">
@@ -39,12 +52,10 @@
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-					</form:select>
-				</td>
-				<td align="center">
-					<p>
-						<b>Producer select:</b>
-					</p> <form:select path="producer">
+					</form:select></td>
+			
+				<td align="center"><form:select path="producer">
+						<option value="0">-----Producers-----</option>
 						<c:forEach items="${producers}" var="producer">
 							<c:choose>
 								<c:when test="${producer.id eq product.producer.id}">
@@ -55,13 +66,19 @@
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-					</form:select>
-				</td>
+					</form:select></td>
 			</tr>
 			<tr>
-			
-				<td align="center"><form:input path="name"  placeholder="Product title:"/></td>
-				<td align="center"><form:input path="price" placeholder="Product price:"/></td>
+				<td align="center"><a class="a1"><b><form:errors path="name" /></b></a></td>
+				<td align="center"><a class="a1"><b><form:errors path="price" /></b></a></td>
+			</tr>
+			<tr>
+
+				<td align="center"><form:input path="name"
+						placeholder="Product title:" /></td>
+
+				<td align="center"><form:input path="price"
+						placeholder="Product price:" /></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="right"><input type="submit" value="Save"></td>
@@ -69,9 +86,9 @@
 		</table>
 	</form:form>
 
-	<table width="75%">
+	<table border="1">
 		<tr>
-			<th align="center" colspan="6">Product List:</th>
+			<td align="center" colspan="6"><b>Product List:</b></td>
 			<c:forEach items="${products}" var="product">
 				<tr>
 					<td>${product.productType.name}</td>
@@ -80,8 +97,7 @@
 					<td>${product.price}</td>
 					<th width="10%"><a class="a1"
 						href="/admin/product/delete/${product.id}"><b>delete</b></a></th>
-					<th width="10%"><a class="a1"
-						href="/admin/product/update/${product.id}"><b>update</b></a></th>
+					<th width="10%"><a href="/admin/product/update/${product.id}"><b>update</b></a></th>
 				</tr>
 			</c:forEach>
 		</tr>

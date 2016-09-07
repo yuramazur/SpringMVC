@@ -6,11 +6,15 @@ import ua.entity.Delivery;
 
 public interface DeliveryService {
 
-	void save(int cityId, int carrierId, int numCerrDep);
+	void save(int cityId, int carrierId, String numCerrDep);
 
-	void save(String cityName, String carrierName, int numCerrDep);
+	void save(String cityName, String carrierName, String numCerrDep);
 
 	List<Delivery> findAll();
 
 	void deleteById(int id);
+
+	void save(Delivery delivery);
+
+	Delivery findById(int id);
 }
