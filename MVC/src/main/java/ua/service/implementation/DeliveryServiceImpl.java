@@ -26,8 +26,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 		delivery.setCarrier(carrierRepository.findById(carrierId));
 		delivery.setNumCerrDep(numCerrDep);
 		if (deliveryRepository.findDelivery(delivery.getCity().getName(),
-				delivery.getCarrier().getName(),
-				delivery.getNumCerrDep()) == null){
+				delivery.getCarrier().getName(), delivery.getNumCerrDep()) == null) {
 			deliveryRepository.save(delivery);
 		}
 	}
@@ -38,8 +37,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 		delivery.setCarrier(carrierRepository.findByName(carrierName));
 		delivery.setNumCerrDep(numCerrDep);
 		if (deliveryRepository.findDelivery(delivery.getCity().getName(),
-				delivery.getCarrier().getName(),
-				delivery.getNumCerrDep()) == null){
+				delivery.getCarrier().getName(), delivery.getNumCerrDep()) == null) {
 			deliveryRepository.save(delivery);
 		}
 
@@ -58,14 +56,20 @@ public class DeliveryServiceImpl implements DeliveryService {
 	@Override
 	public void save(Delivery delivery) {
 		deliveryRepository.save(delivery);
-		
+
 	}
 
 	@Override
 	public Delivery findById(int id) {
-		
+
 		return deliveryRepository.findOneIntited(id);
 	}
 
-	
+	@Override
+	public Delivery findDelivery(Delivery delivery) {
+
+		return deliveryRepository.findDelivery(delivery.getCity().getName(),
+				delivery.getCarrier().getName(), delivery.getNumCerrDep());
+	}
+
 }

@@ -7,10 +7,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
+@Table(indexes={@Index(columnList="numCerrDep")})
 public class Delivery {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +27,8 @@ public class Delivery {
 	@OneToMany(mappedBy = "delivery")
 	private List<MyOrder> order;
 	private String numCerrDep;
+	@Transient
+	private String error;
 
 	public Delivery() {
 
@@ -68,6 +74,15 @@ public class Delivery {
 		this.numCerrDep = numCerrDep;
 	}
 
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
+	
 	// @Override
 	// public String toString() {
 	// return "id: " + id + " city: " + city + ", carrier: " + carrier + ", � "

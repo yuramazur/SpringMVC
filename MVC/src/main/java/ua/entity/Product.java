@@ -7,10 +7,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
+@Table(indexes = {@Index(columnList = "name"), @Index(columnList = "price") })
 public class Product {
 
 	@Id
@@ -26,6 +30,7 @@ public class Product {
 	private List<MyOrder> order;
 	private String name;
 	private String price;
+	@Transient
 	private String error;
 
 	public Product() {

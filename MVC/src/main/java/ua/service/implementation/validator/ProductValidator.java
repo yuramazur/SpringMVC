@@ -31,22 +31,42 @@ public class ProductValidator implements Validator {
 
 		if (product.getProducer() == null) {
 			errors.rejectValue("producer", "", "Select producer!");
-			if (product.getProductType() == null) {
-				errors.rejectValue("productType", "", "Select product type!");
-			}
-		} else if (product.getProductType() == null) {
+		}
+		if (product.getProductType() == null) {
 			errors.rejectValue("productType", "", "Select product type!");
-		} else if (productService.findProduct(product) != null) {
+		}
+		if (errors.getFieldError("producer") == null
+				&& errors.getFieldError("productType") == null
+				&& productService.findProduct(product) != null) {
 			errors.rejectValue("error", "", "Product already exists!");
 		}
 
+		// if (product.getProducer() == null) {
+		// errors.rejectValue("producer", "", "Select producer!");
+		// if (product.getProductType() == null) {
+		// errors.rejectValue("productType", "", "Select product type!");
+		// }
+		// } else if (product.getProductType() == null) {
+		// errors.rejectValue("productType", "", "Select product type!");
+		// } else if (productService.findProduct(product) != null) {
+		// errors.rejectValue("error", "", "Product already exists!");
+		// }
+
 		Matcher m = price.matcher(product.getPrice());
 
-		if (!m.matches() & !product.getPrice().equals("")) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "",
+				"Can not be empty!");
+		if(errors.getFieldError("price")==null & !m.matches()){
 			errors.rejectValue("price", "", "Incorrect price format!");
-		} else if (product.getPrice().equals("")){
-			errors.rejectValue("price", "", "Can not be empty!");
 		}
+			
+//		if (!m.matches() & !product.getPrice().equals("")) {
+//			errors.rejectValue("price", "", "Incorrect price format!");
+//		} else if (product.getPrice().equals("")) {
+//			errors.rejectValue("price", "", "Can not be empty!");
+//		}
+		
+		
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "",
 				"Can not be empty!");
 

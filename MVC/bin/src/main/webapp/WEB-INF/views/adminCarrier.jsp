@@ -23,33 +23,34 @@
 		<!-- 				value="Enter"> -->
 		<!-- 		</form> -->
 
-		<form:form action="/admin/carrier" method="post" modelAttribute="carrier">
+		<form:form action="/admin/carrier" method="post"
+			modelAttribute="carrier">
 			<form:hidden path="id" />
 			<table>
 				<tr>
-					<td><a><b> Enter Carrier:</b></a></td>
+					<td align="center"><a><b> Enter Carrier:</b></a></td>
 				</tr>
-				<!-- 				<tr> -->
-				<%-- 					<td><form:errors path="name" /></td> --%>
-				<!-- 				</tr> -->
+				<tr>
+					<td><a class="a1"><b><form:errors path="name" /></b></a></td>
+				</tr>
 				<tr>
 					<td><form:input path="name" /></td>
 				</tr>
 				<tr>
-					<th align="right"><input type="submit" value="save"></th>
+					<td align="right"><input type="submit" value="save"></td>
 				</tr>
 			</table>
 		</form:form>
 
 		<table border="1">
 			<tr>
-				<th colspan="3">Carriers List:</th>
+				<td colspan="3" align="center"><b>Carriers List:</b></td>
 			</tr>
 
 			<c:forEach items="${carriers}" var="carrier">
 				<tr>
 					<td><b>${carrier.name}</b></td>
-					<th><a href="/admin/carrier/delete/${carrier.id}">delete</a></th>
+					<th><a class="a1" href="/admin/carrier/delete/${carrier.id}"><b>delete</b></a></th>
 					<th><a href="/admin/carrier/update/${carrier.id}">update</a></th>
 				</tr>
 			</c:forEach>

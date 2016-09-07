@@ -12,7 +12,7 @@
 <body>
 	<div class="div1">
 
-		<!-- 		<h1 align="center">Product Type administration:</h1> -->
+				<h1 align="center">Product Type administration:</h1>
 
 
 		<%-- 		<form name="newProductType" method="post" action="/admin/producttype"> --%>
@@ -28,16 +28,16 @@
 			<form:hidden path="id" />
 			<table>
 				<tr>
-					<td><a><b> Enter Product Type:</b></a></td>
+					<td align="center"><a><b> Enter Product Type:</b></a></td>
 				</tr>
-				<!-- 				<tr> -->
-				<%-- 					<td><form:errors path="name" /></td> --%>
-				<!-- 				</tr> -->
+				<tr>
+					<td><a class="a1"><b><form:errors path="name" /></b></a></td>
+				</tr>
 				<tr>
 					<td><form:input path="name" /></td>
 				</tr>
 				<tr>
-					<th align="right"><input type="submit" value="save"></th>
+					<td align="right"><input type="submit" value="save"></td>
 				</tr>
 			</table>
 		</form:form>
@@ -49,7 +49,7 @@
 			<c:forEach items="${productTypes}" var="productType">
 				<tr>
 					<td>${productType.name}</td>
-					<th><a href="/admin/producttype/delete/${productType.id}">delete</a>
+					<th><a class="a1" href="/admin/producttype/delete/${productType.id}">delete</a>
 					<th><a href="/admin/producttype/update/${productType.id}">update</a>
 					</th>
 				</tr>

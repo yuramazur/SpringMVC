@@ -6,11 +6,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Delivery</title>
 </head>
 <body>
 	<h1 align="center">Delivery administration:</h1>
-	<form action="/admin/delivery" method="post">
+	<form:form action="/admin/delivery" method="post"
+		modelAttribute="delivery">
+		<form:hidden path="id" />
 		<table>
 			<tr>
 				<td colspan="2"><p align="center">
@@ -21,38 +23,52 @@
 				<td align="center">
 					<p>
 						<b>City select:</b>
-					</p> <select name="cityId">
+					</p> <form:select path="city">
 						<c:forEach items="${cities}" var="city">
-							<option value="${city.id}">${city.name}</option>
+							<c:choose>
+								<c:when test="${city.id eq delivery.city.id}">
+									<option value="${city.id}" selected="selected">${city.name}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${city.id}">${city.name}</option>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
-				</select>
+					</form:select>
 				</td>
 				<td align="center">
 					<p>
 						<b>Carrier select:</b>
-					</p> <select name="carrierId">
+					</p> <form:select path="carrier">
 						<c:forEach items="${carriers}" var="carrier">
-							<option value="${carrier.id}">${carrier.name}</option>
+							<c:choose>
+								<c:when test="${carrier.id eq delivery.carrier.id}">
+									<option value="${carrier.id}" selected="selected">${carrier.name}</option>
+								</c:when>
+								<c:otherwise>
+									<option value="${carrier.id}">${carrier.name}</option>
+								</c:otherwise>
+							</c:choose>
 						</c:forEach>
-				</select>
-
+					</form:select>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input name="numCerrDep"
-					placeholder="number of carriar department"></td>
+				<td colspan="2" align="center">№<form:input path="numCerrDep"
+						placeholder="carriar department:" /></td>
 			</tr>
 			<tr>
 				<td align="right" colspan="2"><input type="submit" value="Save"></td>
 			</tr>
 		</table>
-	</form>
-	<table width="75%">
+	</form:form>
+	<table width="75%" border="1" >
 		<tr>
-			<td align="center" colspan="4">Delivery List:</td>
+			<td align="center" colspan="5">Delivery List:</td>
 			<c:if test="${size == 0}">
 				<tr>
-					<td colspan="4" align="center"><font color="red" size="15">List is empty!</font></td>
+					<td colspan="4" align="center"><font color="red" size="15">List
+							is empty!</font></td>
 				</tr>
 			</c:if>
 			<c:forEach items="${deliveries}" var="delivery">
@@ -62,6 +78,7 @@
 					<td>${delivery.numCerrDep}</td>
 					<th width="10%"><a class="a1"
 						href="/admin/delivery/delete/${delivery.id}"><b>delete</b></a></th>
+					<th width="10%"><a href="/admin/delivery/update/${delivery.id}"><b>update</b></a></th>
 				</tr>
 			</c:forEach>
 		</tr>

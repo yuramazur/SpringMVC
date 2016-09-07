@@ -12,7 +12,7 @@
 <body>
 	<div class="div1">
 
-		<!-- 		<h1 align="center">City administration:</h1> -->
+		<h1 align="center">City administration:</h1>
 
 
 		<!-- 		<form name="newCity" method="post" action="/admin/city"> -->
@@ -23,34 +23,33 @@
 		<!-- 				value="Enter"> -->
 		<!-- 		</form> -->
 
-		<form:form action="/admin/city" method="post"
-			modelAttribute="city">
+		<form:form action="/admin/city" method="post" modelAttribute="city">
 			<form:hidden path="id" />
 			<table>
 				<tr>
-					<td><a><b> Enter City:</b></a></td>
+					<td align="center"><a><b> Enter City:</b></a></td>
 				</tr>
-				<!-- 				<tr> -->
-				<%-- 					<td><form:errors path="name" /></td> --%>
-				<!-- 				</tr> -->
+				<tr>
+					<td align="center"><a class="a1"><b><form:errors path="name" /></b></a></td>
+				</tr>
 				<tr>
 					<td><form:input path="name" /></td>
 				</tr>
 				<tr>
-					<th align="right"><input type="submit" value="save"></th>
+					<td align="right"><input type="submit" value="save"></td>
 				</tr>
 			</table>
 		</form:form>
 
 		<table border="1">
 			<tr>
-				<th colspan="3">Cities List:</th>
+				<td colspan="3" align="center"><b>Cities List:</b></td>
 			</tr>
 
 			<c:forEach items="${cities}" var="city">
 				<tr>
 					<td><b>${city.name}</b></td>
-					<th><a href="/admin/city/delete/${city.id}">delete</a></th>
+					<th><a class="a1" href="/admin/city/delete/${city.id}">delete</a></th>
 					<th><a href="/admin/city/update/${city.id}">update</a></th>
 				</tr>
 			</c:forEach>

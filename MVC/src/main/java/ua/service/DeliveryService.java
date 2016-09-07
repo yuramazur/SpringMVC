@@ -17,4 +17,6 @@ public interface DeliveryService {
 	void save(Delivery delivery);
 
 	Delivery findById(int id);
+
+	Delivery findDelivery(Delivery delivery);
 }
