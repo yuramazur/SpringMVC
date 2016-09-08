@@ -1,14 +1,18 @@
 package ua.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 import ua.entity.Carrier;
 import ua.entity.City;
 import ua.entity.Delivery;
@@ -17,6 +21,7 @@ import ua.service.CityService;
 import ua.service.DeliveryService;
 import ua.service.implementation.editor.CarrierEditor;
 import ua.service.implementation.editor.CityEditor;
+import ua.service.implementation.validator.DeliveryValidator;
 
 @Controller
 public class DeliveryController {
@@ -33,6 +38,7 @@ public class DeliveryController {
 				cityService));
 		binderDelivery.registerCustomEditor(Carrier.class, new CarrierEditor(
 				carrierService));
+		binderDelivery.setValidator(new DeliveryValidator(deliveryService));
 	}
 
 	@ModelAttribute("delivery")
@@ -62,7 +68,15 @@ public class DeliveryController {
 	// return "redirect:/admin/delivery";
 	// }
 	@RequestMapping(value = "/admin/delivery", method = RequestMethod.POST)
-	public String saveDelivery(@ModelAttribute("delivery") Delivery delivery) {
+	public String saveDelivery(
+			@ModelAttribute("delivery") @Valid Delivery delivery,
+			BindingResult br, Model model) {
+		if (br.hasErrors()) {
+			model.addAttribute("cities", cityService.findAll());
+			model.addAttribute("carriers", carrierService.findAll());
+			model.addAttribute("deliveries", deliveryService.findAll());
+			return "adminDelivery";
+		}
 		deliveryService.save(delivery);
 		return "redirect:/admin/delivery";
 	}

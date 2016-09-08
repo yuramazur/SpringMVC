@@ -79,11 +79,11 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void save(Product product) {
-//		String price = product.getPrice().replaceFirst(",", ".");
-//		if (!price.matches(".")) {
-//			price = price + ".00";
-//		} 
-//		product.setPrice(price);
+		String price = product.getPrice();
+		if (!price.matches("[0-9]*+\\.")) {
+			price = price + ".00";
+		} 
+		product.setPrice(price);
 		productRepository.save(product);
 
 	}

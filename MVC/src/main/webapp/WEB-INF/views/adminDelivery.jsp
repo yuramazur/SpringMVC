@@ -13,17 +13,29 @@
 	<form:form action="/admin/delivery" method="post"
 		modelAttribute="delivery">
 		<form:hidden path="id" />
-		<table>
+		<table border="1">
 			<tr>
 				<td colspan="2"><p align="center">
 						<b>Delivery creator:</b>
 					</p></td>
 			</tr>
 			<tr>
-				<td align="center">
-					<p>
-						<b>City select:</b>
-					</p> <form:select path="city">
+				<td align="center" colspan="2"><a class="a1"><b><form:errors
+								path="error" /></b></a></td>
+			</tr>
+			<tr>
+				<td align="center"><b>City select:</b></td>
+				<td align="center"><b>Carrier select:</b></td>
+			</tr>
+			<tr>
+				<td align="center"><a class="a1"><b><form:errors
+								path="city" /></b></a></td>
+				<td align="center"><a class="a1"><b><form:errors
+								path="carrier" /></b></a></td>
+			</tr>
+			<tr>
+				<td align="center"><form:select path="city">
+						<option value="0">----- Cities -----</option>
 						<c:forEach items="${cities}" var="city">
 							<c:choose>
 								<c:when test="${city.id eq delivery.city.id}">
@@ -34,12 +46,9 @@
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-					</form:select>
-				</td>
-				<td align="center">
-					<p>
-						<b>Carrier select:</b>
-					</p> <form:select path="carrier">
+					</form:select></td>
+				<td align="center"><form:select path="carrier">
+						<option value="0">---- Carriers ---</option>
 						<c:forEach items="${carriers}" var="carrier">
 							<c:choose>
 								<c:when test="${carrier.id eq delivery.carrier.id}">
@@ -50,8 +59,11 @@
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-					</form:select>
-				</td>
+					</form:select></td>
+			</tr>
+			<tr>
+				<td align="center" colspan="2"><a class="a1"><b><form:errors
+								path="numCerrDep" /></b></a></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center">№<form:input path="numCerrDep"
@@ -62,15 +74,11 @@
 			</tr>
 		</table>
 	</form:form>
-	<table width="75%" border="1" >
+	
+	<table width="75%" border="1">
 		<tr>
 			<td align="center" colspan="5">Delivery List:</td>
-			<c:if test="${size == 0}">
-				<tr>
-					<td colspan="4" align="center"><font color="red" size="15">List
-							is empty!</font></td>
-				</tr>
-			</c:if>
+
 			<c:forEach items="${deliveries}" var="delivery">
 				<tr>
 					<td>${delivery.city.name}</td>
@@ -78,7 +86,8 @@
 					<td>${delivery.numCerrDep}</td>
 					<th width="10%"><a class="a1"
 						href="/admin/delivery/delete/${delivery.id}"><b>delete</b></a></th>
-					<th width="10%"><a href="/admin/delivery/update/${delivery.id}"><b>update</b></a></th>
+					<th width="10%"><a
+						href="/admin/delivery/update/${delivery.id}"><b>update</b></a></th>
 				</tr>
 			</c:forEach>
 		</tr>

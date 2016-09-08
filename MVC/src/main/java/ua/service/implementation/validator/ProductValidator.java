@@ -14,7 +14,7 @@ public class ProductValidator implements Validator {
 
 	private final ProductService productService;
 	private static final Pattern price = Pattern
-			.compile("^[^0][0-9]*[^,|\\.](\\.[0-9]{2,2})?");
+			.compile("^[1-9]([0-9]{0,10}[^,|\\.])?(\\.[0-9]{2,2})?$");
 
 	public ProductValidator(ProductService productService) {
 		this.productService = productService;
@@ -41,32 +41,14 @@ public class ProductValidator implements Validator {
 			errors.rejectValue("error", "", "Product already exists!");
 		}
 
-		// if (product.getProducer() == null) {
-		// errors.rejectValue("producer", "", "Select producer!");
-		// if (product.getProductType() == null) {
-		// errors.rejectValue("productType", "", "Select product type!");
-		// }
-		// } else if (product.getProductType() == null) {
-		// errors.rejectValue("productType", "", "Select product type!");
-		// } else if (productService.findProduct(product) != null) {
-		// errors.rejectValue("error", "", "Product already exists!");
-		// }
-
 		Matcher m = price.matcher(product.getPrice());
 
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "",
 				"Can not be empty!");
-		if(errors.getFieldError("price")==null & !m.matches()){
+		if (errors.getFieldError("price") == null && !m.matches()) {
 			errors.rejectValue("price", "", "Incorrect price format!");
 		}
-			
-//		if (!m.matches() & !product.getPrice().equals("")) {
-//			errors.rejectValue("price", "", "Incorrect price format!");
-//		} else if (product.getPrice().equals("")) {
-//			errors.rejectValue("price", "", "Can not be empty!");
-//		}
-		
-		
+
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "",
 				"Can not be empty!");
 
