@@ -2,6 +2,9 @@ package ua.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import ua.entity.Name;
 
 public interface NameService {
@@ -21,4 +24,6 @@ public interface NameService {
 	List<Name> findAll();
 	
 	List<Name> findAllByCoincidence(String value);
+
+	Page<Name> findAllPageble(Pageable pageable);
 }

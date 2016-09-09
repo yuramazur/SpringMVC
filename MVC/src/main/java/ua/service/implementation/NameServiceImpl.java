@@ -3,6 +3,8 @@ package ua.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Name;
@@ -60,6 +62,12 @@ public class NameServiceImpl implements NameService {
 		if (nameRepository.findByNames(name.getNames()) == null) {
 			nameRepository.save(name);
 		}
+	}
+
+	@Override
+	public Page<Name> findAllPageble(Pageable pageable) {
+		
+		return nameRepository.findAll(pageable);
 	}
 
 }

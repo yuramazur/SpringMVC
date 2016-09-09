@@ -3,6 +3,8 @@ package ua.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +25,8 @@ public class NameController {
 	private NameService nameService;
 
 	@RequestMapping("/admin/name")
-	public String showName(Model model) {
-		model.addAttribute("names", nameService.findAll());
+	public String showName(Model model, @PageableDefault() Pageable pageble) {
+		model.addAttribute("names", nameService.findAllPageble(pageble));
 		return "adminName";
 	}
 
