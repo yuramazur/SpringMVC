@@ -3,6 +3,8 @@ package ua.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,14 +29,15 @@ public class CityController {
 		return new City();
 	}
 
-	@InitBinder
+	@InitBinder("city")
 	protected void initBinderCity(WebDataBinder binderCity) {
 		binderCity.setValidator(new CityValidator(cityService));
 	}
 
 	@RequestMapping("/admin/city")
-	public String showCity(Model model) {
-		model.addAttribute("cities", cityService.findAll());
+	public String showCity(Model model,
+			@PageableDefault(size = 5, sort = "name") Pageable pageable) {
+		model.addAttribute("cities", cityService.findAllPageable(pageable));
 		return "adminCity";
 	}
 
@@ -44,18 +47,11 @@ public class CityController {
 		;
 		return "redirect:/admin/city";
 	}
-
-	// @RequestMapping(value = "/admin/city", method = RequestMethod.POST)
-	// public String saveCity(@RequestParam String name) {
-	// cityService.save(name);
-	// return "redirect:/admin/city";
-	// }
-
 	@RequestMapping(value = "/admin/city", method = RequestMethod.POST)
 	public String saveCity(@ModelAttribute("city") @Valid City city,
-			BindingResult br, Model model) {
+			BindingResult br, Model model,@PageableDefault(size = 5) Pageable pageable) {
 		if (br.hasErrors()) {
-			model.addAttribute("cities", cityService.findAll());
+			model.addAttribute("cities", cityService.findAllPageable(pageable));
 			return "adminCity";
 
 		}
@@ -64,9 +60,9 @@ public class CityController {
 	}
 
 	@RequestMapping("/admin/city/update/{id}")
-	public String updateCity(@PathVariable int id, Model model) {
+	public String updateCity(@PathVariable int id, Model model,@PageableDefault(size = 5) Pageable pageable) {
 		model.addAttribute("city", cityService.findById(id));
-		model.addAttribute("cities", cityService.findAll());
+		model.addAttribute("cities", cityService.findAllPageable(pageable));
 		return "adminCity";
 	}
 }

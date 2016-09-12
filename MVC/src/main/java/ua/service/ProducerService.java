@@ -2,6 +2,9 @@ package ua.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import ua.entity.*;
 
 public interface ProducerService {
@@ -18,4 +21,6 @@ public interface ProducerService {
 	void deleteById(int id);
 
 	List<Producer> findAll();
+
+	Page<Producer> findAllPageable(Pageable pageable);
 }

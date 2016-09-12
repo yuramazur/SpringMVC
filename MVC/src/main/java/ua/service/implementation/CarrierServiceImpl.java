@@ -3,6 +3,8 @@ package ua.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Carrier;
@@ -54,6 +56,11 @@ public class CarrierServiceImpl implements CarrierService {
 		if (carrierRepository.findByName(carrier.getName()) == null) {
 			carrierRepository.save(carrier);
 		}
+	}
+
+	@Override
+	public Page<Carrier> findAllPageable(Pageable pageable) {
+		return carrierRepository.findAll(pageable);
 	}
 
 }

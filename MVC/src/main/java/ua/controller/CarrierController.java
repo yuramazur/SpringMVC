@@ -3,6 +3,8 @@ package ua.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,34 +29,31 @@ public class CarrierController {
 		return new Carrier();
 	}
 
-	@InitBinder
-	protected void InitBinderCarrier(WebDataBinder binderCarrier) {
-		binderCarrier.setValidator(new CarrierValidator(carrierService));
+	@InitBinder("carrier")
+	protected void InitBinder(WebDataBinder binder) {
+		binder.setValidator(new CarrierValidator(carrierService));
+	}
+
+	@RequestMapping("/admin/carrier")
+	public String showName(Model model,
+			@PageableDefault(size = 5, sort = "name") Pageable pageable) {
+		model.addAttribute("carriers", carrierService.findAllPageable(pageable));
+		return "adminCarrier";
 	}
 
 	@RequestMapping(value = "/admin/carrier", method = RequestMethod.POST)
 	public String saveCarrier(
 			@ModelAttribute("carrier") @Valid Carrier carrier,
-			BindingResult br, Model model) {
-		if(br.hasErrors()){
-			model.addAttribute("carriers", carrierService.findAll());
+			BindingResult br, Model model,
+			@PageableDefault(size = 5) Pageable pageable) {
+		if (br.hasErrors()) {
+			model.addAttribute("carriers",
+					carrierService.findAllPageable(pageable));
 			return "adminCarrier";
 		}
 		carrierService.save(carrier);
 		return "redirect:/admin/carrier";
 	}
-
-	@RequestMapping("/admin/carrier")
-	public String showName(Model model) {
-		model.addAttribute("carriers", carrierService.findAll());
-		return "adminCarrier";
-	}
-
-	// @RequestMapping(value = "/admin/carrier", method = RequestMethod.POST)
-	// public String saveName(@RequestParam String name) {
-	// carrierService.save(name);
-	// return "redirect:/admin/carrier";
-	// }
 
 	@RequestMapping("/admin/carrier/delete/{id}")
 	public String deleteCarrier(@PathVariable int id) {
@@ -63,9 +62,10 @@ public class CarrierController {
 	}
 
 	@RequestMapping("/admin/carrier/update/{id}")
-	public String updateCarrier(@PathVariable int id, Model model) {
+	public String updateCarrier(@PathVariable int id, Model model,
+			@PageableDefault(size = 5) Pageable pageable) {
 		model.addAttribute("carrier", carrierService.findById(id));
-		model.addAttribute("carriers", carrierService.findAll());
+		model.addAttribute("carriers", carrierService.findAllPageable(pageable));
 		return "adminCarrier";
 	}
 }

@@ -10,7 +10,10 @@ import ua.service.CarrierService;
 public class CarrierValidator implements Validator {
 	private final CarrierService carrierService;
 
+	
+
 	public CarrierValidator(CarrierService carrierService) {
+		
 		this.carrierService = carrierService;
 	}
 

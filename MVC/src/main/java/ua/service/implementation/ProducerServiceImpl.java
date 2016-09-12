@@ -3,6 +3,8 @@ package ua.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Producer;
@@ -34,8 +36,8 @@ public class ProducerServiceImpl implements ProducerService {
 	}
 
 	public void deleteByName(String name) {
-		if(producerReposetory.findByName(name)!=null){
-		producerReposetory.delete(producerReposetory.findByName(name));
+		if (producerReposetory.findByName(name) != null) {
+			producerReposetory.delete(producerReposetory.findByName(name));
 		}
 	}
 
@@ -51,10 +53,15 @@ public class ProducerServiceImpl implements ProducerService {
 
 	@Override
 	public void save(Producer producer) {
-		if(producerReposetory.findByName(producer.getName())==null){
+		if (producerReposetory.findByName(producer.getName()) == null) {
 			producerReposetory.save(producer);
 		}
-		
+
+	}
+
+	@Override
+	public Page<Producer> findAllPageable(Pageable pageable) {
+		return producerReposetory.findAll(pageable);
 	}
 
 }
