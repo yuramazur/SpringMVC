@@ -24,15 +24,9 @@ public class NameController {
 	@Autowired
 	private NameService nameService;
 
-	@RequestMapping("/admin/name")
-	public String showName(Model model, @PageableDefault() Pageable pageble) {
-		model.addAttribute("names", nameService.findAllPageble(pageble));
-		return "adminName";
-	}
-
-	@InitBinder
-	protected void InitBinderName(WebDataBinder binderName) {
-		binderName.setValidator(new NameValidator(nameService));
+	@InitBinder("name")
+		protected void InitBinder(WebDataBinder binder) {
+		binder.setValidator(new NameValidator(nameService));
 	}
 
 	@ModelAttribute("name")
@@ -40,31 +34,24 @@ public class NameController {
 		return new Name();
 	}
 
+	@RequestMapping("/admin/name")
+	public String showName(Model model,
+			@PageableDefault(size = 5, sort = "names") Pageable pageble) {
+		model.addAttribute("names", nameService.findAllPageble(pageble));
+		return "adminName";
+	}
+
 	@RequestMapping(value = "/admin/name", method = RequestMethod.POST)
 	public String saveName(@ModelAttribute("name") @Valid Name name,
-			BindingResult br, Model model) {
+			BindingResult br, Model model,
+			@PageableDefault(size = 5) Pageable pageable) {
 		if (br.hasErrors()) {
-			model.addAttribute("names", nameService.findAll());
+			model.addAttribute("names", nameService.findAllPageble(pageable));
 			return "adminName";
 		}
 		nameService.save(name);
 		return "redirect:/admin/name";
 	}
-
-	// @RequestMapping(value = "/admin/name", method = RequestMethod.POST)
-	// public String saveName(@RequestParam String names){
-	// nameService.save(names);
-	// return "redirect:/admin/name";
-	// }
-
-	// @RequestMapping(value = "/admin/name/search", method =
-	// RequestMethod.POST)
-	// public String searchName(Model model, @RequestParam String names) {
-	// model.addAttribute("names", nameService.findAllByCoincidence(names));
-	// model.addAttribute("size", nameService.findAllByCoincidence(names)
-	// .size());
-	// return "adminNameSearch";
-	// }
 
 	@RequestMapping("/admin/name/delete/{id}")
 	public String deleteName(@PathVariable int id) {
@@ -73,9 +60,10 @@ public class NameController {
 	}
 
 	@RequestMapping("/admin/name/update/{id}")
-	public String updateName(@PathVariable int id, Model model) {
+	public String updateName(@PathVariable int id, Model model,
+			@PageableDefault(size = 5) Pageable pageable) {
 		model.addAttribute("name", nameService.findById(id));
-		model.addAttribute("names", nameService.findAll());
+		model.addAttribute("names", nameService.findAllPageble(pageable));
 		return "adminName";
 	}
 }
