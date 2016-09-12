@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.Name;
+import ua.form.NameFilterForm;
 import ua.service.NameService;
 import ua.service.implementation.validator.NameValidator;
 
@@ -25,7 +26,7 @@ public class NameController {
 	private NameService nameService;
 
 	@InitBinder("name")
-		protected void InitBinder(WebDataBinder binder) {
+	protected void InitBinder(WebDataBinder binder) {
 		binder.setValidator(new NameValidator(nameService));
 	}
 
@@ -34,10 +35,15 @@ public class NameController {
 		return new Name();
 	}
 
+	@ModelAttribute("filter")
+	public NameFilterForm getFilter(){
+		return new NameFilterForm();
+	}
+	
 	@RequestMapping("/admin/name")
 	public String showName(Model model,
-			@PageableDefault(size = 5, sort = "names") Pageable pageble) {
-		model.addAttribute("names", nameService.findAllPageble(pageble));
+			@PageableDefault(size = 5, sort = "names") Pageable pageable,@ModelAttribute("filter") NameFilterForm form) {
+		model.addAttribute("names", nameService.findAllPagebleForm(pageable,form));
 		return "adminName";
 	}
 

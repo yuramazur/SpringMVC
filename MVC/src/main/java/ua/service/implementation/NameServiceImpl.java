@@ -8,8 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Name;
+import ua.form.NameFilterForm;
 import ua.repository.NameRepository;
 import ua.service.NameService;
+import ua.service.implementation.specification.NameFilterAdapter;
 
 @Service
 public class NameServiceImpl implements NameService {
@@ -68,6 +70,12 @@ public class NameServiceImpl implements NameService {
 	public Page<Name> findAllPageble(Pageable pageable) {
 		
 		return nameRepository.findAll(pageable);
+	}
+
+	@Override
+	public Page<Name> findAllPagebleForm(Pageable pageable, NameFilterForm form) {
+		
+		return nameRepository.findAll(new NameFilterAdapter(form), pageable);
 	}
 
 }

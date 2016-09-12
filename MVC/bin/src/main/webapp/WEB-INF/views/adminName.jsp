@@ -8,7 +8,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Carriers</title>
 <style>
-
 </style>
 </head>
 <body>
@@ -16,40 +15,17 @@
 
 		<h1 align="center">Name administration:</h1>
 
-		<!-- 		<table width="100%"> -->
-		<!-- 			<tr> -->
-		<!-- 				<td align="center"> -->
-		<%-- 					<form name="newName" method="post" action="/admin/name"> --%>
-
-		<!-- 						<a><b>Enter new Name:</b></a><br> <input name="names" -->
-		<!-- 							size="30"> <input type="submit" value="Enter"> -->
-		<%-- 					</form> --%>
-		<!-- 				</td> -->
-		<!-- 				<td align="center"> -->
-		<%-- 					<form name="searchName" method="post" action="/admin/name/search"> --%>
-
-		<!-- 						<a><b>Names Search:</b></a><br> -->
-		<!-- 						 <input name="names" -->
-		<!-- 							size="30"> <input type="submit" value="Search"> -->
-		<%-- 					</form> --%>
-		<!-- 				</td> -->
-
-
-
-		<!-- 			</tr> -->
-		<!-- </table> -->
-
 		<form:form action="/admin/name" method="post" modelAttribute="name">
 			<form:hidden path="id" />
 			<table>
-			<tr>
-			<td align="center"><a><b> Enter Name:</b></a></td>
-			</tr>
- 				<tr>
- 					<td><a class="a1"><b><form:errors path="names"/></b></a></td>
+				<tr>
+					<td align="center"><a><b> Enter Name:</b></a></td>
 				</tr>
 				<tr>
-					<td><form:input path="names"/></td>
+					<td><a class="a1"><b><form:errors path="names" /></b></a></td>
+				</tr>
+				<tr>
+					<td><form:input path="names" /></td>
 				</tr>
 				<tr>
 					<td align="right"><input type="submit" value="save"></td>
@@ -64,17 +40,108 @@
 				<th colspan="3">Names List:</th>
 			</tr>
 
-			<c:forEach items="${names}" var="name">
+			<c:forEach items="${names.content}" var="name">
 				<tr>
 					<td><b>${name.names}</b></td>
-					<th><a class="a1" href="/admin/name/delete/${name.id}">delete</a></th>
-					<th><a href="/admin/name/update/${name.id}">update</a></th>
+					<th><a class="a1"
+						href="/admin/name/delete/${name.id}?page=${names.number+1}&size=${names.size}&sort=${param['sort']}">delete</a></th>
+					<th><a
+						href="/admin/name/update/${name.id}?page=${names.number+1}&size=${names.size}&sort=${param['sort']}">update</a></th>
 				</tr>
-				
+
 			</c:forEach>
 		</table>
+		<c:if test="${names.totalPages > 1}">
+			<table border="1">
+				<tr>
 
+					<td><c:if test="${names.number ne 0}">
+							<b><a
+								href="/admin/name?page=${names.number}&size=${names.size}&sort=${param['sort']}">previous</a></b>
+						</c:if> <c:if test="${names.number eq 0}">previous</c:if></td>
+					<c:choose>
+						<c:when test="${names.totalPages eq 1}">
+							<td><b>${names.number+1}</b></td>
+						</c:when>
+						<c:when test="${names.totalPages eq 2}">
+							<c:choose>
+								<c:when test="${names.number eq 0}">
+									<td><b>${names.number+1}</b>&nbsp;<a
+										href="/admin/name?page=${names.number+2}&size=${names.size}&sort=${param['sort']}">${names.number+2}</a></td>
+								</c:when>
+								<c:otherwise>
+									<td><a
+										href="/admin/name?page=${names.number}&size=${names.size}&sort=${param['sort']}">${names.number}</a>&nbsp;
+										<b>${names.number+1}</b></td>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+						<c:when test="${names.totalPages >= 3}">
+							<c:choose>
+								<c:when test="${names.number eq 0}">
+									<td><b>${names.number+1}</b>&nbsp; <a
+										href="/admin/name?page=${names.number+2}&size=${names.size}&sort=${param['sort']}">${names.number+2}</a>&nbsp;
+										<a
+										href="/admin/name?page=${names.number+3}&size=${names.size}&sort=${param['sort']}">${names.number+3}</a>
+									</td>
+								</c:when>
+								<c:when test="${names.number eq names.totalPages-1}">
+									<td><a
+										href="/admin/name?page=${names.number-1}&size=${names.size}&sort=${param['sort']}">${names.number-1}</a>&nbsp;
+										<a
+										href="/admin/name?page=${names.number}&size=${names.size}&sort=${param['sort']}">${names.number}</a>&nbsp;
+										<b>${names.number+1}</b></td>
+								</c:when>
+								<c:otherwise>
+									<td><a
+										href="/admin/name?page=${names.number}&size=${names.size}&sort=${param['sort']}">${names.number}</a>&nbsp;
+										<b>${names.number+1}</b>&nbsp; <a
+										href="/admin/name?page=${names.number+2}&size=${names.size}&sort=${param['sort']}">${names.number+2}</a>
+									</td>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
+					</c:choose>
 
+					<td><c:if test="${names.number ne names.totalPages-1}">
+							<b><a
+								href="/admin/name?page=${names.number+2}&size=${names.size}&sort=${param['sort']}">&nbsp;&nbsp;&nbsp;next&nbsp;&nbsp;&nbsp;</a></b>
+						</c:if> <c:if test="${names.number eq names.totalPages-1}">&nbsp;&nbsp;&nbsp;next&nbsp;&nbsp;&nbsp;</c:if></td>
+				</tr>
+			</table>
+		</c:if>
+		<table>
+			<tr>
+				<td><a href="/admin/name?page=1&size=1&sort=${param['sort']}">1</a></td>
+				<td><a href="/admin/name?page=1&size=5&sort=${param['sort']}">5</a></td>
+				<td><a href="/admin/name?page=1&size=10&sort=${param['sort']}">10</a></td>
+				<td><a href="/admin/name?page=1&size=20&sort=${param['sort']}">20</a></td>
+			</tr>
+
+		</table>
+		<table>
+			<tr>
+				<c:choose>
+				<c:when test="${param['sort'] eq ''}">
+				<td><td><a href="?page=1&size=${names.size}&sort=names">Name
+								asc</a></td>
+				<td><a href="?page=1&size=${names.size}&sort=names,desc">Name
+								desc</a></td>
+  
+				</c:when>
+					<c:when test="${param['sort'] eq 'names,desc'}">
+						<td><a href="?page=1&size=${names.size}&sort=names">Name
+								asc</a></td>
+						<td><b>Name desc</b></td>
+					</c:when>
+					<c:otherwise>
+						<td><b>Name asc</b></td>
+						<td><a href="?page=1&size=${names.size}&sort=names,desc">Name
+								desc</a></td>
+					</c:otherwise>
+				</c:choose>
+			</tr>
+		</table>
 		<form name="returnToAdmin" action="/admin">
 			<p align="right">
 				<b>Return to administrator menu:</b> <input type="submit"

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.entity.Name;
+import ua.form.NameFilterForm;
 
 public interface NameService {
 	
@@ -26,4 +27,6 @@ public interface NameService {
 	List<Name> findAllByCoincidence(String value);
 
 	Page<Name> findAllPageble(Pageable pageable);
+
+	Page<Name> findAllPagebleForm(Pageable pageable, NameFilterForm form);
 }
