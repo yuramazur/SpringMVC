@@ -17,11 +17,11 @@ import org.springframework.data.domain.Page;
 
 public class PageableTag extends SimpleTagSupport{
 
-	private final static int first = 1;
-	private final static int visible = 5;
-	private final static String amper = "&";
-	private final static String quest = "?";
-	private final static String equal = "=";
+	private final static int FIRST = 1;
+	private final static int VISIBLE = 5;
+	private final static String AMPER = "&";
+	private final static String QUEST = "?";
+	private final static String EQUAL = "=";
 	
 	private final StringWriter sw = new StringWriter();
 	
@@ -35,7 +35,6 @@ public class PageableTag extends SimpleTagSupport{
 	private String endContainer = "</tr>";
 	private String stCell = "<td>";
 	private String endCell = "</td>";
-	private String dotClass = "dots";
 	private String activeClass = "active";
 	
 	@Override
@@ -44,16 +43,16 @@ public class PageableTag extends SimpleTagSupport{
 		sw.append(stContainer);
 		buildFirstPage();
 		buildLeftArrow();
-		if(last<=visible){
+		if(last<=VISIBLE){
 			for (int i = 1; i <= last; i++) {
 				buildOneCell(i);
 			}
 		}else{
-			int start = (current-visible/2) >= first ? (current-visible/2) : first;
-			int finish = (current+visible/2) <= last ? (current+visible/2) : last;
-			start = (finish - start < visible) ? (finish - visible + 1) : start;
-			start = start <= 0 ? first : start;
-			finish = (finish - start) < visible ? start + visible - 1 : finish;
+			int start = (current-VISIBLE/2) >= FIRST ? (current-VISIBLE/2) : FIRST;
+			int finish = (current+VISIBLE/2) <= last ? (current+VISIBLE/2) : last;
+			start = (finish - start < VISIBLE) ? (finish - VISIBLE + 1) : start;
+			start = start <= 0 ? FIRST : start;
+			finish = (finish - start) < VISIBLE ? start + VISIBLE - 1 : finish;
 			finish = finish > last ? last : finish;
 			for (; start <= finish; start++) {
 				buildOneCell(start);
@@ -68,10 +67,10 @@ public class PageableTag extends SimpleTagSupport{
 	private void buildLastPage(){
 		sw.append(stCell);
 		sw.append("<a href='");
-		sw.append(quest);
+		sw.append(QUEST);
 		sw.append("page=");
 		sw.append(valueOf(last));
-		sw.append(amper);
+		sw.append(AMPER);
 		sw.append("size=");
 		sw.append(valueOf(size));
 		addAllParameters();
@@ -84,10 +83,10 @@ public class PageableTag extends SimpleTagSupport{
 	private void buildFirstPage(){
 		sw.append(stCell);
 		sw.append("<a href='");
-		sw.append(quest);
+		sw.append(QUEST);
 		sw.append("page=");
-		sw.append(valueOf(first));
-		sw.append(amper);
+		sw.append(valueOf(FIRST));
+		sw.append(AMPER);
 		sw.append("size=");
 		sw.append(valueOf(size));
 		addAllParameters();
@@ -100,11 +99,11 @@ public class PageableTag extends SimpleTagSupport{
 	private void buildRightArrow(){
 		sw.append(stCell);
 		sw.append("<a href='");
-		sw.append(quest);
+		sw.append(QUEST);
 		sw.append("page=");
 		if(current == last) sw.append(valueOf(current));
 		else sw.append(valueOf(current+1));
-		sw.append(amper);
+		sw.append(AMPER);
 		sw.append("size=");
 		sw.append(valueOf(size));
 		addAllParameters();
@@ -117,11 +116,11 @@ public class PageableTag extends SimpleTagSupport{
 	private void buildLeftArrow(){
 		sw.append(stCell);
 		sw.append("<a href='");
-		sw.append(quest);
+		sw.append(QUEST);
 		sw.append("page=");
-		if(current == first) sw.append(valueOf(current));
+		if(current == FIRST) sw.append(valueOf(current));
 		else sw.append(valueOf(current-1));
-		sw.append(amper);
+		sw.append(AMPER);
 		sw.append("size=");
 		sw.append(valueOf(size));
 		addAllParameters();
@@ -141,10 +140,10 @@ public class PageableTag extends SimpleTagSupport{
 			sw.append(stCell);
 		}
 		sw.append("<a href='");
-		sw.append(quest);
+		sw.append(QUEST);
 		sw.append("page=");
 		sw.append(valueOf(number));
-		sw.append(amper);
+		sw.append(AMPER);
 		sw.append("size=");
 		sw.append(valueOf(size));
 		addAllParameters();
@@ -161,9 +160,9 @@ public class PageableTag extends SimpleTagSupport{
 		for(Entry<String, String[]> entry : map.entrySet()){
 			for(String value : entry.getValue()){
 				if(!(entry.getKey().equals("page")||entry.getKey().equals("size"))){
-					sw.append(amper);
+					sw.append(AMPER);
 					sw.append(entry.getKey());
-					sw.append(equal);
+					sw.append(EQUAL);
 					sw.append(value);
 				}
 			}
