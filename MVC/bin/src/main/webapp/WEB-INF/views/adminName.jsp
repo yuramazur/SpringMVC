@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="/WEB-INF/custom.tld" prefix="custom"%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -32,9 +35,14 @@
 				</tr>
 			</table>
 		</form:form>
-
-
-
+		<table border="1" align="right">
+			<tr>
+				<form:form action="/admin/name" method="get" modelAttribute="filter">
+					<td><form:input path="search" placeholder="search" />
+						<button type="submit">Ok</button></td>
+				</form:form>
+			</tr>
+		</table>
 		<table border="1">
 			<tr>
 				<th colspan="3">Names List:</th>
@@ -122,13 +130,14 @@
 		<table>
 			<tr>
 				<c:choose>
-				<c:when test="${param['sort'] eq ''}">
-				<td><td><a href="?page=1&size=${names.size}&sort=names">Name
+					<c:when test="${param['sort'] eq ''}">
+						<td>
+						<td><a href="?page=1&size=${names.size}&sort=names">Name
 								asc</a></td>
-				<td><a href="?page=1&size=${names.size}&sort=names,desc">Name
+						<td><a href="?page=1&size=${names.size}&sort=names,desc">Name
 								desc</a></td>
-  
-				</c:when>
+
+					</c:when>
 					<c:when test="${param['sort'] eq 'names,desc'}">
 						<td><a href="?page=1&size=${names.size}&sort=names">Name
 								asc</a></td>
