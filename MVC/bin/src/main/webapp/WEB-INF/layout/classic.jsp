@@ -16,71 +16,21 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
-<title><tiles:getAsString name="title" /></tiles>
-	<title></title>
-	<style>
-body {
-	border: solid 3px silver;
-}
-
-header {
-	margin-bottom: 30px;
-	background: gray;
-	height: 80px;
-	padding: 20px;
-	border: solid 3px black;
-}
-
-footer {
-	margin-left: 0px;
-	background: gray;
-}
-
-table {
-	margin-top: 20px;
-	border-spacing: 5px;
-	background: gray;
-}
-
-td {
-	width:;
-	background: white;
-	padding: 10px;
-	word-break: break-all;
-}
-
-th {
-	width:;
-	background: white;
-	padding: 10px;
-}
-
-.a1 {
-	color: red;
-}
-
-.container {
-	background: gray;
-	padding-left: 100px;
-}
-
-.block1 {
-	background: silver;
-	padding-right: 20px;
-	padding-left: 20px;
-	border: solid 3px black;
-}
-</style>
+<link rel="stylesheet" href="/resources/css/style.css">
+<link rel="stylesheet" href="/resources/css/chosen.css">
+<script type="text/javascript" src="/resources/js/chosen.jquery.min.js"></script>
+<title><tiles:getAsString name="title" /></title>
 </head>
 <body>
-	<header> <tiles:insertAttribute name="header" /> </header>
+	<tiles:insertAttribute name="header" />
 
 	<div class="container">
-		<div class="block1">
-			<tiles:insertAttribute name="body" />
-		</div>
+
+		<tiles:insertAttribute name="body" />
+
 	</div>
-	<footer> <tiles:insertAttribute name="footer" /> </footer>
+	<tiles:insertAttribute name="footer" />
 </body>
 </html>

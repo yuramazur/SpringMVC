@@ -24,7 +24,7 @@
 				</nav>
 		</div>
 	<div class="row-fluid">
-		<div class="col-md-3 col-xs-12">
+		<div class="col-md-4 col-xs-12">
 		<div class="col-md-12 col-xs-12">
 		<form:form action="/admin/name" class="form-inline" method="get" modelAttribute="filter">
 				<custom:hiddenInputs excludeParams="search"/>
@@ -36,7 +36,7 @@
 			</form:form>
 		</div>
 		</div>
-		<div class="col-md-7 col-xs-12">
+		<div class="col-md-6 col-xs-12">
 		<div class="col-md-12 col-xs-12">
 			<form:form action="/admin/name" method="post" class="form-inline" 
 				modelAttribute="name">

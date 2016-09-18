@@ -19,8 +19,9 @@ public class DeliveryServiceImpl implements DeliveryService {
 	private CarrierRepository carrierRepository;
 	@Autowired
 	private DeliveryRepository deliveryRepository;
-
-	public void save(int cityId, int carrierId, String numCerrDep) {
+	
+	
+public void save(int cityId, int carrierId, int numCerrDep) {
 		Delivery delivery = new Delivery();
 		delivery.setCity(cityRepository.findById(cityId));
 		delivery.setCarrier(carrierRepository.findById(carrierId));
@@ -31,7 +32,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 		}
 	}
 
-	public void save(String cityName, String carrierName, String numCerrDep) {
+	public void save(String cityName, String carrierName, int numCerrDep) {
 		Delivery delivery = new Delivery();
 		delivery.setCity(cityRepository.findByName(cityName));
 		delivery.setCarrier(carrierRepository.findByName(carrierName));
@@ -71,5 +72,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 		return deliveryRepository.findDelivery(delivery.getCity().getName(),
 				delivery.getCarrier().getName(), delivery.getNumCerrDep());
 	}
+
+	
 
 }

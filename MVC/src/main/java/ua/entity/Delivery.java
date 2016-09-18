@@ -26,7 +26,7 @@ public class Delivery {
 	private Carrier carrier;
 	@OneToMany(mappedBy = "delivery")
 	private List<MyOrder> order;
-	private String numCerrDep;
+	private int numCerrDep;
 	@Transient
 	private String error;
 
@@ -66,11 +66,11 @@ public class Delivery {
 		this.carrier = carrier;
 	}
 
-	public String getNumCerrDep() {
+	public int getNumCerrDep() {
 		return numCerrDep;
 	}
 
-	public void setNumCerrDep(String numCerrDep) {
+	public void setNumCerrDep(int numCerrDep) {
 		this.numCerrDep = numCerrDep;
 	}
 

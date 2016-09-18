@@ -17,7 +17,7 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 	@Query("SELECT d FROM Delivery d JOIN d.city dcy JOIN d.carrier dcr WHERE dcy.name=:cityName AND dcr.name=:carrierName AND d.numCerrDep=:numCerrDep")
 	Delivery findDelivery(@Param("cityName") String cityName,
 			@Param("carrierName") String carrierName,
-			@Param("numCerrDep") String string);
+			@Param("numCerrDep") int numCerrDep);
 
 	@Query("SELECT d FROM Delivery d LEFT JOIN FETCH d.city LEFT JOIN FETCH d.carrier WHERE d.id =:id")
 	Delivery findOneIntited(@Param("id") int id);

@@ -30,7 +30,7 @@ public class DeliveryValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		Delivery delivery = (Delivery) target;
-
+     String val = "0";
 		if (delivery.getCity() == null) {
 			errors.rejectValue("city", "", "Select city!");
 		}
@@ -42,7 +42,7 @@ public class DeliveryValidator implements Validator {
 				&& deliveryService.findDelivery(delivery) != null) {
 			errors.rejectValue("error", "", "Delivery already exists!");
 		}
-		Matcher m = numCarrDep.matcher(delivery.getNumCerrDep());
+		Matcher m = numCarrDep.matcher(val.valueOf(delivery.getNumCerrDep()));
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "numCerrDep", "",
 				"Can not be empty!");
 		if (errors.getFieldError("numCerrDep") == null && !m.matches()) {
