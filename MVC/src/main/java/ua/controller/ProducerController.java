@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.Producer;
+import ua.form.NameFilterForm;
+import ua.form.ProducerFilterForm;
 import ua.service.ProducerService;
 import ua.service.implementation.validator.ProducerValidator;
 
@@ -29,23 +33,34 @@ public class ProducerController {
 		return new Producer();
 	}
 
+	@ModelAttribute("filter")
+	public ProducerFilterForm getFilter() {
+		return new ProducerFilterForm();
+	}
+
 	@InitBinder("producer")
 	protected void InitBinderProducer(WebDataBinder binderProducer) {
 		binderProducer.setValidator(new ProducerValidator(producerService));
 	}
 
 	@RequestMapping("/admin/producer")
-	public String showProducer(Model model,@PageableDefault(size=5,sort="name") Pageable pageable) {
-		model.addAttribute("producers", producerService.findAllPageable(pageable));
+	public String showProducer(Model model,
+			@PageableDefault(size = 5, sort = "name") Pageable pageable,
+			@ModelAttribute("filter") ProducerFilterForm form) {
+		model.addAttribute("page",
+				producerService.findAllPageableFilter(pageable, form));
 		return "adminProducer";
 	}
 
 	@RequestMapping(value = "/admin/producer", method = RequestMethod.POST)
 	public String saveProducer(
 			@ModelAttribute("producer") @Valid Producer producer,
-			BindingResult br, Model model,@PageableDefault(size=5,sort="name") Pageable pageable) {
+			BindingResult br, Model model,
+			@PageableDefault(size = 5, sort = "name") Pageable pageable,
+			@ModelAttribute("filter") ProducerFilterForm form) {
 		if (br.hasErrors()) {
-			model.addAttribute("producers", producerService.findAllPageable(pageable));
+			model.addAttribute("page",
+					producerService.findAllPageableFilter(pageable, form));
 			return "adminProducer";
 		}
 		producerService.save(producer);
@@ -59,10 +74,33 @@ public class ProducerController {
 	}
 
 	@RequestMapping("/admin/producer/update/{id}")
-	public String updateProducer(@PathVariable int id, Model model,@PageableDefault(size=5,sort="name") Pageable pageable) {
+	public String updateProducer(@PathVariable int id, Model model,
+			@PageableDefault(size = 5, sort = "name") Pageable pageable,
+			@ModelAttribute("filter") ProducerFilterForm form) {
 		model.addAttribute("producer", producerService.findById(id));
-		model.addAttribute("producers", producerService.findAllPageable(pageable));
+		model.addAttribute("page",
+				producerService.findAllPageableFilter(pageable, form));
 		return "adminProducer";
 	}
 
+	@SuppressWarnings("unused")
+	private String getParams(Pageable pageable, NameFilterForm form) {
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("?page=");
+		buffer.append(String.valueOf(pageable.getPageNumber() + 1));
+		buffer.append("&size=");
+		buffer.append(String.valueOf(pageable.getPageSize()));
+		if (pageable.getSort() != null) {
+			buffer.append("&sort=");
+			Sort sort = pageable.getSort();
+			sort.forEach((order) -> {
+				buffer.append(order.getProperty());
+				if (order.getDirection() != Direction.ASC)
+					buffer.append(",desc");
+			});
+		}
+		buffer.append("&search=");
+		buffer.append(form.getSearch());
+		return buffer.toString();
+	}
 }

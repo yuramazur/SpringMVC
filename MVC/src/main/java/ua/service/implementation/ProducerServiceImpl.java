@@ -8,8 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Producer;
+import ua.form.ProducerFilterForm;
 import ua.repository.ProducerRepository;
 import ua.service.ProducerService;
+import ua.service.implementation.specification.ProducerFilterAdapter;
 
 @Service
 public class ProducerServiceImpl implements ProducerService {
@@ -62,6 +64,14 @@ public class ProducerServiceImpl implements ProducerService {
 	@Override
 	public Page<Producer> findAllPageable(Pageable pageable) {
 		return producerReposetory.findAll(pageable);
+	}
+
+	@Override
+	public Page<Producer> findAllPageableFilter(Pageable pageable,
+			ProducerFilterForm form) {
+
+		return producerReposetory.findAll(new ProducerFilterAdapter(form),
+				pageable);
 	}
 
 }

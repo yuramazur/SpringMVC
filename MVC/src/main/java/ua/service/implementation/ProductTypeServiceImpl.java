@@ -3,11 +3,16 @@ package ua.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.ProductType;
+
+import ua.form.ProductTypeFilterForm;
 import ua.repository.ProductTypeRepository;
 import ua.service.ProductTypeService;
+import ua.service.implementation.specification.ProductTypeFilterAdapter;
 
 @Service
 public class ProductTypeServiceImpl implements ProductTypeService {
@@ -55,6 +60,13 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 			productTypeReposetory.save(productType);
 		}
 
+	}
+
+	@Override
+	public Page<ProductType> findAllPageableFilter(Pageable pageable,
+			ProductTypeFilterForm form) {
+		
+		return productTypeReposetory.findAll(new ProductTypeFilterAdapter(form), pageable);
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.entity.*;
+import ua.form.CarrierFilterForm;
 
 public interface CarrierService {
 	void save(String name);
@@ -23,4 +24,6 @@ public interface CarrierService {
 	List<Carrier> findAll();
 
 	Page<Carrier> findAllPageable(Pageable pageable);
+
+	Page<Carrier> findAllPageableForm(Pageable pageable, CarrierFilterForm form);
 }

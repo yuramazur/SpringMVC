@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.entity.*;
+import ua.form.ProducerFilterForm;
 
 public interface ProducerService {
 	void save(String name);
@@ -23,4 +24,6 @@ public interface ProducerService {
 	List<Producer> findAll();
 
 	Page<Producer> findAllPageable(Pageable pageable);
+
+	Page<Producer> findAllPageableFilter(Pageable pageable, ProducerFilterForm form);
 }

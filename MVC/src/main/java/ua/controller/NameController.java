@@ -4,6 +4,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,23 +38,27 @@ public class NameController {
 	}
 
 	@ModelAttribute("filter")
-	public NameFilterForm getFilter(){
+	public NameFilterForm getFilter() {
 		return new NameFilterForm();
 	}
-	
+
 	@RequestMapping("/admin/name")
 	public String showName(Model model,
-			@PageableDefault(size = 5, sort = "names") Pageable pageable,@ModelAttribute("filter") NameFilterForm form) {
-		model.addAttribute("names", nameService.findAllPagebleForm(pageable,form));
+			@PageableDefault(size = 5, sort = "names") Pageable pageable,
+			@ModelAttribute("filter") NameFilterForm form) {
+		model.addAttribute("page",
+				nameService.findAllPagebleForm(pageable, form));
 		return "adminName";
 	}
 
 	@RequestMapping(value = "/admin/name", method = RequestMethod.POST)
 	public String saveName(@ModelAttribute("name") @Valid Name name,
 			BindingResult br, Model model,
-			@PageableDefault(size = 5) Pageable pageable) {
+			@PageableDefault(size = 5) Pageable pageable,
+			@ModelAttribute("filter") NameFilterForm form) {
 		if (br.hasErrors()) {
-			model.addAttribute("names", nameService.findAllPageble(pageable));
+			model.addAttribute("page",
+					nameService.findAllPagebleForm(pageable, form));
 			return "adminName";
 		}
 		nameService.save(name);
@@ -67,9 +73,31 @@ public class NameController {
 
 	@RequestMapping("/admin/name/update/{id}")
 	public String updateName(@PathVariable int id, Model model,
-			@PageableDefault(size = 5) Pageable pageable) {
+			@PageableDefault(size = 5) Pageable pageable,
+			@ModelAttribute("filter") NameFilterForm form) {
 		model.addAttribute("name", nameService.findById(id));
-		model.addAttribute("names", nameService.findAllPageble(pageable));
+		model.addAttribute("page",
+				nameService.findAllPagebleForm(pageable, form));
 		return "adminName";
+	}
+	@SuppressWarnings("unused")
+	private String getParams(Pageable pageable, NameFilterForm form){
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("?page=");
+		buffer.append(String.valueOf(pageable.getPageNumber()+1));
+		buffer.append("&size=");
+		buffer.append(String.valueOf(pageable.getPageSize()));
+		if(pageable.getSort()!=null){
+			buffer.append("&sort=");
+			Sort sort = pageable.getSort();
+			sort.forEach((order)->{
+				buffer.append(order.getProperty());
+				if(order.getDirection()!=Direction.ASC)
+				buffer.append(",desc");
+			});
+		}
+		buffer.append("&search=");
+		buffer.append(form.getSearch());
+		return buffer.toString();
 	}
 }

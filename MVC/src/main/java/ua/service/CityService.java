@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.entity.*;
+import ua.form.CityFilterForm;
 
 public interface CityService {
 	void save(String name);
@@ -23,4 +24,6 @@ public interface CityService {
 	List<City> findAll();
 
 	Page<City> findAllPageable(Pageable pageable);
+
+	Page<City> findAllPageableForm(Pageable pageable, CityFilterForm form);
 }

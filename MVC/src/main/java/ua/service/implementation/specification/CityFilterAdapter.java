@@ -8,27 +8,26 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import ua.entity.Name;
-import ua.form.NameFilterForm;
+import ua.entity.City;
+import ua.form.CityFilterForm;
 
-public class NameFilterAdapter implements Specification<Name>{
+public class CityFilterAdapter implements Specification<City>{
 
 	private String search = "";
 	
 	
-	
-	public NameFilterAdapter(NameFilterForm form) {
-		if(form.getSearch()!=null)
+	public CityFilterAdapter(CityFilterForm form) {
+		if(form.getSearch() != null){
 			this.search = form.getSearch();
+		}
 	}
 
 
-
 	@Override
-	public Predicate toPredicate(Root<Name> root, CriteriaQuery<?> query,
+	public Predicate toPredicate(Root<City> root, CriteriaQuery<?> query,
 			CriteriaBuilder cb) {
-		Expression<String> ex = root.get("names");
-		return cb.like(cb.upper(ex), search.toUpperCase()+"%");
+		Expression<String> ex = root.get("name");
+ 		return cb.like(cb.upper(ex), search.toUpperCase()+"%");
 	}
 
 }

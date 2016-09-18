@@ -1,10 +1,13 @@
 package ua.repository;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import ua.entity.Carrier;
 
-public interface CarrierRepository extends JpaRepository<Carrier, Integer> {
+
+public interface CarrierRepository extends JpaRepository<Carrier, Integer>,JpaSpecificationExecutor<Carrier> {
 
 	Carrier findByName(String name);
 
@@ -13,5 +16,7 @@ public interface CarrierRepository extends JpaRepository<Carrier, Integer> {
 	void deleteByName(String name);
 
 	void deleteById(int id);
+
+	
 
 }

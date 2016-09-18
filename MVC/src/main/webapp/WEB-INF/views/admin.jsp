@@ -1,29 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Admin</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
-<h1>There will be a administrator page! I hope =)</h1>
-<p><a href="/admin/name" >NAME</a></p>
-<p><a href="/admin/producer" >PRUDUCER</a></p>
-<p><a href="/admin/producttype" >PRODUCT TYPE</a></p>
-<p><a href="/admin/city" >CITY</a></p>
-<p><a href="/admin/carrier" >CARRIER</a></p>
-<p><a href="/admin/product" >PRODUCT</a></p>
-<p><a href="/admin/client" >CLIENT</a></p>
-<p><a href="/admin/delivery" >DELIVERY</a></p>
-<p><a href="/admin/order" >ORDER</a></p>
-
-<form name="returnToIndex" action="/">
-	<p ><b>Return to previous page:</b><br></p>
-		
-		<input type="submit" value="Return">
-		
-</form>
-
+<div class="row-fluid">
+				<nav class="navbar navbar-default">
+					<div class="container-fluid">
+						<div class="collapse navbar-collapse" id="">
+							<ul class="nav navbar-nav">
+								<li><a href="/admin/name"><b>Name</b></a></li>
+								<li><a href="/admin/carrier"><b>Carrier</b></a></li>
+								<li><a href="/admin/city"><b>City</b></a></li>
+								<li><a href="/admin/producer"><b>Producer</b></a></li>
+								<li><a href="/admin/producttype"><b>Product Type</b></a></li>
+								<li><a href="/admin/product"><b>Product</b></a></li>
+								<li><a href="/admin/delivery"><b>Delivery</b></a></li>
+								<li><a href="/admin/order"><b>Order</b></a></li>
+								<li><a href="/admin/client"><b>Clients</b></a></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+		</div>
 </body>
 </html>

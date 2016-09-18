@@ -8,27 +8,23 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import ua.entity.Name;
-import ua.form.NameFilterForm;
+import ua.entity.Carrier;
+import ua.form.CarrierFilterForm;
 
-public class NameFilterAdapter implements Specification<Name>{
-
+public class CarrierFilterAdapter implements Specification<Carrier> {
 	private String search = "";
-	
-	
-	
-	public NameFilterAdapter(NameFilterForm form) {
-		if(form.getSearch()!=null)
+
+	public CarrierFilterAdapter(CarrierFilterForm form) {
+		if (form.getSearch() != null) {
 			this.search = form.getSearch();
+		}
 	}
 
-
-
 	@Override
-	public Predicate toPredicate(Root<Name> root, CriteriaQuery<?> query,
+	public Predicate toPredicate(Root<Carrier> root, CriteriaQuery<?> query,
 			CriteriaBuilder cb) {
-		Expression<String> ex = root.get("names");
-		return cb.like(cb.upper(ex), search.toUpperCase()+"%");
+		Expression<String> ex = root.get("name");
+		return cb.like(cb.upper(ex), search.toUpperCase() + "%");
 	}
 
 }

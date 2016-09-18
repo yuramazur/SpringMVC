@@ -8,8 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Carrier;
+import ua.form.CarrierFilterForm;
 import ua.repository.CarrierRepository;
 import ua.service.CarrierService;
+import ua.service.implementation.specification.CarrierFilterAdapter;
 
 @Service
 public class CarrierServiceImpl implements CarrierService {
@@ -61,6 +63,13 @@ public class CarrierServiceImpl implements CarrierService {
 	@Override
 	public Page<Carrier> findAllPageable(Pageable pageable) {
 		return carrierRepository.findAll(pageable);
+	}
+
+	@Override
+	public Page<Carrier> findAllPageableForm(Pageable pageable,
+			CarrierFilterForm form) {
+		
+		return carrierRepository.findAll(new CarrierFilterAdapter(form), pageable);
 	}
 
 }
