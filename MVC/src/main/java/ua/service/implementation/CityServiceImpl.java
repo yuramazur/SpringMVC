@@ -5,13 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
+
 import org.springframework.stereotype.Service;
 
 import ua.entity.City;
 import ua.form.CityFilterForm;
-import ua.form.NameFilterForm;
+
 import ua.repository.CityRepository;
 import ua.service.CityService;
 import ua.service.implementation.specification.CityFilterAdapter;
@@ -74,24 +73,5 @@ public class CityServiceImpl implements CityService {
 
 		return cityReposetory.findAll(new CityFilterAdapter(form), pageable);
 	}
-	@SuppressWarnings("unused")
-	private String getParams(Pageable pageable, NameFilterForm form){
-		StringBuilder buffer = new StringBuilder();
-		buffer.append("?page=");
-		buffer.append(String.valueOf(pageable.getPageNumber()+1));
-		buffer.append("&size=");
-		buffer.append(String.valueOf(pageable.getPageSize()));
-		if(pageable.getSort()!=null){
-			buffer.append("&sort=");
-			Sort sort = pageable.getSort();
-			sort.forEach((order)->{
-				buffer.append(order.getProperty());
-				if(order.getDirection()!=Direction.ASC)
-				buffer.append(",desc");
-			});
-		}
-		buffer.append("&search=");
-		buffer.append(form.getSearch());
-		return buffer.toString();
-	}
+	
 }

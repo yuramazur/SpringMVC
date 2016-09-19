@@ -2,7 +2,11 @@ package ua.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import ua.entity.Delivery;
+import ua.form.DeliveryFilterForm;
 
 public interface DeliveryService {
 
@@ -19,4 +23,6 @@ public interface DeliveryService {
 	Delivery findById(int id);
 
 	Delivery findDelivery(Delivery delivery);
+
+	Page<Delivery> findAllPagebleFilter(Pageable pageable, DeliveryFilterForm filter);
 }

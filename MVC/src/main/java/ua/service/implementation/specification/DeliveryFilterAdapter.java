@@ -45,7 +45,7 @@ public class DeliveryFilterAdapter implements Specification<Delivery> {
 	private void findByNumCerrDep() {
 		if (form.getNumCerrDepInt() != 0) {
 			filters.add((root, query, cb) -> {
-				Expression<Integer> exp = root.get("numCerrdep");
+				Expression<Integer> exp = root.get("numCerrDep");
 				return cb.equal(exp, form.getNumCerrDepInt());
 			});
 		}

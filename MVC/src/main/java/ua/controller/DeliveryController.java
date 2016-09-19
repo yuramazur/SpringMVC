@@ -3,6 +3,10 @@ package ua.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ua.entity.Carrier;
 import ua.entity.City;
 import ua.entity.Delivery;
+import ua.form.DeliveryFilterForm;
 import ua.service.CarrierService;
 import ua.service.CityService;
 import ua.service.DeliveryService;
@@ -32,7 +37,7 @@ public class DeliveryController {
 	@Autowired
 	public DeliveryService deliveryService;
 
-	@InitBinder
+	@InitBinder("delivery")
 	protected void initBinderDelivery(WebDataBinder binderDelivery) {
 		binderDelivery.registerCustomEditor(City.class, new CityEditor(
 				cityService));
@@ -46,35 +51,29 @@ public class DeliveryController {
 		return new Delivery();
 	}
 
+	@ModelAttribute("filter")
+	public DeliveryFilterForm getFilter() {
+		return new DeliveryFilterForm();
+	}
+
 	@RequestMapping("/admin/delivery")
-	public String showDelyvery(Model model) {
+	public String showDelyvery(Model model, @PageableDefault(5) Pageable pageable,@ModelAttribute("filter") DeliveryFilterForm filter) {
 		model.addAttribute("cities", cityService.findAll());
 		model.addAttribute("carriers", carrierService.findAll());
-		model.addAttribute("deliveries", deliveryService.findAll());
-		model.addAttribute("size", deliveryService.findAll().size());
+		model.addAttribute("page", deliveryService.findAllPagebleFilter(pageable,filter));
+		
 		return "adminDelivery";
 	}
 
-	// @RequestMapping(value = "/admin/delivery", method = RequestMethod.POST)
-	// public String saveDelivery(@RequestParam int cityId,
-	// @RequestParam int carrierId, @RequestParam String numCerrDep) {
-	// int intNumCerrDep = 0;
-	// try {
-	// intNumCerrDep = Integer.parseInt(numCerrDep);
-	// } catch (Exception e) {
-	// intNumCerrDep = 0;
-	// }
-	// deliveryService.save(cityId, carrierId, intNumCerrDep);
-	// return "redirect:/admin/delivery";
-	// }
+	
 	@RequestMapping(value = "/admin/delivery", method = RequestMethod.POST)
 	public String saveDelivery(
 			@ModelAttribute("delivery") @Valid Delivery delivery,
-			BindingResult br, Model model) {
+			BindingResult br, Model model,@PageableDefault(5) Pageable pageable,@ModelAttribute("filter") DeliveryFilterForm filter) {
 		if (br.hasErrors()) {
 			model.addAttribute("cities", cityService.findAll());
 			model.addAttribute("carriers", carrierService.findAll());
-			model.addAttribute("deliveries", deliveryService.findAll());
+			model.addAttribute("page", deliveryService.findAllPagebleFilter(pageable,filter));
 			return "adminDelivery";
 		}
 		deliveryService.save(delivery);
@@ -88,12 +87,41 @@ public class DeliveryController {
 	}
 
 	@RequestMapping(value = "/admin/delivery/update/{id}")
-	public String updadeDelivery(Model model, @PathVariable int id) {
+	public String updadeDelivery( @PathVariable int id,Model model,@PageableDefault(5) Pageable pageable,@ModelAttribute("filter") DeliveryFilterForm filter) {
 		model.addAttribute("delivery", deliveryService.findById(id));
 		model.addAttribute("cities", cityService.findAll());
 		model.addAttribute("carriers", carrierService.findAll());
-		model.addAttribute("deliveries", deliveryService.findAll());
-		model.addAttribute("size", deliveryService.findAll().size());
+		model.addAttribute("page", deliveryService.findAllPagebleFilter(pageable,filter));
+		
 		return "adminDelivery";
+	}
+	@SuppressWarnings("unused")
+	private String getParams(Pageable pageable, DeliveryFilterForm form){
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("?page=");
+		buffer.append(String.valueOf(pageable.getPageNumber()+1));
+		buffer.append("&size=");
+		buffer.append(String.valueOf(pageable.getPageSize()));
+		if(pageable.getSort()!=null){
+			buffer.append("&sort=");
+			Sort sort = pageable.getSort();
+			sort.forEach((order)->{
+				buffer.append(order.getProperty());
+				if(order.getDirection()!=Direction.ASC)
+				buffer.append(",desc");
+			});
+		}
+		buffer.append("&numCerrDep=");
+		buffer.append(form.getNumCerrDepInt());
+		
+		for(Integer i : form.getCityIds()){
+			buffer.append("&ingredientIds=");
+			buffer.append(i.toString());
+		}
+		for(Integer i : form.getCarrierIds()){
+			buffer.append("&msIds=");
+			buffer.append(i.toString());
+		}
+		return buffer.toString();
 	}
 }

@@ -2,14 +2,20 @@ package ua.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
-import ua.entity.Delivery;
 
-public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
+
+import ua.entity.Delivery;
+import ua.form.DeliveryFilterForm;
+
+public interface DeliveryRepository extends JpaRepository<Delivery, Integer>,JpaSpecificationExecutor<Delivery> {
 
 	@Query("SELECT d FROM Delivery d LEFT JOIN FETCH d.city LEFT JOIN FETCH d.carrier")
 	List<Delivery> findAllDeliveryIntited();
@@ -21,5 +27,7 @@ public interface DeliveryRepository extends JpaRepository<Delivery, Integer> {
 
 	@Query("SELECT d FROM Delivery d LEFT JOIN FETCH d.city LEFT JOIN FETCH d.carrier WHERE d.id =:id")
 	Delivery findOneIntited(@Param("id") int id);
+
+	
 
 }

@@ -66,21 +66,22 @@
 			<form:hidden path="id" />
 			<custom:hiddenInputs excludeParams="city, carrier, numCerrDep, id" />
 			<div class="form-group">
-				<label for="amount"><form:errors path="amount" /></label>
-				<form:input path="amount" class="form-control" />
-				<form:select path="system" items="${measuringSystems}"
+				<form:select path="city" items="${cities}"
 					itemLabel="name" itemValue="id">
 				</form:select>
-				<form:select path="ingredient" items="${ingredients}"
+				<form:select path="carrier" items="${carriers}"
 					itemLabel="name" itemValue="id">
 				</form:select>
+				<label for="numCerrDep"><form:errors path="numCerrDep" /></label>
+				<form:input path="numCerrDep" class="form-control" />
+				
 				<button type="submit" class="btn btn-primary">Create</button>
 			</div>
 		</form:form>
 		<div class="row">
-			<div class="col-md-2">Amount</div>
-			<div class="col-md-2">Measuring system</div>
-			<div class="col-md-4">Ingredient</div>
+			<div class="col-md-2">City</div>
+			<div class="col-md-4">Carrier</div>
+			<div class="col-md-2">Department №</div>
 			<div class="col-md-2">
 				<h4>Delete</h4>
 			</div>
@@ -88,18 +89,18 @@
 				<h4>Update</h4>
 			</div>
 		</div>
-		<c:forEach items="${page.content}" var="ingredientAmount">
+		<c:forEach items="${page.content}" var="delivery">
 			<div class="row">
-				<div class="col-md-2">${ingredientAmount.amount}</div>
-				<div class="col-md-2">${ingredientAmount.measuringSystem.name}</div>
-				<div class="col-md-4">${ingredientAmount.ingredient.name}</div>
+				<div class="col-md-2">${delivery.city.name}</div>
+				<div class="col-md-4">${delivery.carrier.name}</div>
+				<div class="col-md-2">${delivery.numCerrDep}</div>
 				<div class="col-md-2">
 					<a
-						href="/admin/ingredientAmount/delete/${ingredientAmount.id}<custom:allParams/>">delete</a>
+						href="/admin/delivery/delete/${delivery.id}<custom:allParams/>">delete</a>
 				</div>
 				<div class="col-md-2">
 					<a
-						href="/admin/ingredientAmount/update/${ingredientAmount.id}<custom:allParams/>">update</a>
+						href="/admin/delivery/update/${delivery.id}<custom:allParams/>">update</a>
 				</div>
 			</div>
 		</c:forEach>
@@ -116,16 +117,16 @@
 					Sort <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<custom:sort innerHtml="Amount asc" paramValue="amount" />
-					<custom:sort innerHtml="Amount desc" paramValue="amount,desc" />
-					<custom:sort innerHtml="Ingredient name asc"
-						paramValue="ingredient.name" />
-					<custom:sort innerHtml="Ingredient name desc"
-						paramValue="ingredient.name,desc" />
-					<custom:sort innerHtml="Ms name asc"
-						paramValue="measuringSystem.name" />
-					<custom:sort innerHtml="Ms name desc"
-						paramValue="measuringSystem.name,desc" />
+					<custom:sort innerHtml="Department № asc" paramValue="numCerrDep" />
+					<custom:sort innerHtml="Amount desc" paramValue="numCerrDep,desc" />
+					<custom:sort innerHtml="City name asc"
+						paramValue="city.name" />
+					<custom:sort innerHtml="City name desc"
+						paramValue="city.name,desc" />
+					<custom:sort innerHtml="Carrier name asc"
+						paramValue="carrier.name" />
+					<custom:sort innerHtml="Carrier name desc"
+						paramValue="carrier.name,desc" />
 				</ul>
 			</div>
 		</div>

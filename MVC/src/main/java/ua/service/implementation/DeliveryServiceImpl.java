@@ -3,13 +3,17 @@ package ua.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Delivery;
+import ua.form.DeliveryFilterForm;
 import ua.repository.CarrierRepository;
 import ua.repository.CityRepository;
 import ua.repository.DeliveryRepository;
 import ua.service.DeliveryService;
+import ua.service.implementation.specification.DeliveryFilterAdapter;
 
 @Service
 public class DeliveryServiceImpl implements DeliveryService {
@@ -71,6 +75,15 @@ public void save(int cityId, int carrierId, int numCerrDep) {
 
 		return deliveryRepository.findDelivery(delivery.getCity().getName(),
 				delivery.getCarrier().getName(), delivery.getNumCerrDep());
+	}
+
+	
+
+	@Override
+	public Page<Delivery> findAllPagebleFilter(Pageable pageable,
+			DeliveryFilterForm filter) {
+		
+		return deliveryRepository.findAll(new DeliveryFilterAdapter(filter), pageable);
 	}
 
 	
