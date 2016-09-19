@@ -35,9 +35,9 @@
 		<form:form action="/admin/delivery" class="form-inline" method="get"
 			modelAttribute="filter">
 			<custom:hiddenInputs
-				excludeParams="numCerrDepInt, cityIds, carrierIds,_cityIds,_carrierIds " />
+				excludeParams="numCerrDep, cityIds, carrierIds,_cityIds,_carrierIds " />
 			<div class="form-group">
-				<form:input path="numCerrDepInt" placeholder="№ carrier department:"
+				<form:input path="numCerrDep" placeholder="№ carrier department:"
 					class="form-control" />
 
 			</div>
