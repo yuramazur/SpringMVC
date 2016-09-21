@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.City;
-import ua.form.CityFilterForm;
-import ua.form.NameFilterForm;
+import ua.form.filter.CityFilterForm;
+import ua.form.filter.NameFilterForm;
 import ua.service.CityService;
 import ua.service.implementation.validator.CityValidator;
 

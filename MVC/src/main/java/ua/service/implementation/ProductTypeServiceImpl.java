@@ -8,8 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.ProductType;
-
-import ua.form.ProductTypeFilterForm;
+import ua.form.filter.ProductTypeFilterForm;
 import ua.repository.ProductTypeRepository;
 import ua.service.ProductTypeService;
 import ua.service.implementation.specification.ProductTypeFilterAdapter;

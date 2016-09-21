@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.entity.*;
-import ua.form.CarrierFilterForm;
+import ua.form.filter.CarrierFilterForm;
 
 public interface CarrierService {
 	void save(String name);

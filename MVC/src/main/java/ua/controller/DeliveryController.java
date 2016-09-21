@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.Carrier;
 import ua.entity.City;
-import ua.entity.Delivery;
-import ua.form.DeliveryFilterForm;
+
+import ua.form.DeliveryForm;
+
+import ua.form.filter.DeliveryFilterForm;
 import ua.service.CarrierService;
 import ua.service.CityService;
 import ua.service.DeliveryService;
@@ -37,7 +39,7 @@ public class DeliveryController {
 	@Autowired
 	public DeliveryService deliveryService;
 
-	@InitBinder("delivery")
+	@InitBinder("deliveryForm")
 	protected void initBinderDelivery(WebDataBinder binderDelivery) {
 		binderDelivery.registerCustomEditor(City.class, new CityEditor(
 				cityService));
@@ -46,9 +48,9 @@ public class DeliveryController {
 		binderDelivery.setValidator(new DeliveryValidator(deliveryService));
 	}
 
-	@ModelAttribute("delivery")
-	public Delivery getDelivery() {
-		return new Delivery();
+	@ModelAttribute("deliveryForm")
+	public DeliveryForm getDeliveryForm() {
+		return new DeliveryForm();
 	}
 
 	@ModelAttribute("filter")
@@ -68,7 +70,7 @@ public class DeliveryController {
 	
 	@RequestMapping(value = "/admin/delivery", method = RequestMethod.POST)
 	public String saveDelivery(
-			@ModelAttribute("delivery") @Valid Delivery delivery,
+			@ModelAttribute("deliveryForm") @Valid DeliveryForm deliveryForm,
 			BindingResult br, Model model,@PageableDefault(5) Pageable pageable,@ModelAttribute("filter") DeliveryFilterForm filter) {
 		if (br.hasErrors()) {
 			model.addAttribute("cities", cityService.findAll());
@@ -76,7 +78,7 @@ public class DeliveryController {
 			model.addAttribute("page", deliveryService.findAllPagebleFilter(pageable,filter));
 			return "adminDelivery";
 		}
-		deliveryService.save(delivery);
+		deliveryService.save(deliveryForm);
 		return "redirect:/admin/delivery";
 	}
 
@@ -88,7 +90,7 @@ public class DeliveryController {
 
 	@RequestMapping(value = "/admin/delivery/update/{id}")
 	public String updadeDelivery( @PathVariable int id,Model model,@PageableDefault(5) Pageable pageable,@ModelAttribute("filter") DeliveryFilterForm filter) {
-		model.addAttribute("delivery", deliveryService.findById(id));
+		model.addAttribute("deliveryForm", deliveryService.findFormById(id));
 		model.addAttribute("cities", cityService.findAll());
 		model.addAttribute("carriers", carrierService.findAll());
 		model.addAttribute("page", deliveryService.findAllPagebleFilter(pageable,filter));
@@ -115,11 +117,11 @@ public class DeliveryController {
 		buffer.append(form.getNumCerrDepInt());
 		
 		for(Integer i : form.getCityIds()){
-			buffer.append("&ingredientIds=");
+			buffer.append("&cityIds=");
 			buffer.append(i.toString());
 		}
 		for(Integer i : form.getCarrierIds()){
-			buffer.append("&msIds=");
+			buffer.append("&carrierIds=");
 			buffer.append(i.toString());
 		}
 		return buffer.toString();

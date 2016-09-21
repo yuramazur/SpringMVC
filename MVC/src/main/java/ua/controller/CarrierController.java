@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.Carrier;
-import ua.form.CarrierFilterForm;
-import ua.form.NameFilterForm;
+import ua.form.filter.CarrierFilterForm;
+import ua.form.filter.NameFilterForm;
 import ua.service.CarrierService;
 import ua.service.implementation.validator.CarrierValidator;
 

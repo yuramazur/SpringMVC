@@ -6,8 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.entity.*;
-
-import ua.form.ProductTypeFilterForm;
+import ua.form.filter.ProductTypeFilterForm;
 
 public interface ProductTypeService {
 	void save(String name);

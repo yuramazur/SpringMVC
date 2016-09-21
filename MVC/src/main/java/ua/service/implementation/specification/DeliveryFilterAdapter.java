@@ -14,7 +14,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
 import ua.entity.Delivery;
-import ua.form.DeliveryFilterForm;
+import ua.form.filter.DeliveryFilterForm;
 
 public class DeliveryFilterAdapter implements Specification<Delivery> {
 	private final DeliveryFilterForm form;

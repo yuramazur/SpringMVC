@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.entity.*;
-import ua.form.CityFilterForm;
+import ua.form.filter.CityFilterForm;
 
 public interface CityService {
 	void save(String name);

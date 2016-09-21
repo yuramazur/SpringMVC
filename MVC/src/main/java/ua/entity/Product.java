@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(indexes = {@Index(columnList = "name"), @Index(columnList = "price") })
+@Table(indexes = { @Index(columnList = "name"), @Index(columnList = "price") })
 public class Product {
 
 	@Id
@@ -29,9 +29,11 @@ public class Product {
 	@OneToMany(mappedBy = "products")
 	private List<MyOrder> order;
 	private String name;
-	private String price;
+	private double price;
 	@Transient
 	private String error;
+	private int version;
+	private String path;
 
 	public Product() {
 
@@ -61,11 +63,11 @@ public class Product {
 		this.producer = producer;
 	}
 
-	public String getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -91,6 +93,22 @@ public class Product {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 }

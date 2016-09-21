@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.entity.Name;
-import ua.form.NameFilterForm;
+import ua.form.filter.NameFilterForm;
 
 public interface NameService {
 	

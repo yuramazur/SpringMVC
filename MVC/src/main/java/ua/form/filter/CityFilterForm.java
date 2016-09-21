@@ -1,6 +1,6 @@
-package ua.form;
+package ua.form.filter;
 
-public class ProductTypeFilterForm {
+public class CityFilterForm {
 	private String search;
 
 	public String getSearch() {

@@ -3,6 +3,10 @@ package ua.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,8 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.Producer;
-import ua.entity.Product;
 import ua.entity.ProductType;
+import ua.form.ProductForm;
+import ua.form.filter.ProductFilterForm;
 import ua.service.ProducerService;
 import ua.service.ProductService;
 import ua.service.ProductTypeService;
@@ -32,7 +37,7 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	@InitBinder
+	@InitBinder("productForm")
 	protected void initBinderProduct(WebDataBinder binderProduct) {
 		binderProduct.registerCustomEditor(ProductType.class,
 				new ProductTypeEditor(productTypeService));
@@ -41,44 +46,41 @@ public class ProductController {
 		binderProduct.setValidator(new ProductValidator(productService));
 	}
 
-	@ModelAttribute("product")
-	public Product getProduct() {
-		return new Product();
+	@ModelAttribute("productForm")
+	public ProductForm getProduct() {
+		return new ProductForm();
+	}
+
+	@ModelAttribute("filter")
+	public ProductFilterForm getFilter() {
+		return new ProductFilterForm();
 	}
 
 	@RequestMapping("/admin/product")
-	public String showProduct(Model model) {
-		model.addAttribute("products", productService.findAll());
+	public String showProduct(Model model,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute("filter") ProductFilterForm filter) {
+		model.addAttribute("page",
+				productService.findAllPagebleFilter(pageable, filter));
 		model.addAttribute("productTypes", productTypeService.findAll());
 		model.addAttribute("producers", producerService.findAll());
 		return "adminProduct";
 	}
 
-	// @RequestMapping(value = "/admin/product", method = RequestMethod.POST)
-	// public String saveProduct(@RequestParam String name,
-	// @RequestParam String price, @RequestParam int productTypeId,
-	// @RequestParam int producerId) {
-	// double priceDouble = 0;
-	// try {
-	// priceDouble = Double.parseDouble(price);
-	// } catch (NumberFormatException e) {
-	// priceDouble = 150000;
-	// }
-	// productService.save(name, priceDouble, productTypeId, producerId);
-	// return "redirect:/admin/product";
-	// }
-
 	@RequestMapping(value = "/admin/product", method = RequestMethod.POST)
 	public String saveProduct(
-			@ModelAttribute("product") @Valid Product product,
-			BindingResult br, Model model) {
-		if(br.hasErrors()){
-			model.addAttribute("products", productService.findAll());
+			@ModelAttribute("productForm") @Valid ProductForm productForm,
+			BindingResult br, Model model,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute("filter") ProductFilterForm filter) {
+		if (br.hasErrors()) {
+			model.addAttribute("page",
+					productService.findAllPagebleFilter(pageable, filter));
 			model.addAttribute("productTypes", productTypeService.findAll());
 			model.addAttribute("producers", producerService.findAll());
 			return "adminProduct";
 		}
-		productService.save(product);
+		productService.save(productForm);
 		return "redirect:/admin/product";
 	}
 
@@ -89,11 +91,15 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/admin/product/update/{id}")
-	public String updateProduct(Model model, @PathVariable int id) {
-		model.addAttribute("product", productService.findById(id));
-		model.addAttribute("products", productService.findAll());
+	public String updateProduct(Model model, @PathVariable int id,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute("filter") ProductFilterForm filter) {
+		model.addAttribute("productForm", productService.findFormById(id));
+		model.addAttribute("page",
+				productService.findAllPagebleFilter(pageable, filter));
 		model.addAttribute("productTypes", productTypeService.findAll());
 		model.addAttribute("producers", producerService.findAll());
+
 		return "adminProduct";
 	}
 
@@ -102,4 +108,37 @@ public class ProductController {
 		model.addAttribute("product", productService.findById(id));
 		return "userProduct";
 	}
+
+	 @SuppressWarnings("unused")
+	 private String getParams(Pageable pageable, ProductFilterForm form){
+	 StringBuilder buffer = new StringBuilder();
+	 buffer.append("?page=");
+	 buffer.append(String.valueOf(pageable.getPageNumber()+1));
+	 buffer.append("&size=");
+	 buffer.append(String.valueOf(pageable.getPageSize()));
+	 if(pageable.getSort()!=null){
+	 buffer.append("&sort=");
+	 Sort sort = pageable.getSort();
+	 sort.forEach((order)->{
+	 buffer.append(order.getProperty());
+	 if(order.getDirection()!=Direction.ASC)
+	 buffer.append(",desc");
+	 });
+	 }
+	 buffer.append("&minPrice=");
+	 buffer.append(form.getMinPrice());
+	 buffer.append("&maxPrice=");
+	 buffer.append(form.getMaxPrice());
+	 buffer.append("&nameSearch=");
+	 buffer.append(form.getNameSearch());
+	 for(Integer i : form.getProductTypeIds()){
+	 buffer.append("&productTypeIds=");
+	 buffer.append(i.toString());
+	 }
+	 for(Integer i : form.getProducerIds()){
+	 buffer.append("&ProducerIds=");
+	 buffer.append(i.toString());
+	 }
+	 return buffer.toString();
+	 }
 }

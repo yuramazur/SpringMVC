@@ -6,8 +6,8 @@
 <link rel="stylesheet" href="/resources/css/ingredientAmount.css">
 <script>
 	$(function() {
-		$('select[name=system]').chosen();
-		$('select[name=ingredient]').chosen();
+		$('select[name=city]').chosen();
+		$('select[name=carrier]').chosen();
 	});
 </script>
 <div class="row-fluid">
@@ -62,18 +62,19 @@
 	</div>
 	<div class="col-md-7 col-xs-12">
 		<form:form class="form-inline" action="/admin/delivery"
-			method="post" modelAttribute="delivery">
+			method="post" modelAttribute="deliveryForm">
 			<form:hidden path="id" />
-			<custom:hiddenInputs excludeParams="city, carrier, numCerrDep, id" />
+			<custom:hiddenInputs excludeParams="city, carrier, numberDepartment, id" />
 			<div class="form-group">
+			<label for="error"><form:errors path="error" /></label>
 				<form:select path="city" items="${cities}"
 					itemLabel="name" itemValue="id">
 				</form:select>
 				<form:select path="carrier" items="${carriers}"
 					itemLabel="name" itemValue="id">
 				</form:select>
-				<label for="numCerrDep"><form:errors path="numCerrDep" /></label>
-				<form:input path="numCerrDep" class="form-control" />
+				<label for="numberDepartment"><form:errors path="numberDepartment" /></label>
+				<form:input path="numberDepartment" placeholder="№ department" class="form-control" />
 				
 				<button type="submit" class="btn btn-primary">Create</button>
 			</div>

@@ -1,4 +1,4 @@
-package ua.form;
+package ua.form.filter;
 
 public class CarrierFilterForm {
 	private String search;

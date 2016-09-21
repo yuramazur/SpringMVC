@@ -9,7 +9,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ua.entity.City;
-import ua.form.CityFilterForm;
+import ua.form.filter.CityFilterForm;
 
 public class CityFilterAdapter implements Specification<City>{
 

@@ -9,7 +9,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ua.entity.Producer;
-import ua.form.ProducerFilterForm;
+import ua.form.filter.ProducerFilterForm;
 
 public class ProducerFilterAdapter implements Specification<Producer> {
 	private String search = "";

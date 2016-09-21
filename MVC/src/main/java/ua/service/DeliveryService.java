@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ua.entity.Delivery;
-import ua.form.DeliveryFilterForm;
+import ua.form.DeliveryForm;
+
+import ua.form.filter.DeliveryFilterForm;
 
 public interface DeliveryService {
 
@@ -25,4 +27,10 @@ public interface DeliveryService {
 	Delivery findDelivery(Delivery delivery);
 
 	Page<Delivery> findAllPagebleFilter(Pageable pageable, DeliveryFilterForm filter);
+
+	void save(DeliveryForm deliveryForm);
+
+	DeliveryForm findFormById(int id);
+
+	Delivery findDelivery(DeliveryForm deliveryForm);
 }

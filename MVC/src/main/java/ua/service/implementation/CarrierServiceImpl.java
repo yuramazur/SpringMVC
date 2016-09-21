@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Carrier;
-import ua.form.CarrierFilterForm;
+import ua.form.filter.CarrierFilterForm;
 import ua.repository.CarrierRepository;
 import ua.service.CarrierService;
 import ua.service.implementation.specification.CarrierFilterAdapter;

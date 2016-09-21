@@ -43,7 +43,7 @@
 				<form:hidden path="id" />
 				<custom:hiddenInputs excludeParams="name, id"/>
 				<div class="form-group">
-					<form:input id="productType" path="name" placeholder="city name" class="form-control" />
+					<form:input id="productType" path="name" placeholder="product type:" class="form-control" />
 					<label for="name"><form:errors path="name" /></label>
 					<button type="submit" class="btn btn-primary">Create Product Type</button>
 				</div>

@@ -9,7 +9,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ua.entity.ProductType;
-import ua.form.ProductTypeFilterForm;
+import ua.form.filter.ProductTypeFilterForm;
 
 public class ProductTypeFilterAdapter implements Specification<ProductType> {
 

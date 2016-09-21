@@ -7,14 +7,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import ua.entity.Delivery;
+import ua.form.DeliveryForm;
 import ua.service.DeliveryService;
 
 public class DeliveryValidator implements Validator {
 
 	private final DeliveryService deliveryService;
 	
-	private static final Pattern numCarrDep = Pattern.compile("^[^0][0-9]{1,3}$");
+	private static final Pattern numCarrDep = Pattern.compile("^[1-9]{1,1}([0-9]{1,2})?$");
 
 	public DeliveryValidator(DeliveryService deliveryService) {
 
@@ -24,29 +24,29 @@ public class DeliveryValidator implements Validator {
 	@Override
 	public boolean supports(Class<?> clazz) {
 
-		return Delivery.class.equals(clazz);
+		return DeliveryForm.class.equals(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		Delivery delivery = (Delivery) target;
-     String val = "0";
-		if (delivery.getCity() == null) {
+		DeliveryForm deliveryForm = (DeliveryForm) target;
+    
+		if (deliveryForm.getCity() == null) {
 			errors.rejectValue("city", "", "Select city!");
 		}
-		if (delivery.getCarrier() == null) {
+		if (deliveryForm.getCarrier() == null) {
 			errors.rejectValue("carrier", "", "Select carrier!");
 		}
 		if (errors.getFieldError("city") == null
 				&& errors.getFieldError("carrier") == null
-				&& deliveryService.findDelivery(delivery) != null) {
+				&& deliveryService.findDelivery(deliveryForm) != null) {
 			errors.rejectValue("error", "", "Delivery already exists!");
 		}
-		Matcher m = numCarrDep.matcher(val.valueOf(delivery.getNumCerrDep()));
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "numCerrDep", "",
+		Matcher m = numCarrDep.matcher(deliveryForm.getNumberDepartment());
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "numberDepartment", "",
 				"Can not be empty!");
-		if (errors.getFieldError("numCerrDep") == null && !m.matches()) {
-			errors.rejectValue("numCerrDep", "", "Incorrect number format!");
+		if (errors.getFieldError("numberDepartment") == null && !m.matches()) {
+			errors.rejectValue("numberDepartment", "", "Incorrect number format!");
 		}
 	}
 }

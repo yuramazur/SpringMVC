@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.Producer;
-import ua.form.NameFilterForm;
-import ua.form.ProducerFilterForm;
+import ua.form.filter.NameFilterForm;
+import ua.form.filter.ProducerFilterForm;
 import ua.service.ProducerService;
 import ua.service.implementation.validator.ProducerValidator;
 

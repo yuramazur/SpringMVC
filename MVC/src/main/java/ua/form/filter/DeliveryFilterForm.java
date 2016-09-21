@@ -1,4 +1,4 @@
-package ua.form;
+package ua.form.filter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class DeliveryFilterForm {
 	private int numCerrDepInt;
 	private List<Integer> cityIds = new ArrayList<>();
 	private List<Integer> carrierIds = new ArrayList<>();
-	private static final Pattern p = Pattern.compile("^[1-9]{1,1}[0-9]{2,3}$");
+	private static final Pattern p = Pattern.compile("^[1-9]{1,1}([0-9]{1,2})?$");
 
 	public String getNumCerrDep() {
 		return numCerrDep;

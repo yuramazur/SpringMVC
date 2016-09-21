@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Name;
-import ua.form.NameFilterForm;
+import ua.form.filter.NameFilterForm;
 import ua.repository.NameRepository;
 import ua.service.NameService;
 import ua.service.implementation.specification.NameFilterAdapter;

@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.ProductType;
-import ua.form.NameFilterForm;
-
-import ua.form.ProductTypeFilterForm;
+import ua.form.filter.NameFilterForm;
+import ua.form.filter.ProductTypeFilterForm;
 import ua.service.ProductTypeService;
 import ua.service.implementation.validator.ProductTypeValidator;
 

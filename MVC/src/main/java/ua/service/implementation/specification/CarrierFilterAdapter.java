@@ -9,7 +9,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ua.entity.Carrier;
-import ua.form.CarrierFilterForm;
+import ua.form.filter.CarrierFilterForm;
 
 public class CarrierFilterAdapter implements Specification<Carrier> {
 	private String search = "";

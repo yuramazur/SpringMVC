@@ -9,7 +9,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import ua.entity.Name;
-import ua.form.NameFilterForm;
+import ua.form.filter.NameFilterForm;
 
 public class NameFilterAdapter implements Specification<Name>{
 

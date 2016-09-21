@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.Name;
-import ua.form.NameFilterForm;
+import ua.form.filter.NameFilterForm;
 import ua.service.NameService;
 import ua.service.implementation.validator.NameValidator;
 
