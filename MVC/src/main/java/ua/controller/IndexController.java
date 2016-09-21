@@ -30,9 +30,8 @@ public class IndexController {
 		return "user";
 	}
 
-	// @RequestMapping("/user/product/{id}")
-	// public String showUserProduct(@PathVariable int id, Model model) {
-	// model.addAttribute("product", productService.findById(id));
-	// return "userProduct";
-	// }
+	@RequestMapping("/login")
+	public String showLogin() {
+		return "login";
+	}
 }

@@ -47,7 +47,7 @@ public class ProductController {
 	}
 
 	@ModelAttribute("productForm")
-	public ProductForm getProduct() {
+	public ProductForm getForm() {
 		return new ProductForm();
 	}
 
@@ -93,7 +93,7 @@ public class ProductController {
 	@RequestMapping(value = "/admin/product/update/{id}")
 	public String updateProduct(Model model, @PathVariable int id,
 			@PageableDefault(5) Pageable pageable,
-			@ModelAttribute("filter") ProductFilterForm filter) {
+			@ModelAttribute(value="filter") ProductFilterForm filter) {
 		model.addAttribute("productForm", productService.findFormById(id));
 		model.addAttribute("page",
 				productService.findAllPagebleFilter(pageable, filter));

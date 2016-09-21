@@ -69,6 +69,7 @@
 	<div class="col-md-9 col-xs-12">
 		<form:form class="form-inline" action="/admin/product" method="post"
 			modelAttribute="productForm" >
+			<form:errors path="*"/>
 			<form:hidden path="id" />
 			<form:hidden path="path" />
 			<form:hidden path="version" />
