@@ -26,7 +26,7 @@
 <body>
 	<tiles:insertAttribute name="header" />
 
-	<div class="container">
+	<div class="container-fluid" style="padding-top:70px;">
 
 		<tiles:insertAttribute name="body" />
 

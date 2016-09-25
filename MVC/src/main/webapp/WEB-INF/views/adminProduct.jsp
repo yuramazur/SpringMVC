@@ -6,8 +6,9 @@
 <link rel="stylesheet" href="/resources/css/ingredientAmount.css">
 <script>
 	$(function() {
-		$('select[name=productType]').chosen();
-		$('select[name=producer]').chosen();
+		$('select[name=productType]').chosen({width:"190px;"});
+		$('select[name=producer]').chosen({width:"190px;"});
+		$(".chosen-select").chosen({width:"190px;"});
 	});
 </script>
 <div class="row-fluid">
@@ -31,7 +32,7 @@
 	</nav>
 </div>
 <div class="row-fluid">
-	<div class="col-md-2 col-xs-12">
+	<div class="col-md-2 col-xs-12" style="padding-top:90px;">
 		<form:form action="/admin/product" class="form-inline" method="get"
 			modelAttribute="filter">
 			<custom:hiddenInputs
@@ -39,6 +40,8 @@
 			<div class="form-group">
 				<form:input path="minPrice" placeholder=" min Price:"
 					class="form-control" />
+			</div>
+			<div class="form-group">
 				<form:input path="maxPrice" placeholder=" max Price:"
 					class="form-control" />
 			</div>
@@ -51,38 +54,51 @@
 				<h4>Product Types:</h4>
 			</div>
 			<div class="form-group">
-				<form:checkboxes items="${productTypes}" path="productTypeIds"
-					itemLabel="name" itemValue="id" />
+				<%-- 				<form:checkboxes items="${productTypes}" path="productTypeIds" --%>
+				<%-- 					itemLabel="name" itemValue="id" /> --%>
+				<form:select class="chosen-select" data-placeholder="Product Type"
+					path="productTypeIds" items="${productTypes}" itemLabel="name"
+					itemValue="id" style="width:180px;">
+
+				</form:select>
 			</div>
 			<div class="form-group">
 				<h4>Producers:</h4>
 			</div>
 			<div class="form-group">
-				<form:checkboxes items="${producers}" path="producerIds"
-					itemLabel="name" itemValue="id" />
+				<%-- 				<form:checkboxes items="${producers}" path="producerIds" --%>
+				<%-- 					itemLabel="name" itemValue="id" /> --%>
+				<form:select class="chosen-select" data-placeholder="Producers"
+					path="producerIds" items="${producers}" itemLabel="name"
+					itemValue="id" style="width:180px;">
+
+				</form:select>
 			</div>
-			<div class="form-group">
-				<button type="submit" class="btn btn-primary">Ok</button>
+			<div class="row" style="padding: 5px;">
+				<div class="col-md-8"></div>
+				<div class="col-md-4 col-xs-12 form-group">
+					<button type="submit" class="btn btn-primary">Ok</button>
+				</div>
 			</div>
 		</form:form>
 	</div>
-	<div class="col-md-9 col-xs-12">
+	<div class="col-md-8 col-xs-12">
 		<form:form class="form-inline" action="/admin/product" method="post"
-			modelAttribute="productForm" >
-			<form:errors path="*"/>
+			modelAttribute="productForm">
+			<form:errors path="*" />
 			<form:hidden path="id" />
 			<form:hidden path="path" />
 			<form:hidden path="version" />
 			<custom:hiddenInputs
 				excludeParams="productType, producer, title, price, id, path, version" />
-			<div class="form-group">
+			<div class="form-group" style="width:100%;">
 				<label for="error"><form:errors path="error" /></label>
 				<form:select path="productType" items="${productTypes}"
-					itemLabel="name" itemValue="id">
-					
+					itemLabel="name" itemValue="id" data-placeholder="Product Type">
+
 				</form:select>
 				<form:select path="producer" items="${producers}" itemLabel="name"
-					itemValue="id">
+					itemValue="id" data-placeholder="Producer">
 				</form:select>
 				<label for="title"><form:errors path="title" /></label>
 				<form:input path="title" placeholder="title:" class="form-control" />
@@ -95,11 +111,11 @@
 			</div>
 		</form:form>
 		<div class="row">
-			<div class="col-md-3">Image</div>
-			<div class="col-md-2">Product Type</div>
-			<div class="col-md-2">Producer</div>
-			<div class="col-md-2">Title</div>
-			<div class="col-md-1">Price</div>
+			<div class="col-md-3"><h4>Image</h4></div>
+			<div class="col-md-2"><h4>Product Type</h4></div>
+			<div class="col-md-2"><h4>Producer</h4></div>
+			<div class="col-md-2"><h4>Title</h4></div>
+			<div class="col-md-1"><h4>Price</h4></div>
 			<div class="col-md-1">
 				<h4>Delete</h4>
 			</div>
@@ -130,8 +146,8 @@
 				container="<ul class='pagination'></ul>" />
 		</div>
 	</div>
-	<div class="col-md-1 col-xs-12">
-		<div class="col-md-6">
+	<div class="col-md-2 col-xs-12">
+		<div class="col-md-4">
 			<div class="dropdown">
 				<button class="btn btn-primary dropdown-toggle" type="button"
 					data-toggle="dropdown">
@@ -153,7 +169,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<custom:size posibleSizes="1,2,5,10" size="${page.size}"
 				title="Розмір сторінки" />
 		</div>

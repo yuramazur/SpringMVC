@@ -10,3 +10,12 @@ body {
 .navbar .navbar-collapse {
 	text-align: center;
 }
+div{
+	padding: 5px;
+/* 	border: solid red 1px; */
+	
+}
+.chose-select{
+	
+	width: 90px;
+}
