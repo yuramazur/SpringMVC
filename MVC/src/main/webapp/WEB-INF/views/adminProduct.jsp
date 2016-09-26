@@ -84,7 +84,7 @@
 	</div>
 	<div class="col-md-8 col-xs-12">
 		<form:form class="form-inline" action="/admin/product" method="post"
-			modelAttribute="productForm">
+			modelAttribute="productForm" enctype="multipart/form-data">
 			<form:errors path="*" />
 			<form:hidden path="id" />
 			<form:hidden path="path" />
