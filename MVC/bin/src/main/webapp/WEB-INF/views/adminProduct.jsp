@@ -1,113 +1,177 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Product</title>
-<style>
-</style>
-</head>
-<body>
-	<h1 align="center">Product administration:</h1>
-	<form:form method="post" action="/admin/product"
-		modelAttribute="product">
-		<form:hidden path="id" />
-		<table border="1">
-			<tr>
-				<td colspan="2" align="center">
-					<p>
-						<b>Product creator</b>
-					</p>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="/WEB-INF/custom.tld" prefix="custom"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<link rel="stylesheet" href="/resources/css/ingredientAmount.css">
+<script>
+	$(function() {
+		$('select[name=productType]').chosen({width:"190px;"});
+		$('select[name=producer]').chosen({width:"190px;"});
+		$(".chosen-select").chosen({width:"190px;"});
+	});
+</script>
+<div class="row-fluid">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="collapse navbar-collapse" id="">
+				<ul class="nav navbar-nav">
+					<li><a href="/admin/name"><b>Name</b></a></li>
+					<li><a href="/admin/carrier"><b>Carrier</b></a></li>
+					<li><a href="/admin/city"><b>City</b></a></li>
+					<li><a href="/admin/producer"><b>Producer</b></a></li>
+					<li><a href="/admin/producttype"><b>Product Type</b></a></li>
+					<li class="active"><a href="/admin/product"><b>Product</b></a><span
+						class="sr-only">(current)</span></li>
+					<li><a href="/admin/delivery"><b>Delivery</b></a></li>
+					<li><a href="/admin/order"><b>Order</b></a></li>
+					<li><a href="/admin/client"><b>Clients</b></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</div>
+<div class="row-fluid">
+	<div class="col-md-2 col-xs-12" style="padding-top:90px;">
+		<form:form action="/admin/product" class="form-inline" method="get"
+			modelAttribute="filter">
+			<custom:hiddenInputs
+				excludeParams="minPrice,maxPrice,nameSearch,productTypeIds, producerIds,_productTypeIds,_producerIds " />
+			<div class="form-group">
+				<form:input path="minPrice" placeholder=" min Price:"
+					class="form-control" />
+			</div>
+			<div class="form-group">
+				<form:input path="maxPrice" placeholder=" max Price:"
+					class="form-control" />
+			</div>
+			<div class="form-group">
+				<form:input path="nameSearch" placeholder="product title:"
+					class="form-control" />
+			</div>
 
-				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="2"><a class="a1"><b><form:errors
-								path="error" /></b></a></td>
+			<div class="form-group">
+				<h4>Product Types:</h4>
+			</div>
+			<div class="form-group">
+				<%-- 				<form:checkboxes items="${productTypes}" path="productTypeIds" --%>
+				<%-- 					itemLabel="name" itemValue="id" /> --%>
+				<form:select class="chosen-select" data-placeholder="Product Type"
+					path="productTypeIds" items="${productTypes}" itemLabel="name"
+					itemValue="id" style="width:180px;">
 
-			</tr>
-			<tr>
-				<td align="center"><b>Product type select:</b></td>
-				<td align="center"><b>Producer select:</b></td>
-			</tr>
-			<tr>
-				<td align="center"><a class="a1"><b><form:errors
-								path="productType" /></b></a></td>
-				<td align="center"><a class="a1"><b><form:errors
-								path="producer" /></b></a></td>
-			</tr>
-			<tr>
-				<td align="center"><form:select path="productType">
-						<option value="0">---Product Types---</option>
-						<c:forEach items="${productTypes}" var="productType">
-							<c:choose>
-								<c:when test="${productType.id eq product.productType.id}">
-									<option value="${productType.id}" selected="selected">${productType.name}</option>
-								</c:when>
-								<c:otherwise>
-									<option value="${productType.id}">${productType.name}</option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</form:select></td>
-			
-				<td align="center"><form:select path="producer">
-						<option value="0">-----Producers-----</option>
-						<c:forEach items="${producers}" var="producer">
-							<c:choose>
-								<c:when test="${producer.id eq product.producer.id}">
-									<option value="${producer.id}" selected="selected">${producer.name}</option>
-								</c:when>
-								<c:otherwise>
-									<option value="${producer.id}">${producer.name}</option>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-					</form:select></td>
-			</tr>
-			<tr>
-				<td align="center"><a class="a1"><b><form:errors path="name" /></b></a></td>
-				<td align="center"><a class="a1"><b><form:errors path="price" /></b></a></td>
-			</tr>
-			<tr>
+				</form:select>
+			</div>
+			<div class="form-group">
+				<h4>Producers:</h4>
+			</div>
+			<div class="form-group">
+				<%-- 				<form:checkboxes items="${producers}" path="producerIds" --%>
+				<%-- 					itemLabel="name" itemValue="id" /> --%>
+				<form:select class="chosen-select" data-placeholder="Producers"
+					path="producerIds" items="${producers}" itemLabel="name"
+					itemValue="id" style="width:180px;">
 
-				<td align="center"><form:input path="name"
-						placeholder="Product title:" /></td>
+				</form:select>
+			</div>
+			<div class="row" style="padding: 5px;">
+				<div class="col-md-8"></div>
+				<div class="col-md-4 col-xs-12 form-group">
+					<button type="submit" class="btn btn-primary">Ok</button>
+				</div>
+			</div>
+		</form:form>
+	</div>
+	<div class="col-md-8 col-xs-12">
+		<form:form class="form-inline" action="/admin/product" method="post"
+			modelAttribute="productForm" enctype="multipart/form-data">
+			<form:errors path="*" />
+			<form:hidden path="id" />
+			<form:hidden path="path" />
+			<form:hidden path="version" />
+			<custom:hiddenInputs
+				excludeParams="productType, producer, title, price, id, path, version" />
+			<div class="form-group" style="width:100%;">
+				<label for="error"><form:errors path="error" /></label>
+				<form:select path="productType" items="${productTypes}"
+					itemLabel="name" itemValue="id" data-placeholder="Product Type">
 
-				<td align="center"><form:input path="price"
-						placeholder="Product price:" /></td>
-			</tr>
-			<tr>
-				<td colspan="2" align="right"><input type="submit" value="Save"></td>
-			</tr>
-		</table>
-	</form:form>
-
-	<table border="1">
-		<tr>
-			<td align="center" colspan="6"><b>Product List:</b></td>
-			<c:forEach items="${products}" var="product">
-				<tr>
-					<td>${product.productType.name}</td>
-					<td>${product.producer.name}</td>
-					<td>${product.name}</td>
-					<td>${product.price}</td>
-					<th width="10%"><a class="a1"
-						href="/admin/product/delete/${product.id}"><b>delete</b></a></th>
-					<th width="10%"><a href="/admin/product/update/${product.id}"><b>update</b></a></th>
-				</tr>
-			</c:forEach>
-		</tr>
-	</table>
-
-	<form name="returnToAdmin" action="/admin">
-		<p align="right">
-			<b>Return to administrator menu:</b> <input type="submit"
-				value="Return">
-		</p>
-	</form>
-</body>
-</html>
+				</form:select>
+				<form:select path="producer" items="${producers}" itemLabel="name"
+					itemValue="id" data-placeholder="Producer">
+				</form:select>
+				<label for="title"><form:errors path="title" /></label>
+				<form:input path="title" placeholder="title:" class="form-control" />
+				<label for="price"><form:errors path="price" /></label>
+				<form:input path="price" placeholder="price:" class="form-control" />
+				<label class="btn btn-default btn-file"> Browse <input
+					type="file" name="file" style="display: none;">
+				</label>
+				<button type="submit" class="btn btn-primary">Create</button>
+			</div>
+		</form:form>
+		<div class="row">
+			<div class="col-md-3"><h4>Image</h4></div>
+			<div class="col-md-2"><h4>Product Type</h4></div>
+			<div class="col-md-2"><h4>Producer</h4></div>
+			<div class="col-md-2"><h4>Title</h4></div>
+			<div class="col-md-1"><h4>Price</h4></div>
+			<div class="col-md-1">
+				<h4>Delete</h4>
+			</div>
+			<div class="col-md-1">
+				<h4>Update</h4>
+			</div>
+		</div>
+		<c:forEach items="${page.content}" var="product">
+			<div class="row">
+				<div class="col-md-3">
+					<img class="img-thumbnail" width="100"
+						src="/images/product/${product.id}${product.path}?version=${product.version}" />
+				</div>
+				<div class="col-md-2">${product.productType.name}</div>
+				<div class="col-md-2">${product.producer.name}</div>
+				<div class="col-md-2">${product.name}</div>
+				<div class="col-md-1">${product.price}</div>
+				<div class="col-md-1">
+					<a href="/admin/product/delete/${product.id}<custom:allParams/>">delete</a>
+				</div>
+				<div class="col-md-1">
+					<a href="/admin/product/update/${product.id}<custom:allParams/>">update</a>
+				</div>
+			</div>
+		</c:forEach>
+		<div class="col-md-12 text-center">
+			<custom:pageable page="${page}" cell="<li></li>"
+				container="<ul class='pagination'></ul>" />
+		</div>
+	</div>
+	<div class="col-md-2 col-xs-12">
+		<div class="col-md-4">
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle" type="button"
+					data-toggle="dropdown">
+					Sort <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<custom:sort innerHtml="Price asc" paramValue="price" />
+					<custom:sort innerHtml="Price desc" paramValue="price,desc" />
+					<custom:sort innerHtml="Product Type asc"
+						paramValue="productType.name" />
+					<custom:sort innerHtml="Product Type desc"
+						paramValue="productType.name,desc" />
+					<custom:sort innerHtml="Producer name asc"
+						paramValue="producer.name" />
+					<custom:sort innerHtml="Producer name desc"
+						paramValue="producer.name,desc" />
+					<custom:sort innerHtml="Title asc" paramValue="name" />
+					<custom:sort innerHtml="Title desc" paramValue="name,desc" />
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<custom:size posibleSizes="1,2,5,10" size="${page.size}"
+				title="Розмір сторінки" />
+		</div>
+	</div>
+</div>

@@ -24,7 +24,7 @@
 	</nav>
 </div>
 <div class="row-fluid">
-	<div class="col-md-3 col-xs-12">
+	<div class="col-md-4 col-xs-12">
 		<div class="col-md-12 col-xs-12">
 			<form:form action="/admin/producer" class="form-inline" method="get"
 				modelAttribute="filter">
@@ -37,7 +37,7 @@
 			</form:form>
 		</div>
 	</div>
-	<div class="col-md-7 col-xs-12">
+	<div class="col-md-6 col-xs-12">
 		<div class="col-md-12 col-xs-12">
 			<form:form action="/admin/producer" method="post" class="form-inline"
 				modelAttribute="producer">
@@ -52,7 +52,7 @@
 			</form:form>
 		</div>
 		<div class="col-md-4 col-xs-4">
-			<h4>Producer name</h4>
+			<h4>Producer</h4>
 		</div>
 		<div class="col-md-4 col-xs-4">
 			<h4>Delete</h4>

@@ -24,7 +24,7 @@
 	</nav>
 </div>
 <div class="row-fluid">
-		<div class="col-md-3 col-xs-12">
+		<div class="col-md-4 col-xs-12">
 		<div class="col-md-12 col-xs-12">
 		<form:form action="/admin/city" class="form-inline" method="get" modelAttribute="filter">
 				<custom:hiddenInputs excludeParams="search"/>
@@ -36,7 +36,7 @@
 			</form:form>
 		</div>
 		</div>
-		<div class="col-md-7 col-xs-12">
+		<div class="col-md-6 col-xs-12">
 		<div class="col-md-12 col-xs-12">
 			<form:form action="/admin/city" method="post" class="form-inline" 
 				modelAttribute="city">
@@ -49,7 +49,7 @@
 				</div>
 			</form:form>
 		</div>
-			<div class="col-md-4 col-xs-4"><h4>City name</h4></div>
+			<div class="col-md-4 col-xs-4"><h4>City</h4></div>
 			<div class="col-md-4 col-xs-4"><h4>Delete</h4></div>
 			<div class="col-md-4 col-xs-4"><h4>Update</h4></div>
 			<c:forEach items="${page.content}" var="city">

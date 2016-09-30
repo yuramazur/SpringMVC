@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.User;
+import ua.form.UserForm;
 import ua.service.UserService;
 
 @Controller
@@ -15,9 +16,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@ModelAttribute("user")
-	public User getForm(){
-		return new User();
+	@ModelAttribute("userForm")
+	public UserForm getForm(){
+		return new UserForm();
 	}
 	@RequestMapping("/registration")
 	public String register(){
@@ -25,8 +26,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/registration", method=RequestMethod.POST)
-	public String save(@ModelAttribute("user") User user){
-		userService.save(user);
+	public String save(@ModelAttribute("userForm") UserForm userForm){
+		userService.save(userForm);
 		return "redirect:/login";
 	}
 }

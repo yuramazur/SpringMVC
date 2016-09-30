@@ -1,6 +1,7 @@
 package ua.service;
 
 import ua.entity.User;
+import ua.form.UserForm;
 
 public interface UserService {
 	
@@ -9,4 +10,6 @@ public interface UserService {
 	User findById(int id);
 
 	void save(User user);
+
+	void save(UserForm userForm);
 }

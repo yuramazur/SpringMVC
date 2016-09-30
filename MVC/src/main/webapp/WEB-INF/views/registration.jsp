@@ -9,12 +9,13 @@
 			<p style="color: red;">Fail</p>
 		</div>
 	</c:if>
-		<form:form action="/login" class="form-group" method="post" modelAttribute="user">
+		<form:form action="/registration" class="form-group" method="post" modelAttribute="userForm">
 				<div class="form-group">
 					<input name="login" placeholder="Login" class="form-control" />
 					<input name="mail" placeholder="E-mail" class="form-control" />
-					<input name="password" type="password" placeholder="Some like ***" class="form-control" />
-					<button type="submit" class="btn btn-primary">Ok</button>
+					<input name="password" type="password" placeholder="enter password:" class="form-control" />
+					<input name="passwordConfirm" type="password" placeholder="confirm password:" class="form-control" />
+					<button type="submit" class="btn btn-primary">Registration</button>
 				</div>
 		</form:form>
 	</div>

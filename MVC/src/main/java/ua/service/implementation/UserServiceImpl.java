@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import ua.entity.Role;
 import ua.entity.User;
+import ua.form.UserForm;
 import ua.repository.UserRepository;
 import ua.service.UserService;
 
@@ -54,5 +55,16 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	@Override
 	public User findById(int id) {
 		return repository.findOne(id);
+	}
+
+	@Override
+	public void save(UserForm userForm) {
+		User user = new User();
+		user.setRole(Role.ROLE_USER);
+		user.setLogin(userForm.getLogin());
+		user.setMail(userForm.getMail());
+		user.setPassword(encoder.encode(userForm.getPasswordConfirm()));
+		repository.save(user);
+		
 	}
 }
