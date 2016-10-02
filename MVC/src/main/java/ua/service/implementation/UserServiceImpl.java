@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.entity.Client;
 import ua.entity.Name;
@@ -16,6 +17,7 @@ import ua.entity.User;
 import ua.form.UserForm;
 import ua.repository.ClientRepository;
 import ua.repository.NameRepository;
+import ua.repository.ProductRepository;
 import ua.repository.UserRepository;
 import ua.service.UserService;
 
@@ -28,7 +30,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	private ClientRepository clientRepository;
 	@Autowired
 	private NameRepository nameRepository;
-
+	@Autowired
+	private ProductRepository productRepository;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
@@ -62,7 +65,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User findById(int id) {
-		return repository.findOne(id);
+		return repository.findById(id);
 	}
 
 	@Override
@@ -88,10 +91,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public void addToWishList(int UserId, int productId) {
-		repository.findOne(UserId).getWishList().add(productId);
-		
+	@Transactional
+	public void addToWishList(int userId, int productId) {
+		User user = repository.findOne(userId);
+		user.getWishList().add(productRepository.findOne(productId));
+		repository.save(user);
+
 	}
 
-	
 }

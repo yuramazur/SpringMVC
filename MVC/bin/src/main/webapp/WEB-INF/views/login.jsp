@@ -18,9 +18,7 @@
 
 			</div>
 		</form:form>
-		<form action="/registration">
-			<button type="submit" class="btn btn-primary">Registration</button>
-		</form>
+
 
 	</div>
 </div>

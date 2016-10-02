@@ -17,13 +17,15 @@
 <div class="row-fluid">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-			<div class="col-md-9">
+			<div class="col-md-11">
 				<h4>Hello! Nice to see you =)</h4>
 			</div>
-			<div class="col-md-3">
-				<h4>Wish List: ${authUser.wishList.size} items</h4>
-<!-- 					<span class="tag tag-success"></span> -->
-				
+			<div class="col-md-1">
+			<ul class="list-group">
+			 <li class="list-group-item">Wish List: <span class="badge">${authUser.wishList.size()}</span></li>
+<%-- 				<h4>Wish List: ${authUser.wishList.size()} items.</h4> --%>
+<!-- <!-- 					<span class="tag tag-success"></span> --> 
+				</ul>
 			</div>
 		</div>
 	</nav>
@@ -120,7 +122,7 @@
 
 				<div class="col-md-1">
 					<security:authorize access="isAuthenticated()">
-						<a href="/user/wishlist/add/${authUser.id}/${product.id}<custom:allParams/>">Want
+						<a href="/user/wishlist/add/${product.id}<custom:allParams/>">Want
 							it!</a>
 					</security:authorize>
 				</div>

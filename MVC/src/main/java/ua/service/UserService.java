@@ -4,7 +4,7 @@ import ua.entity.User;
 import ua.form.UserForm;
 
 public interface UserService {
-	
+
 	User findByLogin(String login);
 
 	User findById(int id);
@@ -12,5 +12,6 @@ public interface UserService {
 	void save(User user);
 
 	void save(UserForm userForm);
-	void addToWishList(int UserId, int productId);
+
+	void addToWishList(int uId, int id);
 }

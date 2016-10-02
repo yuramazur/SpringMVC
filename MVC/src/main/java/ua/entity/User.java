@@ -5,14 +5,15 @@ import java.util.Collection;
 import java.util.List;
 
 
+
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -29,8 +30,8 @@ public class User implements UserDetails {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	private Client client;
-	@Transient
-	private List<Integer> wishList = new ArrayList<Integer>();
+	@ManyToMany
+	private List<Product> wishList = new ArrayList<Product>();
 	
 	private String login;
 
@@ -121,12 +122,14 @@ public class User implements UserDetails {
 		this.client = client;
 	}
 
-	public List<Integer> getWishList() {
+	public List<Product> getWishList() {
 		return wishList;
 	}
 
-	public void setWishList(List<Integer> wishList) {
+	public void setWishList(List<Product> wishList) {
 		this.wishList = wishList;
 	}
+
+	
 
 }
