@@ -5,42 +5,31 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-				aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<!-- 			<a class="navbar-brand" href="/"><img class="img-thumbnail" -->
-			<!-- 				width="80" src="/resources/image/maxresdefault.jpg?version=1" /></a> -->
-		</div>
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<form:form class="navbar-form navbar-right">
-				<button type="submit" class="btn btn-default">${authUser.login}</button>
-			</form:form>
-		</div>
-		<security:authorize access="isAuthenticated()">
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
+  <div class="container">
+    <div class="navbar-header">
+     <a class="navbar-brand" href="/"><img class="img-thumbnail" width="90%" src="/resources/image/heder.jpg?version=1" /></a> 
+    </div>
+    <ul class="nav navbar-nav">
+<!--       	<li><a>Home</a></li> -->
+<!--       	<li><a>Page 1</a></li> -->
+<!--       	<li><a>Page 2</a></li> -->
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+<%--     <security:authentication property="principal.password"/> --%>
+    	<li><a>${authUser.login}</a></li>
+    <security:authorize access="isAuthenticated()">
+			<li>
 				<form:form action="/logout" method="post"
 					class="navbar-form navbar-right">
 					<button type="submit" class="btn btn-default">Logout</button>
 				</form:form>
-			</div>
+			</li>
 		</security:authorize>
 		<security:authorize access="!isAuthenticated()">
-			<div class="collapse navbar-collapse"
-				id="bs-example-navbar-collapse-1">
-				<form:form action="/login" method="get"
-					class="navbar-form navbar-right">
-					<button type="submit" class="btn btn-default">login</button>
-				</form:form>
-			</div>
-		</security:authorize>
-	</div>
+			<li>
+				<a class="btn btn-default" href="/login">Login</a>
+			</li>
+	</security:authorize>
+    </ul>
+  </div>
 </nav>

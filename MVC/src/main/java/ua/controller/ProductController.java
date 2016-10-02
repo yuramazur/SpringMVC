@@ -81,19 +81,21 @@ public class ProductController {
 			return "adminProduct";
 		}
 		productService.save(productForm);
-		return "redirect:/admin/product";
+		return "redirect:/admin/product" + getParams(pageable, filter);
 	}
 
 	@RequestMapping(value = "/admin/product/delete/{id}")
-	public String deleteProduct(@PathVariable int id) {
+	public String deleteProduct(@PathVariable int id,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute("filter") ProductFilterForm filter) {
 		productService.deleteById(id);
-		return "redirect:/admin/product";
+		return "redirect:/admin/product" + getParams(pageable, filter);
 	}
 
 	@RequestMapping(value = "/admin/product/update/{id}")
 	public String updateProduct(Model model, @PathVariable int id,
 			@PageableDefault(5) Pageable pageable,
-			@ModelAttribute(value="filter") ProductFilterForm filter) {
+			@ModelAttribute(value = "filter") ProductFilterForm filter) {
 		model.addAttribute("productForm", productService.findFormById(id));
 		model.addAttribute("page",
 				productService.findAllPagebleFilter(pageable, filter));
@@ -109,36 +111,35 @@ public class ProductController {
 		return "userProduct";
 	}
 
-	 @SuppressWarnings("unused")
-	 private String getParams(Pageable pageable, ProductFilterForm form){
-	 StringBuilder buffer = new StringBuilder();
-	 buffer.append("?page=");
-	 buffer.append(String.valueOf(pageable.getPageNumber()+1));
-	 buffer.append("&size=");
-	 buffer.append(String.valueOf(pageable.getPageSize()));
-	 if(pageable.getSort()!=null){
-	 buffer.append("&sort=");
-	 Sort sort = pageable.getSort();
-	 sort.forEach((order)->{
-	 buffer.append(order.getProperty());
-	 if(order.getDirection()!=Direction.ASC)
-	 buffer.append(",desc");
-	 });
-	 }
-	 buffer.append("&minPrice=");
-	 buffer.append(form.getMinPrice());
-	 buffer.append("&maxPrice=");
-	 buffer.append(form.getMaxPrice());
-	 buffer.append("&nameSearch=");
-	 buffer.append(form.getNameSearch());
-	 for(Integer i : form.getProductTypeIds()){
-	 buffer.append("&productTypeIds=");
-	 buffer.append(i.toString());
-	 }
-	 for(Integer i : form.getProducerIds()){
-	 buffer.append("&ProducerIds=");
-	 buffer.append(i.toString());
-	 }
-	 return buffer.toString();
-	 }
+	private String getParams(Pageable pageable, ProductFilterForm form) {
+		StringBuilder buffer = new StringBuilder();
+		buffer.append("?page=");
+		buffer.append(String.valueOf(pageable.getPageNumber() + 1));
+		buffer.append("&size=");
+		buffer.append(String.valueOf(pageable.getPageSize()));
+		if (pageable.getSort() != null) {
+			buffer.append("&sort=");
+			Sort sort = pageable.getSort();
+			sort.forEach((order) -> {
+				buffer.append(order.getProperty());
+				if (order.getDirection() != Direction.ASC)
+					buffer.append(",desc");
+			});
+		}
+		buffer.append("&minPrice=");
+		buffer.append(form.getMinPrice());
+		buffer.append("&maxPrice=");
+		buffer.append(form.getMaxPrice());
+		buffer.append("&nameSearch=");
+		buffer.append(form.getNameSearch());
+		for (Integer i : form.getProductTypeIds()) {
+			buffer.append("&productTypeIds=");
+			buffer.append(i.toString());
+		}
+		for (Integer i : form.getProducerIds()) {
+			buffer.append("&ProducerIds=");
+			buffer.append(i.toString());
+		}
+		return buffer.toString();
+	}
 }

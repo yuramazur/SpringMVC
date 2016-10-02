@@ -4,29 +4,38 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements UserDetails{
-
-	private static final long serialVersionUID = 5902478133304864638L;
+public class User implements UserDetails {
+	
+	private static final long serialVersionUID = 3088562910924191115L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@OneToOne(fetch = FetchType.LAZY)
+	private Client client;
+	@Transient
+	private List<Integer> wishList = new ArrayList<Integer>();
+	
 	private String login;
-	
+
 	private String mail;
-	
+
 	private String password;
 	@Enumerated
 	private Role role;
@@ -54,6 +63,7 @@ public class User implements UserDetails{
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+
 	@Override
 	public String getPassword() {
 		return password;
@@ -102,4 +112,21 @@ public class User implements UserDetails{
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public List<Integer> getWishList() {
+		return wishList;
+	}
+
+	public void setWishList(List<Integer> wishList) {
+		this.wishList = wishList;
+	}
+
 }

@@ -9,18 +9,26 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ua.entity.Client;
+import ua.entity.Name;
 import ua.entity.Role;
 import ua.entity.User;
 import ua.form.UserForm;
+import ua.repository.ClientRepository;
+import ua.repository.NameRepository;
 import ua.repository.UserRepository;
 import ua.service.UserService;
 
 @Service("userDetailsService")
-public class UserServiceImpl implements UserService,UserDetailsService{
+public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Autowired
 	private UserRepository repository;
-	
+	@Autowired
+	private ClientRepository clientRepository;
+	@Autowired
+	private NameRepository nameRepository;
+
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
@@ -35,9 +43,9 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 		user.setPassword(encoder.encode(user.getPassword()));
 		repository.save(user);
 	}
-	
+
 	@PostConstruct
-	public void saveAdmin(){
+	public void saveAdmin() {
 		User user = new User();
 		user.setRole(Role.ROLE_ADMIN);
 		user.setPassword(encoder.encode("admin"));
@@ -60,11 +68,30 @@ public class UserServiceImpl implements UserService,UserDetailsService{
 	@Override
 	public void save(UserForm userForm) {
 		User user = new User();
+		Client client = new Client();
 		user.setRole(Role.ROLE_USER);
 		user.setLogin(userForm.getLogin());
 		user.setMail(userForm.getMail());
 		user.setPassword(encoder.encode(userForm.getPasswordConfirm()));
+		if (nameRepository.findByNames(userForm.getName()) == null) {
+			Name name = new Name();
+			name.setNames(userForm.getName());
+			nameRepository.save(name);
+		}
+		client.setName(nameRepository.findByNames(userForm.getName()));
+		client.setLastName(userForm.getLastName());
+		client.setPhone(userForm.getPhone());
+		user.setClient(client);
+		clientRepository.save(client);
 		repository.save(user);
+
+	}
+
+	@Override
+	public void addToWishList(int UserId, int productId) {
+		repository.findOne(UserId).getWishList().add(productId);
 		
 	}
+
+	
 }

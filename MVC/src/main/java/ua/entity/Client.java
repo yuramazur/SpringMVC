@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -24,6 +25,8 @@ public class Client {
 	private int id;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Name name;
+	@OneToOne(mappedBy="client")
+	private User user;
 	@OneToMany(mappedBy ="client")
 	private List<MyOrder> order;
 	private String lastName;
@@ -81,9 +84,14 @@ public class Client {
 		this.order = order;
 	}
 
-	@Override
-	public String toString() {
-		return "id: " + id + ", " + name + ", " + lastName + ", Phone: " + phone;
+	public User getUser() {
+		return user;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	
 	
 }

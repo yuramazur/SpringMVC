@@ -59,68 +59,78 @@ public class DeliveryController {
 	}
 
 	@RequestMapping("/admin/delivery")
-	public String showDelyvery(Model model, @PageableDefault(5) Pageable pageable,@ModelAttribute("filter") DeliveryFilterForm filter) {
+	public String showDelyvery(Model model,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute("filter") DeliveryFilterForm filter) {
 		model.addAttribute("cities", cityService.findAll());
 		model.addAttribute("carriers", carrierService.findAll());
-		model.addAttribute("page", deliveryService.findAllPagebleFilter(pageable,filter));
-		
+		model.addAttribute("page",
+				deliveryService.findAllPagebleFilter(pageable, filter));
+
 		return "adminDelivery";
 	}
 
-	
 	@RequestMapping(value = "/admin/delivery", method = RequestMethod.POST)
 	public String saveDelivery(
 			@ModelAttribute("deliveryForm") @Valid DeliveryForm deliveryForm,
-			BindingResult br, Model model,@PageableDefault(5) Pageable pageable,@ModelAttribute("filter") DeliveryFilterForm filter) {
+			BindingResult br, Model model,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute("filter") DeliveryFilterForm filter) {
 		if (br.hasErrors()) {
 			model.addAttribute("cities", cityService.findAll());
 			model.addAttribute("carriers", carrierService.findAll());
-			model.addAttribute("page", deliveryService.findAllPagebleFilter(pageable,filter));
+			model.addAttribute("page",
+					deliveryService.findAllPagebleFilter(pageable, filter));
 			return "adminDelivery";
 		}
 		deliveryService.save(deliveryForm);
-		return "redirect:/admin/delivery";
+		return "redirect:/admin/delivery" + getParams(pageable, filter);
 	}
 
 	@RequestMapping("/admin/delivery/delete/{id}")
-	public String deleteDelivery(@PathVariable int id) {
+	public String deleteDelivery(@PathVariable int id,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute("filter") DeliveryFilterForm filter) {
 		deliveryService.deleteById(id);
-		return "redirect:/admin/delivery";
+		return "redirect:/admin/delivery" + getParams(pageable, filter);
 	}
 
 	@RequestMapping(value = "/admin/delivery/update/{id}")
-	public String updadeDelivery( @PathVariable int id,Model model,@PageableDefault(5) Pageable pageable,@ModelAttribute("filter") DeliveryFilterForm filter) {
+	public String updadeDelivery(@PathVariable int id, Model model,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute("filter") DeliveryFilterForm filter) {
 		model.addAttribute("deliveryForm", deliveryService.findFormById(id));
 		model.addAttribute("cities", cityService.findAll());
 		model.addAttribute("carriers", carrierService.findAll());
-		model.addAttribute("page", deliveryService.findAllPagebleFilter(pageable,filter));
-		
+		model.addAttribute("page",
+				deliveryService.findAllPagebleFilter(pageable, filter));
+
 		return "adminDelivery";
 	}
-	@SuppressWarnings("unused")
-	private String getParams(Pageable pageable, DeliveryFilterForm form){
+
+	private String getParams(Pageable pageable, DeliveryFilterForm form) {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("?page=");
-		buffer.append(String.valueOf(pageable.getPageNumber()+1));
+		buffer.append(String.valueOf(pageable.getPageNumber() + 1));
 		buffer.append("&size=");
 		buffer.append(String.valueOf(pageable.getPageSize()));
-		if(pageable.getSort()!=null){
+		if (pageable.getSort() != null) {
 			buffer.append("&sort=");
 			Sort sort = pageable.getSort();
-			sort.forEach((order)->{
+			sort.forEach((order) -> {
 				buffer.append(order.getProperty());
-				if(order.getDirection()!=Direction.ASC)
-				buffer.append(",desc");
+				if (order.getDirection() != Direction.ASC)
+					buffer.append(",desc");
 			});
 		}
 		buffer.append("&numCerrDep=");
 		buffer.append(form.getNumCerrDepInt());
-		
-		for(Integer i : form.getCityIds()){
+
+		for (Integer i : form.getCityIds()) {
 			buffer.append("&cityIds=");
 			buffer.append(i.toString());
 		}
-		for(Integer i : form.getCarrierIds()){
+		for (Integer i : form.getCarrierIds()) {
 			buffer.append("&carrierIds=");
 			buffer.append(i.toString());
 		}

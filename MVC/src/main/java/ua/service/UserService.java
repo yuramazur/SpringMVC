@@ -12,4 +12,5 @@ public interface UserService {
 	void save(User user);
 
 	void save(UserForm userForm);
+	void addToWishList(int UserId, int productId);
 }
