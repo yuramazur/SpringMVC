@@ -1,5 +1,7 @@
 package ua.service;
 
+import java.security.Principal;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,5 +22,9 @@ public interface UserService {
 
 	void addToWishList(int uId, int id);
 
-	Page<Product> findWishList(Pageable pageable, ProductFilterForm filter);
+	Page<Product> findWishList(int id, Pageable pageable,
+			ProductFilterForm filter);
+
+	void deleteFromWishList(Principal principal,int id);
+
 }

@@ -1,6 +1,7 @@
 package ua.controller;
 
 import java.security.Principal;
+import java.util.Iterator;
 
 import javax.validation.Valid;
 
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.entity.Producer;
+import ua.entity.Product;
 import ua.entity.ProductType;
+import ua.entity.User;
 import ua.form.ProductForm;
 import ua.form.filter.ProductFilterForm;
 import ua.service.ProducerService;
@@ -113,13 +116,23 @@ public class ProductController {
 	@RequestMapping("/user/wishlist")
 	public String showProductWishList(Model model,
 			@PageableDefault(5) Pageable pageable,
-			@ModelAttribute("filter") ProductFilterForm filter, Principal principal) {
+			@ModelAttribute("filter") ProductFilterForm filter,
+			Principal principal) {
 		int id = Integer.parseInt(principal.getName());
 		model.addAttribute("page",
-				userService.findWishList(id,pageable, filter));
+				userService.findWishList(id, pageable, filter));
 		model.addAttribute("productTypes", productTypeService.findAll());
 		model.addAttribute("producers", producerService.findAll());
 		return "userWishList";
+	}
+
+	@RequestMapping(value = "/user/wishlist/delete/{id}")
+	public String deleteFromWishList(@PathVariable int id,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute(value = "filter") ProductFilterForm filter,
+			Principal principal) {
+		userService.deleteFromWishList(principal,id);
+		return "redirect:/user/wishlist" + getParams(pageable, filter);
 	}
 
 	private String getParams(Pageable pageable, ProductFilterForm form) {

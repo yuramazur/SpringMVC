@@ -1,8 +1,13 @@
 package ua.service.implementation;
 
+import java.security.Principal;
+import java.util.Iterator;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,14 +17,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import ua.entity.Client;
 import ua.entity.Name;
+import ua.entity.Product;
 import ua.entity.Role;
 import ua.entity.User;
 import ua.form.UserForm;
+import ua.form.filter.ProductFilterForm;
 import ua.repository.ClientRepository;
 import ua.repository.NameRepository;
 import ua.repository.ProductRepository;
 import ua.repository.UserRepository;
 import ua.service.UserService;
+import ua.service.implementation.specification.ProductFilterAdapter;
 
 @Service("userDetailsService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -99,4 +107,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	}
 
+	@Override
+	public Page<Product> findWishList(int id, Pageable pageable,
+			ProductFilterForm filter) {
+		return productRepository.findAll(new ProductFilterAdapter(id, filter),
+				pageable);
+	}
+
+	@Override
+	public void deleteFromWishList(Principal principal, int id) {
+		User user = findById(Integer.valueOf(principal.getName()));
+		Iterator<Product> iterator = user.getWishList().iterator();
+		while (iterator.hasNext()) {
+			if (iterator.next().getId() == id) {
+				iterator.remove();
+				break;
+			}
+		}
+		save(user);
+	}
 }

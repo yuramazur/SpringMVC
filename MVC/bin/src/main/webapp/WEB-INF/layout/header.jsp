@@ -10,9 +10,7 @@
      <a class="navbar-brand" href="/"><img class="img-thumbnail" width="90%" src="/resources/image/heder.jpg?version=1" /></a> 
     </div>
     <ul class="nav navbar-nav">
-<!--       	<li><a>Home</a></li> -->
-<!--       	<li><a>Page 1</a></li> -->
-<!--       	<li><a>Page 2</a></li> -->
+
     </ul>
     <ul class="nav navbar-nav navbar-right">
 <%--     <security:authentication property="principal.password"/> --%>

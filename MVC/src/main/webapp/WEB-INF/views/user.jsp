@@ -24,7 +24,7 @@
 				<security:authorize
 					access="isAuthenticated() and hasRole('ROLE_USER')">
 					<ul class="list-group">
-						<li class="list-group-item">Wish List: <span class="badge">${authUser.wishList.size()}</span></li>
+						<li class="list-group-item"><a href="/user/wishlist">Wish List:</a><span class="badge">${authUser.wishList.size()}</span></li>
 					</ul>
 				</security:authorize>
 			</div>

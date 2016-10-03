@@ -1,2 +1,7 @@
 /target/
+/.gitignore
+/.project
+/.settings/
+/Mazur/
+/pom.xml
 /src/

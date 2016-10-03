@@ -20,7 +20,11 @@
 			<div class="col-md-9">
 				<h4>Hello! Nice to see you =)</h4>
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-1">
+			<ul class="list-group">
+						<li class="list-group-item"><a href="/user">Exit:</a><span class="badge">${authUser.wishList.size()}</span></li>
+					</ul>			
+			</div>
 			<div class="col-md-2 col-xs-12">
 				<div class="col-md-4">
 					<div class="dropdown">
@@ -55,7 +59,7 @@
 
 <div class="row-fluid">
 	<div class="col-md-2 col-xs-12" style="padding-top: 90px;">
-		<form:form action="/user" class="form-inline" method="get"
+		<form:form action="/user/wishlist" class="form-inline" method="get"
 			modelAttribute="filter">
 			<custom:hiddenInputs
 				excludeParams="minPrice,maxPrice,nameSearch,productTypeIds, producerIds,_productTypeIds,_producerIds " />
@@ -141,8 +145,7 @@
 				<div class="col-md-2">${product.name}</div>
 				<div class="col-md-1">${product.price}</div>
 				<div class="col-md-1">
-					<a href="/user/wishlist/delete/${product.id}<custom:allParams/>">Want
-						it!</a>
+					<a href="/user/wishlist/delete/${product.id}<custom:allParams/>">Don't want it!</a>
 				</div>
 
 			</div>

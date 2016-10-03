@@ -8,7 +8,7 @@
 	<http use-expressions="true">
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')" />
-		<intercept-url pattern="/user/*" access="hasRole('ROLE_USER','ROLE_ADMIN')" />
+		<intercept-url pattern="/user/*" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')" />
 		<form-login login-page="/login" login-processing-url="/login"
 			authentication-failure-url="/login?fail=true" />
 		<logout logout-url="/logout" logout-success-url="/" />

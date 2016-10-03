@@ -6,17 +6,18 @@ import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
-
 import ua.entity.Product;
+import ua.entity.User;
 import ua.form.filter.ProductFilterForm;
+
 
 public class ProductFilterAdapter implements Specification<Product> {
 	private final ProductFilterForm form;
@@ -28,6 +29,15 @@ public class ProductFilterAdapter implements Specification<Product> {
 		} else {
 			this.form = new ProductFilterForm();
 		}
+	}
+
+	public ProductFilterAdapter(int id, ProductFilterForm form) {
+		this.form = form;
+		filters.add((root, query, cb) -> {
+			Join<Product, User> join = root.join("users");
+			Expression<Integer> exp = join.get("id");
+			return cb.equal(exp, id);
+		});
 	}
 
 	private void findByPrice() {

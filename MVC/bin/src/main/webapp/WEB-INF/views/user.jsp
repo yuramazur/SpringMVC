@@ -11,7 +11,7 @@
 		$(".chosen-select").chosen({
 			width : "190px;"
 		});
-		
+
 	});
 </script>
 <div class="row-fluid">
@@ -20,10 +20,41 @@
 			<div class="col-md-9">
 				<h4>Hello! Nice to see you =)</h4>
 			</div>
-			<div class="col-md-3">
-				<h4>Wish List: ${authUser.wishList.size} items</h4>
-<!-- 					<span class="tag tag-success"></span> -->
-				
+			<div class="col-md-1">
+				<security:authorize
+					access="isAuthenticated() and hasRole('ROLE_USER')">
+					<ul class="list-group">
+						<li class="list-group-item">Wish List: <span class="badge">${authUser.wishList.size()}</span></li>
+					</ul>
+				</security:authorize>
+			</div>
+			<div class="col-md-2 col-xs-12">
+				<div class="col-md-4">
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button"
+							data-toggle="dropdown">
+							Sort <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<custom:sort innerHtml="Price asc" paramValue="price" />
+							<custom:sort innerHtml="Price desc" paramValue="price,desc" />
+							<custom:sort innerHtml="Product Type asc"
+								paramValue="productType.name" />
+							<custom:sort innerHtml="Product Type desc"
+								paramValue="productType.name,desc" />
+							<custom:sort innerHtml="Producer name asc"
+								paramValue="producer.name" />
+							<custom:sort innerHtml="Producer name desc"
+								paramValue="producer.name,desc" />
+							<custom:sort innerHtml="Title asc" paramValue="name" />
+							<custom:sort innerHtml="Title desc" paramValue="name,desc" />
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<custom:size posibleSizes="1,2,5,10" size="${page.size}"
+						title="Page Size" />
+				</div>
 			</div>
 		</div>
 	</nav>
@@ -100,9 +131,12 @@
 			<div class="col-md-1">
 				<h4>Buy</h4>
 			</div>
-			<div class="col-md-1">
-				<h4>Wish List</h4>
-			</div>
+			<security:authorize
+				access="isAuthenticated() and hasRole('ROLE_USER')">
+				<div class="col-md-1">
+					<h4>Wish List</h4>
+				</div>
+			</security:authorize>
 		</div>
 		<c:forEach items="${page.content}" var="product">
 			<div class="row">
@@ -120,7 +154,7 @@
 
 				<div class="col-md-1">
 					<security:authorize access="isAuthenticated()">
-						<a href="/user/wishlist/add/${authUser.id}/${product.id}<custom:allParams/>">Want
+						<a href="/user/wishlist/add/${product.id}<custom:allParams/>">Want
 							it!</a>
 					</security:authorize>
 				</div>
@@ -130,34 +164,6 @@
 		<div class="col-md-12 text-center">
 			<custom:pageable page="${page}" cell="<li></li>"
 				container="<ul class='pagination'></ul>" />
-		</div>
-	</div>
-	<div class="col-md-2 col-xs-12">
-		<div class="col-md-4">
-			<div class="dropdown">
-				<button class="btn btn-primary dropdown-toggle" type="button"
-					data-toggle="dropdown">
-					Sort <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<custom:sort innerHtml="Price asc" paramValue="price" />
-					<custom:sort innerHtml="Price desc" paramValue="price,desc" />
-					<custom:sort innerHtml="Product Type asc"
-						paramValue="productType.name" />
-					<custom:sort innerHtml="Product Type desc"
-						paramValue="productType.name,desc" />
-					<custom:sort innerHtml="Producer name asc"
-						paramValue="producer.name" />
-					<custom:sort innerHtml="Producer name desc"
-						paramValue="producer.name,desc" />
-					<custom:sort innerHtml="Title asc" paramValue="name" />
-					<custom:sort innerHtml="Title desc" paramValue="name,desc" />
-				</ul>
-			</div>
-		</div>
-		<div class="col-md-8">
-			<custom:size posibleSizes="1,2,5,10" size="${page.size}"
-				title="Розмір сторінки" />
 		</div>
 	</div>
 </div>
