@@ -1,5 +1,7 @@
 package ua.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import ua.form.filter.ProductFilterForm;
 import ua.service.ProducerService;
 import ua.service.ProductService;
 import ua.service.ProductTypeService;
+import ua.service.UserService;
 import ua.service.implementation.editor.ProducerEditor;
 import ua.service.implementation.editor.ProductTypeEditor;
 import ua.service.implementation.validator.ProductValidator;
@@ -36,6 +39,8 @@ public class ProductController {
 	private ProducerService producerService;
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private UserService userService;
 
 	@InitBinder("productForm")
 	protected void initBinderProduct(WebDataBinder binderProduct) {
@@ -105,10 +110,16 @@ public class ProductController {
 		return "adminProduct";
 	}
 
-	@RequestMapping("/user/product/{id}")
-	public String showUserProduct(@PathVariable int id, Model model) {
-		model.addAttribute("product", productService.findById(id));
-		return "userProduct";
+	@RequestMapping("/user/wishlist")
+	public String showProductWishList(Model model,
+			@PageableDefault(5) Pageable pageable,
+			@ModelAttribute("filter") ProductFilterForm filter, Principal principal) {
+		int id = Integer.parseInt(principal.getName());
+		model.addAttribute("page",
+				userService.findWishList(id,pageable, filter));
+		model.addAttribute("productTypes", productTypeService.findAll());
+		model.addAttribute("producers", producerService.findAll());
+		return "userWishList";
 	}
 
 	private String getParams(Pageable pageable, ProductFilterForm form) {

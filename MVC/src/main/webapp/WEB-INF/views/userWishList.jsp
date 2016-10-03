@@ -20,14 +20,7 @@
 			<div class="col-md-9">
 				<h4>Hello! Nice to see you =)</h4>
 			</div>
-			<div class="col-md-1">
-				<security:authorize
-					access="isAuthenticated() and hasRole('ROLE_USER')">
-					<ul class="list-group">
-						<li class="list-group-item">Wish List: <span class="badge">${authUser.wishList.size()}</span></li>
-					</ul>
-				</security:authorize>
-			</div>
+			<div class="col-md-1"></div>
 			<div class="col-md-2 col-xs-12">
 				<div class="col-md-4">
 					<div class="dropdown">
@@ -131,16 +124,15 @@
 			<div class="col-md-1">
 				<h4>Buy</h4>
 			</div>
-			<security:authorize
-				access="isAuthenticated() and hasRole('ROLE_USER')">
-				<div class="col-md-1">
-					<h4>Wish List</h4>
-				</div>
-			</security:authorize>
+
+			<div class="col-md-1">
+				<h4>Delete</h4>
+			</div>
+
 		</div>
 		<c:forEach items="${page.content}" var="product">
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-4">
 					<img class="img-thumbnail" width="100"
 						src="/images/product/${product.id}${product.path}?version=${product.version}" />
 				</div>
@@ -149,14 +141,8 @@
 				<div class="col-md-2">${product.name}</div>
 				<div class="col-md-1">${product.price}</div>
 				<div class="col-md-1">
-					<a href="/user/order/${product.id}<custom:allParams/>">Buy it!</a>
-				</div>
-
-				<div class="col-md-1">
-					<security:authorize access="isAuthenticated()">
-						<a href="/user/wishlist/add/${product.id}<custom:allParams/>">Want
-							it!</a>
-					</security:authorize>
+					<a href="/user/wishlist/delete/${product.id}<custom:allParams/>">Want
+						it!</a>
 				</div>
 
 			</div>
