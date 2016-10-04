@@ -1,5 +1,4 @@
 package ua.controller;
-import java.security.Principal;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -105,29 +104,7 @@ public class ProductController {
 
 		return "adminProduct";
 	}
-
-	@RequestMapping("/user/wishlist")
-	public String showProductWishList(Model model,
-			@PageableDefault(5) Pageable pageable,
-			@ModelAttribute("filter") ProductFilterForm filter,
-			Principal principal) {
-		int id = Integer.parseInt(principal.getName());
-		model.addAttribute("page",
-				userService.findWishList(id, pageable, filter));
-		model.addAttribute("productTypes", productTypeService.findAll());
-		model.addAttribute("producers", producerService.findAll());
-		return "userWishList";
-	}
-
-	@RequestMapping(value = "/user/wishlist/delete/{id}")
-	public String deleteFromWishList(@PathVariable int id,
-			@PageableDefault(5) Pageable pageable,
-			@ModelAttribute(value = "filter") ProductFilterForm filter,
-			Principal principal) {
-		userService.deleteFromWishList(principal, id);
-		return "redirect:/user/wishlist" + getParams(pageable, filter);
-	}
-
+	
 	private String getParams(Pageable pageable, ProductFilterForm form) {
 		StringBuilder buffer = new StringBuilder();
 		buffer.append("?page=");

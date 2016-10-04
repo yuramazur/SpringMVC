@@ -40,4 +40,6 @@ public interface ProductService {
 
 	Product findProduct(ProductForm productForm);
 
+	List<Product> findAllSelected(List<Integer> productIds);
+
 }

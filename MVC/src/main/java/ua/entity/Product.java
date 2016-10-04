@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -28,7 +28,7 @@ public class Product {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Producer producer;
-	@OneToMany(mappedBy = "products")
+	@ManyToMany(mappedBy = "products")
 	private List<MyOrder> order;
 	@ManyToMany(mappedBy = "wishList")
 	private List<User> users = new ArrayList<User>();

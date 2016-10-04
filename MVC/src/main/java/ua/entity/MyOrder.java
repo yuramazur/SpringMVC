@@ -1,6 +1,8 @@
 package ua.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,8 +24,8 @@ public class MyOrder {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Client client;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Product products;
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Product> products = new ArrayList<Product>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Delivery delivery;
@@ -63,12 +66,14 @@ public class MyOrder {
 		this.delivery = delivery;
 	}
 
-	public Product getProducts() {
+	public List<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Product products) {
+	public void setProducts(List<Product> products) {
 		this.products = products;
 	}
+
+	
 
 }

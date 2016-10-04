@@ -2,6 +2,7 @@ package ua.service.implementation;
 
 import java.security.Principal;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -125,5 +126,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 			}
 		}
 		save(user);
+	}
+
+	@Override
+	public List<Product> getWishList(int id) {
+		
+		return productRepository.findWishList(id);
 	}
 }

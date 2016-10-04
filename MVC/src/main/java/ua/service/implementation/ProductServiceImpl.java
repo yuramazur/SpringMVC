@@ -1,5 +1,6 @@
 package ua.service.implementation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,6 +148,15 @@ public class ProductServiceImpl implements ProductService {
 		return productRepository.findProduct(productForm.getProducer().getName(),
 				productForm.getProductType().getName(), productForm.getTitle(),
 				Double.valueOf(productForm.getPrice()));
+	}
+
+	@Override
+	public List<Product> findAllSelected(List<Integer> productIds) {
+		List<Product> selected = new ArrayList<Product>();
+		for (Integer id : productIds) {
+			selected.add(productRepository.findOneInited(id));
+		}
+		return selected;
 	}
 
 }

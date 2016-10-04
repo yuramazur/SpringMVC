@@ -1,6 +1,7 @@
 package ua.service;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,5 +27,7 @@ public interface UserService {
 			ProductFilterForm filter);
 
 	void deleteFromWishList(Principal principal,int id);
+
+	List<Product> getWishList(int id);
 
 }

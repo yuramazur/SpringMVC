@@ -18,15 +18,12 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="col-md-9">
-				<h4>Hello! Nice to see you =)</h4>
+				<h4>Your wish list:</h4>
 			</div>
 			<div class="col-md-1">
-				<security:authorize
-					access="isAuthenticated() and hasRole('ROLE_USER')">
-					<ul class="list-group">
-						<li class="list-group-item"><a href="/user/wishlist">Wish List:</a><span class="badge">${authUser.wishList.size()}</span></li>
-					</ul>
-				</security:authorize>
+			<ul class="list-group">
+						<li class="list-group-item"><a href="/user">Exit:</a><span class="badge">${authUser.wishList.size()}</span></li>
+					</ul>			
 			</div>
 			<div class="col-md-2 col-xs-12">
 				<div class="col-md-4">
@@ -62,7 +59,7 @@
 
 <div class="row-fluid">
 	<div class="col-md-2 col-xs-12" style="padding-top: 90px;">
-		<form:form action="/user" class="form-inline" method="get"
+		<form:form action="/user/wishlist" class="form-inline" method="get"
 			modelAttribute="filter">
 			<custom:hiddenInputs
 				excludeParams="minPrice,maxPrice,name,productTypeIds, producerIds,_productTypeIds,_producerIds " />
@@ -128,18 +125,25 @@
 			<div class="col-md-1">
 				<h4>Price</h4>
 			</div>
-			<div class="col-md-1">
-				<h4>Buy</h4>
+			<div class="col-md-2">
+				<h4>Delete</h4>
 			</div>
-			<security:authorize
-				access="isAuthenticated() and hasRole('ROLE_USER')">
-				<div class="col-md-1">
-					<h4>Wish List</h4>
-				</div>
-			</security:authorize>
+
 		</div>
+		
+		<form:form action="/user/order" class="form-inline" method="post"
+			modelAttribute="addOrderForm">
+			<custom:hiddenInputs
+				excludeParams="productIds,_productTypeIds" />
+				
 		<c:forEach items="${page.content}" var="product">
 			<div class="row">
+			<div class="col-md-1">
+			<%-- 				<form:checkboxes items="${productTypes}" path="productTypeIds" --%>
+				<%-- 					itemLabel="name" itemValue="id" /> --%>
+			<form:checkbox path="productIds" value="${product.id}" /> 
+			
+			</div>
 				<div class="col-md-3">
 					<img class="img-thumbnail" width="100"
 						src="/images/product/${product.id}${product.path}?version=${product.version}" />
@@ -149,18 +153,12 @@
 				<div class="col-md-2">${product.name}</div>
 				<div class="col-md-1">${product.price}</div>
 				<div class="col-md-1">
-					<a href="/user/order/${product.id}<custom:allParams/>">Buy it!</a>
-				</div>
-
-				<div class="col-md-1">
-					<security:authorize access="isAuthenticated()">
-						<a href="/user/wishlist/add/${product.id}<custom:allParams/>">Want
-							it!</a>
-					</security:authorize>
+					<a href="/user/wishlist/delete/${product.id}<custom:allParams/>">Don't want it!</a>
 				</div>
 
 			</div>
 		</c:forEach>
+		</form:form>
 		<div class="col-md-12 text-center">
 			<custom:pageable page="${page}" cell="<li></li>"
 				container="<ul class='pagination'></ul>" />
