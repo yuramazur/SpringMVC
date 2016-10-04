@@ -80,10 +80,10 @@ public class ProductFilterAdapter implements Specification<Product> {
 	}
 
 	private void findByName() {
-		if (form.getNameSearch() != null) {
+		if (form.getName() != null) {
 			filters.add((root, query, cb) -> {
 				Expression<String> exp = root.get("name");
-				return cb.like(cb.upper(exp), form.getNameSearch()
+				return cb.like(cb.upper(exp), form.getName()
 						.toUpperCase() + "%");
 			});
 		}

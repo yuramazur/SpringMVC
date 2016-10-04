@@ -10,7 +10,7 @@ public class ProductFilterForm {
 	private String minPrice = "";
 	private double maxPriceDouble = 0;
 	private double minPriceDouble = 0;
-	private String nameSearch;
+	private String name;
 	private static final Pattern p = Pattern
 			.compile("^[1-9]{1,1}([0-9]{0,10}[^,|\\.])?(\\.[0-9]{2,2})?$");
 
@@ -67,12 +67,12 @@ public class ProductFilterForm {
 		this.producerIds = producerIds;
 	}
 
-	public String getNameSearch() {
-		return nameSearch;
+	public String getName() {
+		return name;
 	}
 
-	public void setNameSearch(String nameSearch) {
-		this.nameSearch = nameSearch;
+	public void setName(String nameSearch) {
+		this.name = nameSearch;
 	}
 
 }

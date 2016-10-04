@@ -109,7 +109,7 @@ public class IndexController {
 		buffer.append("&maxPrice=");
 		buffer.append(form.getMaxPrice());
 		buffer.append("&nameSearch=");
-		buffer.append(form.getNameSearch());
+		buffer.append(form.getName());
 		for (Integer i : form.getProductTypeIds()) {
 			buffer.append("&productTypeIds=");
 			buffer.append(i.toString());

@@ -18,7 +18,7 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="col-md-9">
-				<h4>Hello! Nice to see you =)</h4>
+				<h4>Your wish list:</h4>
 			</div>
 			<div class="col-md-1">
 			<ul class="list-group">
@@ -62,7 +62,7 @@
 		<form:form action="/user/wishlist" class="form-inline" method="get"
 			modelAttribute="filter">
 			<custom:hiddenInputs
-				excludeParams="minPrice,maxPrice,nameSearch,productTypeIds, producerIds,_productTypeIds,_producerIds " />
+				excludeParams="minPrice,maxPrice,name,productTypeIds, producerIds,_productTypeIds,_producerIds " />
 			<div class="form-group">
 				<form:input path="minPrice" placeholder=" min Price:"
 					class="form-control" />
@@ -72,7 +72,7 @@
 					class="form-control" />
 			</div>
 			<div class="form-group">
-				<form:input path="nameSearch" placeholder="product title:"
+				<form:input path="name" placeholder="product title:"
 					class="form-control" />
 			</div>
 
@@ -125,18 +125,26 @@
 			<div class="col-md-1">
 				<h4>Price</h4>
 			</div>
-			<div class="col-md-1">
-				<h4>Buy</h4>
-			</div>
-
-			<div class="col-md-1">
+			<div class="col-md-2">
 				<h4>Delete</h4>
 			</div>
 
 		</div>
+		
+		<form:form action="/user/order" class="form-inline" method="post"
+			modelAttribute="addOrderForm">
+			<custom:hiddenInputs
+				excludeParams="productIds,_productTypeIds" />
+				
 		<c:forEach items="${page.content}" var="product">
 			<div class="row">
-				<div class="col-md-4">
+			<div class="col-md-1">
+			<%-- 				<form:checkboxes items="${productTypes}" path="productTypeIds" --%>
+				<%-- 					itemLabel="name" itemValue="id" /> --%>
+			<form:checkbox path="productIds" value="${product.id}" /> 
+			
+			</div>
+				<div class="col-md-3">
 					<img class="img-thumbnail" width="100"
 						src="/images/product/${product.id}${product.path}?version=${product.version}" />
 				</div>
@@ -150,6 +158,7 @@
 
 			</div>
 		</c:forEach>
+		</form:form>
 		<div class="col-md-12 text-center">
 			<custom:pageable page="${page}" cell="<li></li>"
 				container="<ul class='pagination'></ul>" />

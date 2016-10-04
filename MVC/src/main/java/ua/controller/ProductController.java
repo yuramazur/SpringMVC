@@ -1,10 +1,6 @@
 package ua.controller;
-
 import java.security.Principal;
-import java.util.Iterator;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,11 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import ua.entity.Producer;
-import ua.entity.Product;
 import ua.entity.ProductType;
-import ua.entity.User;
 import ua.form.ProductForm;
 import ua.form.filter.ProductFilterForm;
 import ua.service.ProducerService;
@@ -131,7 +124,7 @@ public class ProductController {
 			@PageableDefault(5) Pageable pageable,
 			@ModelAttribute(value = "filter") ProductFilterForm filter,
 			Principal principal) {
-		userService.deleteFromWishList(principal,id);
+		userService.deleteFromWishList(principal, id);
 		return "redirect:/user/wishlist" + getParams(pageable, filter);
 	}
 
@@ -154,8 +147,8 @@ public class ProductController {
 		buffer.append(form.getMinPrice());
 		buffer.append("&maxPrice=");
 		buffer.append(form.getMaxPrice());
-		buffer.append("&nameSearch=");
-		buffer.append(form.getNameSearch());
+		buffer.append("&name=");
+		buffer.append(form.getName());
 		for (Integer i : form.getProductTypeIds()) {
 			buffer.append("&productTypeIds=");
 			buffer.append(i.toString());

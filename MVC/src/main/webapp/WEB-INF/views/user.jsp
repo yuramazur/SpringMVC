@@ -65,7 +65,7 @@
 		<form:form action="/user" class="form-inline" method="get"
 			modelAttribute="filter">
 			<custom:hiddenInputs
-				excludeParams="minPrice,maxPrice,nameSearch,productTypeIds, producerIds,_productTypeIds,_producerIds " />
+				excludeParams="minPrice,maxPrice,name,productTypeIds, producerIds,_productTypeIds,_producerIds " />
 			<div class="form-group">
 				<form:input path="minPrice" placeholder=" min Price:"
 					class="form-control" />
@@ -75,7 +75,7 @@
 					class="form-control" />
 			</div>
 			<div class="form-group">
-				<form:input path="nameSearch" placeholder="product title:"
+				<form:input path="name" placeholder="product title:"
 					class="form-control" />
 			</div>
 
