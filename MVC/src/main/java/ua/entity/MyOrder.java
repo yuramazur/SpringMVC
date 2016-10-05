@@ -1,9 +1,8 @@
 package ua.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,7 +19,7 @@ public class MyOrder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private Date date;
+	private LocalDate date;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Client client;
 
@@ -42,7 +41,7 @@ public class MyOrder {
 		this.id = id;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
@@ -54,7 +53,7 @@ public class MyOrder {
 		this.client = client;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

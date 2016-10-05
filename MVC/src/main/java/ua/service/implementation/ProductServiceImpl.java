@@ -152,10 +152,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Product> findAllSelected(List<Integer> productIds) {
-		List<Product> selected = new ArrayList<Product>();
-		for (Integer id : productIds) {
-			selected.add(productRepository.findOneInited(id));
-		}
+		List<Product> selected = productRepository.findAll(productIds);
 		return selected;
 	}
 
