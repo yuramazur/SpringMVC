@@ -49,66 +49,12 @@
 						</ul>
 					</div>
 				</div>
-				<!-- 				<div class="col-md-8"> -->
-				<%-- 					<custom:size posibleSizes="1,2,5,10" size="${page.size}" --%>
-				<%-- 						title="Page Size" /> --%>
-				<!-- 				</div> -->
+				
 			</div>
 		</div>
 	</nav>
 </div>
 
-<!-- <div class="row-fluid"> -->
-<!-- 	<div class="col-md-2 col-xs-12" style="padding-top: 90px;"> -->
-<%-- 		<form:form action="/user/wishlist" class="form-inline" method="get" --%>
-<%-- 			modelAttribute="filter"> --%>
-<%-- 			<custom:hiddenInputs --%>
-<%-- 				excludeParams="minPrice,maxPrice,name,productTypeIds, producerIds,_productTypeIds,_producerIds " /> --%>
-<!-- 			<div class="form-group"> -->
-<%-- 				<form:input path="minPrice" placeholder=" min Price:" --%>
-<%-- 					class="form-control" /> --%>
-<!-- 			</div> -->
-<!-- 			<div class="form-group"> -->
-<%-- 				<form:input path="maxPrice" placeholder=" max Price:" --%>
-<%-- 					class="form-control" /> --%>
-<!-- 			</div> -->
-<!-- 			<div class="form-group"> -->
-<%-- 				<form:input path="name" placeholder="product title:" --%>
-<%-- 					class="form-control" /> --%>
-<!-- 			</div> -->
-
-<!-- 			<div class="form-group"> -->
-<!-- 				<h4>Product Types:</h4> -->
-<!-- 			</div> -->
-<!-- 			<div class="form-group"> -->
-<%-- 								<form:checkboxes items="${productTypes}" path="productTypeIds" --%>
-<%-- 									itemLabel="name" itemValue="id" /> --%>
-<%-- 				<form:select class="chosen-select" data-placeholder="Product Type" --%>
-<%-- 					path="productTypeIds" items="${productTypes}" itemLabel="name" --%>
-<%-- 					itemValue="id" style="width:180px;"> --%>
-
-<%-- 				</form:select> --%>
-<!-- 			</div> -->
-<!-- 			<div class="form-group"> -->
-<!-- 				<h4>Producers:</h4> -->
-<!-- 			</div> -->
-<!-- 			<div class="form-group"> -->
-<%-- 								<form:checkboxes items="${producers}" path="producerIds" --%>
-<%-- 									itemLabel="name" itemValue="id" /> --%>
-<%-- 				<form:select class="chosen-select" data-placeholder="Producers" --%>
-<%-- 					path="producerIds" items="${producers}" itemLabel="name" --%>
-<%-- 					itemValue="id" style="width:180px;"> --%>
-
-<%-- 				</form:select> --%>
-<!-- 			</div> -->
-<!-- 			<div class="row" style="padding: 5px;"> -->
-<!-- 				<div class="col-md-8"></div> -->
-<!-- 				<div class="col-md-4 col-xs-12 form-group"> -->
-<!-- 					<button type="submit" class="btn btn-primary">Ok</button> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<%-- 		</form:form> --%>
-<!-- 	</div> -->
 <div class="col-md-8 col-xs-12">
 	<div class="row">
 		<div class="col-md-1">
