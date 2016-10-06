@@ -28,8 +28,10 @@ public class Product {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Producer producer;
+	
 	@ManyToMany(mappedBy = "products")
-	private List<MyOrder> order;
+	private List<MyOrder> order = new ArrayList<MyOrder>();
+	
 	@ManyToMany(mappedBy = "wishList")
 	private List<User> users = new ArrayList<User>();
 	private String name;

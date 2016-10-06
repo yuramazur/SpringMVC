@@ -42,4 +42,6 @@ public interface ProductService {
 
 	List<Product> findAllSelected(List<Integer> productIds);
 
+	List<Product> findAllInited(List<Integer> productIds);
+
 }

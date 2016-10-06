@@ -1,9 +1,12 @@
 package ua.service.implementation;
+import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import ua.entity.Product;
 import ua.form.ProductForm;
 import ua.form.filter.ProductFilterForm;
@@ -150,6 +153,15 @@ public class ProductServiceImpl implements ProductService {
 	public List<Product> findAllSelected(List<Integer> productIds) {
 		List<Product> selected = productRepository.findAll(productIds);
 		return selected;
+	}
+
+	@Override
+	public List<Product> findAllInited(List<Integer> productIds) {
+		List<Product> products = new ArrayList<Product>();
+		for (Integer id : productIds) {
+			products.add(productRepository.findOneInited(id));
+		}
+		return products;
 	}
 
 }

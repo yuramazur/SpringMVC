@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ua.entity.Delivery;
 import ua.entity.MyOrder;
 import ua.entity.Product;
+import ua.form.AddOrderForm;
 import ua.form.DeliveryForm;
 import ua.repository.DeliveryRepository;
 import ua.repository.MyOrderRepository;
@@ -67,14 +68,43 @@ public class OrderServiceImpl implements OrderService {
 			delivery = deliveryRepository.findDelivery(deliveryForm.getCity()
 					.getName(), deliveryForm.getCarrier().getName(), Integer
 					.valueOf(deliveryForm.getNumberDepartment()));
-		}else{
+		} else {
 			delivery.setCity(deliveryForm.getCity());
 			delivery.setCarrier(deliveryForm.getCarrier());
-			delivery.setNumCerrDep(Integer.valueOf(deliveryForm.getNumberDepartment()));
+			delivery.setNumCerrDep(Integer.valueOf(deliveryForm
+					.getNumberDepartment()));
 			deliveryRepository.save(delivery);
 		}
 		order = orderRepository.findOne(id);
 		order.setDelivery(delivery);
+		orderRepository.save(order);
+	}
+
+	@Override
+	public void saveOrder(DeliveryForm deliveryForm, AddOrderForm addForm,
+			Principal principal) {
+		MyOrder order = new MyOrder();
+		Delivery delivery = new Delivery();
+		if (deliveryRepository.findDelivery(deliveryForm.getCity().getName(),
+				deliveryForm.getCarrier().getName(),
+				Integer.valueOf(deliveryForm.getNumberDepartment())) != null) {
+			delivery = deliveryRepository.findDelivery(deliveryForm.getCity()
+					.getName(), deliveryForm.getCarrier().getName(), Integer
+					.valueOf(deliveryForm.getNumberDepartment()));
+		} else if(deliveryRepository.findDelivery(deliveryForm.getCity().getName(),
+				deliveryForm.getCarrier().getName(),
+				Integer.valueOf(deliveryForm.getNumberDepartment())) == null) {
+			delivery.setCity(deliveryForm.getCity());
+			delivery.setCarrier(deliveryForm.getCarrier());
+			delivery.setNumCerrDep(Integer.valueOf(deliveryForm
+					.getNumberDepartment()));
+			deliveryRepository.save(delivery);
+		}
+		order.setDelivery(delivery);
+		order.setClient(userService.findById(Integer.valueOf(principal.getName())).getClient());
+		order.setDate(LocalDate.now());
+		orderRepository.save(order);
+		order.setProducts(productRepository.findAllInited(addForm.getProductIds()));
 		orderRepository.save(order);
 	}
 

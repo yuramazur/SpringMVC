@@ -44,7 +44,7 @@
 			<div class="row-fluid">
 				<h4>Delivery:</h4>
 			</div>
-			<form:form class="form-inline" action="/user/order"
+			<form:form class="form-inline" action="/user/order/save"
 				method="post" modelAttribute="deliveryForm">
 				<form:hidden path="id" />
 				<custom:hiddenInputs
@@ -114,10 +114,6 @@
 					<div class="col-md-2">${product.producer.name}</div>
 					<div class="col-md-2">${product.name}</div>
 					<div class="col-md-1">${product.price}</div>
-					<div class="col-md-2">
-						<a href="/user/order/delete/${product.id}">Don't
-							want it!</a>
-					</div>
 				</div>
 			</c:forEach>
 

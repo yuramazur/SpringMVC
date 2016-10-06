@@ -3,11 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/custom.tld" prefix="custom"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<link rel="stylesheet" href="/resources/css/ingredientAmount.css">
+
 <script>
 	$(function() {
-		$('select[name=city]').chosen();
-		$('select[name=carrier]').chosen();
+		$('select[name=city]').chosen({
+			width : "190px;"
+		});
+		$('select[name=carrier]').chosen({
+			width : "190px;"
+		});
 	});
 </script>
 <div class="row-fluid">
