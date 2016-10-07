@@ -88,17 +88,17 @@
 				</ul>
 			</div>
 		
-<%-- 		<c:forEach items="${order.getProducts()}" var="product"> --%>
-<!-- 			<div class="row-fluid"> -->
-<!-- 				<div class="col-xm-1"> -->
-<!-- 					<b>Product:</b> -->
-<!-- 				</div> -->
-<%-- 				<div class="col-xm-2">${product.productType.name}</div> --%>
-<%-- 				<div class="col-xm-3">${product.producer.name}</div> --%>
-<%-- 				<div class="col-xm-3">${product.name}</div> --%>
-<%-- 				<div class="col-xm-3">${product.price}</div> --%>
-<!-- 			</div> -->
-<%-- 		</c:forEach> --%>
+		<c:forEach items="${order.getProducts()}" var="product">
+			<div class="row">
+				<div class="col-md-1">
+					<b>Product:</b>
+				</div>
+				<div class="col-md-2">${product.productType.name}</div>
+				<div class="col-md-3">${product.producer.name}</div>
+				<div class="col-md-3">${product.name}</div>
+				<div class="col-md-3">${product.price}</div>
+			</div>
+		</c:forEach>
 </div>
 	</c:forEach>
 	<div class="row-fluid">

@@ -144,4 +144,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		
 		return userRepository.findAll(new UserFilterAdapter(filter), pageable);
 	}
+
+	@Override
+	public User findByMail(String mail) {
+		
+		return userRepository.findByMail(mail);
+	}
+
+	@Override
+	public User findByPhone(String phone) {
+		
+		return userRepository.findByPhone(phone);
+	}
 }

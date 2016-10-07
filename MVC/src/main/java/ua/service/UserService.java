@@ -33,4 +33,8 @@ public interface UserService {
 
 	Page<User> findAllPageable(Pageable pageable, UserFilterForm filter);
 
+	User findByMail(String mail);
+
+	User findByPhone(String phone);
+
 }

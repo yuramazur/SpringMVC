@@ -7,6 +7,7 @@ import javax.enterprise.inject.spi.Producer;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
@@ -21,7 +22,6 @@ import ua.entity.MyOrder;
 import ua.entity.Name;
 import ua.entity.Product;
 import ua.entity.ProductType;
-import ua.entity.User;
 import ua.form.filter.OrderFilterForm;
 
 public class OrderFilterAdapter implements Specification<MyOrder> {
@@ -86,6 +86,7 @@ public class OrderFilterAdapter implements Specification<MyOrder> {
 
 		}
 	}
+
 	private void findByCarrier() {
 		if (form.getCarrierSearch() != null) {
 			filters.add((root, query, cb) -> {
@@ -97,12 +98,14 @@ public class OrderFilterAdapter implements Specification<MyOrder> {
 
 		}
 	}
+
 	private void findByProducer() {
 		if (form.getProducerSearch() != null) {
-			
+
 			filters.add((root, query, cb) -> {
 				Join<MyOrder, Product> productJoin = root.join("products");
-				Join<Product, Producer> producerJoin = productJoin.join("producer");
+				Join<Product, Producer> producerJoin = productJoin
+						.join("producer");
 				Expression<String> exp = producerJoin.get("name");
 				return cb.like(cb.upper(exp), form.getProducerSearch()
 						.toUpperCase() + "%");
@@ -110,12 +113,14 @@ public class OrderFilterAdapter implements Specification<MyOrder> {
 
 		}
 	}
+
 	private void findByProductType() {
 		if (form.getProductTypeSearch() != null) {
-			
+
 			filters.add((root, query, cb) -> {
 				Join<MyOrder, Product> productJoin = root.join("products");
-				Join<Product, ProductType> productTypeJoin = productJoin.join("productType");
+				Join<Product, ProductType> productTypeJoin = productJoin
+						.join("productType");
 				Expression<String> exp = productTypeJoin.get("name");
 				return cb.like(cb.upper(exp), form.getProductTypeSearch()
 						.toUpperCase() + "%");
@@ -123,7 +128,7 @@ public class OrderFilterAdapter implements Specification<MyOrder> {
 
 		}
 	}
-	
+
 	@Override
 	public Predicate toPredicate(Root<MyOrder> root, CriteriaQuery<?> query,
 			CriteriaBuilder cb) {
@@ -131,17 +136,13 @@ public class OrderFilterAdapter implements Specification<MyOrder> {
 				&& query.getResultType() != long.class) {
 			root.fetch("client", JoinType.LEFT).fetch("name", JoinType.LEFT);
 			root.fetch("client", JoinType.LEFT);
-			root.fetch("delivery", JoinType.LEFT).fetch("city", JoinType.LEFT);
-			root.fetch("delivery", JoinType.LEFT).fetch("carrier",
-					JoinType.LEFT);
-			root.fetch("delivery", JoinType.LEFT);
-			
-//			root.fetch("products", JoinType.LEFT).fetch("productType",
-//					JoinType.LEFT);
-//			root.fetch("products", JoinType.LEFT).fetch("producer",
-//					JoinType.LEFT);
-//			root.fetch("products", JoinType.LEFT);
-			
+			Fetch<Delivery, MyOrder> delFetch=  root.fetch("delivery", JoinType.LEFT);
+			delFetch.fetch("city", JoinType.LEFT);
+			delFetch.fetch("carrier",JoinType.LEFT);
+			Fetch<Product, MyOrder> prodFetch = root.fetch("products", JoinType.LEFT);
+			prodFetch.fetch("productType", JoinType.LEFT);
+			prodFetch.fetch("producer", JoinType.LEFT);
+			query.distinct(true);
 		}
 		findByName();
 		findByLastName();
@@ -160,5 +161,4 @@ public class OrderFilterAdapter implements Specification<MyOrder> {
 		}
 		return null;
 	}
-
 }

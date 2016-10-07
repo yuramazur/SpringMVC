@@ -29,17 +29,5 @@
 			</div>
 		</nav>
 	</div>
-
-	<div class="row">
-		<form:form action="/admin" method="post" modelAttribute="mailSender">
-		<ul class="nav navbar-nav">
-		<li><form:input path="email" placeholder="E-MAIL:"/></li>
-		<li><form:input path="content" placeholder="title:"/></li>
-		<li><form:textarea path="mailBody" placeholder="text masege:"/></li>
-		<Li><button type="submit" class="btn btn-primary">Ok</button></li>
-		</ul>
-		</form:form>
-
-	</div>
 </body>
 </html>

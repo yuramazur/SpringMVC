@@ -16,19 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-
-
-
-
-
-
-
-
-
 import ua.entity.Carrier;
 import ua.entity.City;
-import ua.entity.MyOrder;
 import ua.form.AddOrderForm;
 import ua.form.DeliveryForm;
 import ua.form.filter.OrderFilterForm;

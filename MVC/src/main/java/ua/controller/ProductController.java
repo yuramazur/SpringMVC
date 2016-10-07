@@ -124,7 +124,7 @@ public class ProductController {
 		buffer.append(form.getMinPrice());
 		buffer.append("&maxPrice=");
 		buffer.append(form.getMaxPrice());
-		buffer.append("&name=");
+		buffer.append("&nameSearh=");
 		buffer.append(form.getName());
 		for (Integer i : form.getProductTypeIds()) {
 			buffer.append("&productTypeIds=");
