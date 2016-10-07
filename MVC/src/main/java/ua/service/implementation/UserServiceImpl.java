@@ -35,8 +35,7 @@ import ua.service.implementation.specification.UserFilterAdapter;
 @Service("userDetailsService")
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-	@Autowired
-	private UserRepository repository;
+	
 	@Autowired
 	private ClientRepository clientRepository;
 	@Autowired
@@ -50,14 +49,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User findByLogin(String login) {
-		return repository.findByLogin(login);
+		return userRepository.findByLogin(login);
 	}
 
 	@Override
 	public void save(User user) {
 		user.setRole(Role.ROLE_USER);
 		user.setPassword(encoder.encode(user.getPassword()));
-		repository.save(user);
+		userRepository.save(user);
 	}
 
 	@PostConstruct
@@ -67,18 +66,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		user.setPassword(encoder.encode("admin"));
 		user.setLogin("admin");
 		user.setId(1);
-		repository.save(user);
+		userRepository.save(user);
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username)
 			throws UsernameNotFoundException {
-		return repository.findByLogin(username);
+		return userRepository.findByLogin(username);
 	}
 
 	@Override
 	public User findById(int id) {
-		return repository.findById(id);
+		return userRepository.findById(id);
 	}
 
 	@Override
@@ -97,18 +96,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		client.setName(nameRepository.findByNames(userForm.getName()));
 		client.setLastName(userForm.getLastName());
 		client.setPhone(userForm.getPhone());
-		user.setClient(client);
 		clientRepository.save(client);
-		repository.save(user);
+		user.setClient(client);
+		userRepository.save(user);
 
 	}
 
 	@Override
 	@Transactional
 	public void addToWishList(int userId, int productId) {
-		User user = repository.findOne(userId);
+		User user = userRepository.findOne(userId);
 		user.getWishList().add(productRepository.findOne(productId));
-		repository.save(user);
+		userRepository.save(user);
 
 	}
 

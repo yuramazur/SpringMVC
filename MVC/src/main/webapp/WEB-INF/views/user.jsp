@@ -125,12 +125,10 @@
 			<div class="col-md-2">
 				<h4>Title</h4>
 			</div>
-			<div class="col-md-1">
+			<div class="col-md-2">
 				<h4>Price</h4>
 			</div>
-			<div class="col-md-1">
-				<h4>Buy</h4>
-			</div>
+			
 			<security:authorize
 				access="isAuthenticated() and hasRole('ROLE_USER')">
 				<div class="col-md-1">
@@ -147,11 +145,7 @@
 				<div class="col-md-2">${product.productType.name}</div>
 				<div class="col-md-2">${product.producer.name}</div>
 				<div class="col-md-2">${product.name}</div>
-				<div class="col-md-1">${product.price}</div>
-				<div class="col-md-1">
-					<a href="/user/order/${product.id}<custom:allParams/>">Buy it!</a>
-				</div>
-
+				<div class="col-md-2">${product.price}</div>
 				<div class="col-md-1">
 					<security:authorize access="isAuthenticated()">
 						<a href="/user/wishlist/add/${product.id}<custom:allParams/>">Want

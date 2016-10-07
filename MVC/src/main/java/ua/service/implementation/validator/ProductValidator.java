@@ -28,29 +28,36 @@ public class ProductValidator implements Validator {
 	@Override
 	public void validate(Object target, Errors errors) {
 		ProductForm productForm = (ProductForm) target;
-		
-			if (productForm.getProducer() == null) {
-				errors.rejectValue("producer", "", "Select producer!");
-			}
-			if (productForm.getProductType() == null) {
-				errors.rejectValue("productType", "", "Select product type!");
-			}
-			if (productForm.getId() == 0) if (errors.getFieldError("producer") == null
-					&& errors.getFieldError("productType") == null
-					&& productService.findProduct(productForm) != null) {
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "",
+				"Can not be empty!");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "",
+				"Can not be empty!");
+		if (productForm.getPrice() == null) {
+			errors.rejectValue("price", "", "Can not be empty!");
+		}
+		if (productForm.getProducer() == null) {
+			errors.rejectValue("producer", "", "Select producer!");
+		}
+		if (productForm.getProductType() == null) {
+			errors.rejectValue("productType", "", "Select product type!");
+		}
+		// if (productForm.getId() == 0) if (errors.getFieldError("producer") ==
+		// null
+		// && errors.getFieldError("productType") == null
+		// && productService.findProduct(productForm) != null) {
+		// errors.rejectValue("error", "", "Product already exists!");
+		// }
+		if (productForm.getId() == 0) if(errors.getFieldError("price")==null)
+			if (productService.findProduct(productForm) != null) {
 				errors.rejectValue("error", "", "Product already exists!");
 			}
 
-			Matcher m = price.matcher(productForm.getPrice());
+		Matcher m = price.matcher(productForm.getPrice());
 
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "",
-					"Can not be empty!");
-			ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "",
-					"Can not be empty!");
-			if (errors.getFieldError("price") == null && !m.matches()) {
-				errors.rejectValue("price", "", "Incorrect price format!");
-			}
-		
+		if (errors.getFieldError("price") == null && !m.matches()) {
+			errors.rejectValue("price", "", "Incorrect price format!");
+		}
+
 	}
 
 }

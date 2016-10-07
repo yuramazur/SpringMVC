@@ -91,14 +91,16 @@
 			<form:hidden path="version" />
 			<custom:hiddenInputs
 				excludeParams="productType, producer, title, price, id, path, version" />
-			<div class="form-group" style="width:100%;">
+			<div class="form-group">
 				<label for="error"><form:errors path="error" /></label>
 				<form:select path="productType" items="${productTypes}"
-					itemLabel="name" itemValue="id" data-placeholder="Product Type">
-
+					itemLabel="name" itemValue="id">
+					<option value="0">Product Type</option>
 				</form:select>
+				
 				<form:select path="producer" items="${producers}" itemLabel="name"
-					itemValue="id" data-placeholder="Producer">
+					itemValue="id">
+					<option value="0">Producer</option>
 				</form:select>
 				<label for="title"><form:errors path="title" /></label>
 				<form:input path="title" placeholder="title:" class="form-control" />

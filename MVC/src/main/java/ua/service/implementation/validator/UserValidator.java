@@ -15,8 +15,8 @@ import ua.service.UserService;
 public class UserValidator implements Validator {
 	private final UserService userService;
 
-	private static final Pattern mail = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}$");
-	private static final Pattern phone = Pattern.compile("(\\d{3})(\\[-])(\\d{4})$");
+	private static final Pattern mail = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+	private static final Pattern phone = Pattern.compile("^[0-9]+$");
 
 	public UserValidator(UserService userService) {
 		this.userService = userService;
@@ -47,9 +47,9 @@ public class UserValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phone", "",
 				"Can not be empty!");
 
-		if (userForm.getPassword() != userForm.getPasswordConfirm()) {
+		if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
 			errors.rejectValue("password", "", "password dosn't match!");
-			errors.rejectValue("password", "", "password dosn't match!");
+			errors.rejectValue("passwordConfirm", "", "password dosn't match!");
 		}
 		if (userService.findByLogin(userForm.getLogin()) != null) {
 			errors.rejectValue("login", "", "User allready exists!");

@@ -12,6 +12,7 @@
 
 		<form:form action="/registration" class="form-group" method="post"
 			modelAttribute="userForm">
+			<form:errors path="*" />
 			<div class="form-group">
 				<div class="row">
 					<div class="col-md-6">

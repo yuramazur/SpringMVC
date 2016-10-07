@@ -53,7 +53,9 @@ public class ProductForm {
 	}
 
 	public void setPrice(String price) {
-		this.price = price;
+		
+			this.price = price;
+		
 	}
 
 	public String getError() {
