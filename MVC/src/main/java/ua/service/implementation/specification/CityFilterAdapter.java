@@ -26,6 +26,7 @@ public class CityFilterAdapter implements Specification<City>{
 	@Override
 	public Predicate toPredicate(Root<City> root, CriteriaQuery<?> query,
 			CriteriaBuilder cb) {
+		
 		Expression<String> ex = root.get("name");
  		return cb.like(cb.upper(ex), search.toUpperCase()+"%");
 	}

@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import ua.entity.Delivery;
@@ -12,12 +14,15 @@ import ua.entity.MyOrder;
 import ua.entity.Product;
 import ua.form.AddOrderForm;
 import ua.form.DeliveryForm;
+import ua.form.filter.OrderFilterForm;
 import ua.repository.DeliveryRepository;
 import ua.repository.MyOrderRepository;
 import ua.repository.ProductRepository;
 import ua.repository.UserRepository;
+import ua.service.MailSender;
 import ua.service.OrderService;
 import ua.service.UserService;
+import ua.service.implementation.specification.OrderFilterAdapter;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -35,6 +40,8 @@ public class OrderServiceImpl implements OrderService {
 	private UserRepository userRepositori;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MailSender mailSender;
 
 	@Override
 	public void save() {
@@ -106,6 +113,25 @@ public class OrderServiceImpl implements OrderService {
 		orderRepository.save(order);
 		order.setProducts(productRepository.findAllInited(addForm.getProductIds()));
 		orderRepository.save(order);
+		String content = "Congratulations, you made the order";
+		String email = userService.findById(Integer.valueOf(principal.getName())).getMail();
+		String mailBody ="";
+		double totalPrice = 0;
+		for (Product product : order.getProducts()) {
+			mailBody =mailBody+product.getProductType().getName()+" "+product.getProducer().getName()+" "+product.getName()+" "+product.getPrice()+"\n";
+			totalPrice =totalPrice+product.getPrice();
+		}
+		mailBody = mailBody+"\n"+"Total price: "+totalPrice+" UAH";
+		mailSender.sendMail(content, email, mailBody);
+		
 	}
+
+	@Override
+	public Page<MyOrder> findAllPageable(OrderFilterForm form, Pageable pageable) {
+		
+		return orderRepository.findAll(new OrderFilterAdapter(form),pageable);
+	}
+
+	
 
 }

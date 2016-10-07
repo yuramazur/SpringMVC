@@ -5,6 +5,8 @@ import java.security.Principal;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,13 +21,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
+
+
+
+
+
 import ua.entity.Carrier;
 import ua.entity.City;
+import ua.entity.MyOrder;
 import ua.form.AddOrderForm;
 import ua.form.DeliveryForm;
+import ua.form.filter.OrderFilterForm;
 import ua.service.CarrierService;
 import ua.service.CityService;
 import ua.service.DeliveryService;
+import ua.service.MailSender;
 import ua.service.OrderService;
 import ua.service.ProducerService;
 import ua.service.ProductService;
@@ -53,10 +63,16 @@ public class WishListAndOrderController {
 	private OrderService orderService;
 	@Autowired
 	private DeliveryService deliveryService;
+	@Autowired
+	private MailSender mailSender;
 
 	@ModelAttribute("addOrderForm")
 	public AddOrderForm getOrderForm() {
 		return new AddOrderForm();
+	}
+	@ModelAttribute("filter")
+	public OrderFilterForm getForm(){
+		return new OrderFilterForm();
 	}
 	@InitBinder("deliveryForm")
 	protected void initBinderDelivery(WebDataBinder binderDelivery) {
@@ -82,6 +98,13 @@ public class WishListAndOrderController {
 		return "userWishList";
 	}
 
+	@RequestMapping("/admin/order")
+	public String showOrder(Model model,@ModelAttribute("filter") OrderFilterForm form, @PageableDefault(size = 5) Pageable pageable){
+		model.addAttribute("page", orderService.findAllPageable(form,pageable));
+		
+		return "adminOrder";
+	}
+	
 	@RequestMapping("/user/order")
 	public String showProductOrder(Model model,
 			@ModelAttribute("addOrderForm") AddOrderForm addForm,
@@ -114,6 +137,8 @@ public class WishListAndOrderController {
 		for (Integer id : addForm.getProductIds()) {
 			userService.deleteFromWishList(principal, id);
 		}
+		
+	
 		return "redirect:/user";
 	}
 

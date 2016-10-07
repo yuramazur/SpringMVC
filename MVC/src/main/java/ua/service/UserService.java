@@ -10,6 +10,7 @@ import ua.entity.Product;
 import ua.entity.User;
 import ua.form.UserForm;
 import ua.form.filter.ProductFilterForm;
+import ua.form.filter.UserFilterForm;
 
 public interface UserService {
 
@@ -29,5 +30,7 @@ public interface UserService {
 	void deleteFromWishList(Principal principal,int id);
 
 	List<Product> getWishList(int id);
+
+	Page<User> findAllPageable(Pageable pageable, UserFilterForm filter);
 
 }

@@ -8,10 +8,17 @@ import java.util.List;
 
 
 
+
+
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import ua.entity.MyOrder;
 import ua.entity.Product;
 import ua.form.AddOrderForm;
 import ua.form.DeliveryForm;
+import ua.form.filter.OrderFilterForm;
 
 
 public interface OrderService {
@@ -26,6 +33,8 @@ public interface OrderService {
 
 	void saveOrder(DeliveryForm deliveryForm, AddOrderForm addForm,
 			Principal principal);
+
+	Page<MyOrder> findAllPageable(OrderFilterForm form,Pageable pageable);
 	
 	
 }

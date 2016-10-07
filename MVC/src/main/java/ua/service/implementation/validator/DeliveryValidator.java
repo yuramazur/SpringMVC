@@ -37,7 +37,7 @@ public class DeliveryValidator implements Validator {
 		if (deliveryForm.getCarrier() == null) {
 			errors.rejectValue("carrier", "", "Select carrier!");
 		}
-		if (errors.getFieldError("city") == null
+		if(deliveryForm.getId()==0)if (errors.getFieldError("city") == null
 				&& errors.getFieldError("carrier") == null
 				&& deliveryService.findDelivery(deliveryForm) != null) {
 			errors.rejectValue("error", "", "Delivery already exists!");

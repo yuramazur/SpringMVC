@@ -23,12 +23,14 @@ import ua.entity.Role;
 import ua.entity.User;
 import ua.form.UserForm;
 import ua.form.filter.ProductFilterForm;
+import ua.form.filter.UserFilterForm;
 import ua.repository.ClientRepository;
 import ua.repository.NameRepository;
 import ua.repository.ProductRepository;
 import ua.repository.UserRepository;
 import ua.service.UserService;
 import ua.service.implementation.specification.ProductFilterAdapter;
+import ua.service.implementation.specification.UserFilterAdapter;
 
 @Service("userDetailsService")
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -41,6 +43,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	private NameRepository nameRepository;
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private UserRepository userRepository;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
@@ -132,5 +136,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public List<Product> getWishList(int id) {
 		
 		return productRepository.findWishList(id);
+	}
+
+	@Override
+	public Page<User> findAllPageable(Pageable pageable,
+			UserFilterForm filter) {
+		
+		return userRepository.findAll(new UserFilterAdapter(filter), pageable);
 	}
 }
